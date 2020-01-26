@@ -11,6 +11,8 @@ OSI_OUTPUT = ./build/data/Base.osi
 
 default: build
 
+build: native script data
+
 clean:
 	@if exist build\NUL rmdir build /s /q
 	@if exist packaged\NUL rmdir packaged /s /q
