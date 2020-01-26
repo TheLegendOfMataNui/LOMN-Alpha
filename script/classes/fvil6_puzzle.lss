@@ -1,0 +1,78 @@
+class fvil6_puzzle {
+    property parent;
+    property leverpickup;
+    property music;
+    
+    method fvil6_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var1 = gcsaver::finditem(scslosifoundation::stringtoidentifier("levr"));
+        if (var1 == 0) {
+            this.leverpickup = new lego_pickup("levr", 0, 5, "item", 8, 1);
+            this.leverpickup.initfull();
+            this.leverpickup.show();
+            this.leverpickup.setcondition(8192);
+        }
+        this.music = new legomp3player();
+        this.music.setupforplay("Root/Data/sounds/MUSICPart2LegoUNDERGROUND");
+        this.music.play(1);
+        return null;
+    }
+    
+    method cleanupfull() {
+        if (!(this.leverpickup == null)) {
+            this.leverpickup.cleanupfull();
+            this.leverpickup = null;
+        }
+        this.music.stop();
+        this.music.cleanupfordestroy();
+        this.music = null;
+        return null;
+    }
+    
+    method initshort() {
+        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        globalclass.player.unkill();
+        globalclass.player.actor.setinputstate("ninp");
+        this.music.play(1);
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.music.stop();
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 1) {
+            if (param1.args[1] == scslosifoundation::stringtoidentifier("cnt1")) {
+                
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+            this.cleanupshort();
+        }
+        else if (param1.eventid == 27) {
+            this.initshort();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

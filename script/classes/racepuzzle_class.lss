@@ -1,0 +1,191 @@
+class racepuzzle_class {
+    property roadrunner;
+    property rider;
+    property parent;
+    property tiggerboxid;
+    property timer;
+    property areaid;
+    property roadrunnerwon;
+    property switchai;
+    property atendofspline;
+    property bgmusic;
+    property startraceonce;
+    
+    method racepuzzle_class(param1) {
+        this.parent = param1;
+        this.switchai = 1;
+        this.atendofspline = 0;
+        return null;
+    }
+    
+    method initfull() {
+        this.areaid = scslosifoundation::stringtoidentifier(this.parent.name);
+        this.startraceonce = 1;
+        this.roadrunner = new gs_lego_character("rrun", "rrun", "fake", 0, 331.987, 0 - 11.8812, 94.6078, "aiin");
+        this.roadrunner.initfull();
+        this.roadrunner.add(0);
+        this.roadrunner.show();
+        this.rider = new gs_lego_character("xman", "vlgr", "gly1", 0, 305, 0 - 11.8, 103, "none");
+        this.rider.initfull();
+        this.rider.add();
+        this.rider.settweakable();
+        this.rider.show();
+        this.roadrunnerwon = null;
+        this.timer = new lego_timer("timr", 1, 0);
+        this.timer.initfull();
+        this.setuprace();
+        return null;
+    }
+    
+    method initshort() {
+        this.startraceonce = 1;
+        this.roadrunner.aidisablepatrolonspline();
+        this.roadrunner.aiidle();
+        this.roadrunner.setpos(331.228, 0 - 12.0782, 95.0781);
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method setuprace() {
+        this.rider.ride(scslosifoundation::stringtoidentifier("rrun"), "gly1", 2063160497);
+        return null;
+    }
+    
+    method startrace() {
+        this.roadrunnerwon = null;
+        this.roadrunner.setsplitanimation(scslosifoundation::stringtoidentifier("rr02"));
+        this.roadrunner.aienablepatrolonspline();
+        this.roadrunner.aipatrol();
+        debug::print("************ROAD RUNNER SHOULD BE RUNNING***********");
+        return null;
+    }
+    
+    method cleanupfull() {
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        this.roadrunner.cleanupfull();
+        this.roadrunner = null;
+        this.rider.cleanupfull();
+        this.rider = null;
+        return null;
+    }
+    
+    method process(param1) {
+        this.roadrunner.process(param1);
+        if (this.switchai) {
+            this.switchai = 0;
+            this.roadrunner.disableai();
+            this.roadrunner.aiidle();
+            this.roadrunner.aidisablepatrolonspline();
+        }
+        if (this.atendofspline) {
+            this.atendofspline = 0;
+            this.roadrunner.aidisablepatrolonspline();
+            this.roadrunner.aiidle();
+            debug::print("*************ROAD RUNNER AT END OF SPLINE...SHOULD BE IDLING*************");
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 89) {
+                this.startrace();
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        if (param1.eventid == 49) {
+            this.atendofspline = 1;
+        }
+        else if (param1.eventid == 4) {
+            var1 = param1.args[0];
+            if (var1 == scslosifoundation::stringtoidentifier("tp02")) {
+                if (this.roadrunnerwon == null) {
+                    this.youwin();
+                }
+            }
+            else if (var1 == scslosifoundation::stringtoidentifier("tp03")) {
+                if (this.startraceonce) {
+                    this.startrace();
+                    this.startraceonce = 0;
+                }
+            }
+        }
+        else if (param1.eventid == 3) {
+            var1 = param1.args[0];
+            if (var1 == scslosifoundation::stringtoidentifier("tb00")) {
+                this.reseta();
+                this.tiggerboxid = scslosifoundation::stringtoidentifier("tb00");
+            }
+            if (var1 == scslosifoundation::stringtoidentifier("tb01")) {
+                this.reseta();
+                this.tiggerboxid = scslosifoundation::stringtoidentifier("tb01");
+            }
+        }
+        else if (param1.eventid == 27) {
+            debug::print("Screen Black Event");
+            this.resetc();
+        }
+        else if (param1.eventid == 8) {
+            var2 = param1.args[0];
+            if (var2 == scslosifoundation::stringtoidentifier("timr")) {
+                this.resetb();
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        return null;
+    }
+    
+    method reseta() {
+        this.parent.parent.cam.setaimode(7);
+        this.timer.start();
+        return null;
+    }
+    
+    method resetb() {
+        globalclass.player.kill();
+        return null;
+    }
+    
+    method resetc() {
+        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        globalclass.player.unkill();
+        gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+        globalclass.player.actor.setinputstate("ninp");
+        this.parent.level.cam.setaimode(11);
+        this.initshort();
+        return null;
+    }
+    
+    method youwin() {
+        this.roadrunnerwon = 0;
+        debug::print("**********************************YOU WIN");
+        globalclass.player.addelement(10);
+        this.startraceonce = 1;
+        return null;
+    }
+    
+    method youlost() {
+        this.roadrunnerwon = 1;
+        debug::print("YOU LOST");
+        this.startraceonce = 1;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

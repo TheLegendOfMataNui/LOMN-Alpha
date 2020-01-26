@@ -1,0 +1,116 @@
+class ta04_fireball {
+    property obj;
+    property name;
+    property id;
+    property group;
+    property timefromlastdrop;
+    property timetodrop;
+    property explodesound;
+    
+    method ta04_fireball(param1, param2) {
+        this.name = param1;
+        this.id = scslosifoundation::stringtoidentifier(this.name);
+        this.group = param2;
+        this.obj = new sprite_projectile(this.name, "Root/Data/art/SpriteAnims/fireBall/firebll", 55, 20, 100, 24);
+        this.timetodrop = 0;
+        this.timefromlastdrop = 0;
+        this.explodesound = new tablecopysound(743);
+        this.explodesound.synctoprojectile(this.obj.handle);
+        this.explodesound.setlistenerrollofffactor(0.5);
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.obj.cleanupfull();
+        this.obj = null;
+        this.name = null;
+        var1 = null;
+        this.explodesound.cleanupfull();
+        this.explodesound = null;
+        return null;
+    }
+    
+    method process(param1) {
+        this.obj.process(param1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 19) {
+            if (param1.args[1] == this.id) {
+                this.detonate(param1.args[0]);
+            }
+        }
+        param1.eventid;
+        return null;
+    }
+    
+    method drop() {
+        var var1;
+        var var2;
+        var1 = this.dropzone();
+        var2 = this.ysubtract(var1, 150);
+        this.obj.launch(var2, var1);
+        return null;
+    }
+    
+    method dropzone() {
+        var var1;
+        var var2;
+        if (globalclass.randnum.getrandomnumber(1, 9) == 1) {
+            var1 = 207;
+            var2 = globalclass.randnum.getrandomnumber(50, 135);
+        }
+        else if (globalclass.randnum.getrandomnumber(1, 9) == 2) {
+            var1 = globalclass.randnum.getrandomnumber(172, 207);
+            var2 = 97;
+        }
+        else if (globalclass.randnum.getrandomnumber(1, 9) == 3) {
+            var1 = 207;
+            var2 = globalclass.randnum.getrandomnumber(297, 345);
+        }
+        else if (globalclass.randnum.getrandomnumber(1, 9) == 4) {
+            var1 = globalclass.randnum.getrandomnumber(165, 250);
+            var2 = 345;
+        }
+        else if (globalclass.randnum.getrandomnumber(1, 9) == 5) {
+            var1 = -57;
+            var2 = globalclass.randnum.getrandomnumber(180, 345);
+        }
+        else if (globalclass.randnum.getrandomnumber(1, 9) == 6) {
+            var1 = globalclass.randnum.getrandomnumber(-100, 0);
+            var2 = 280;
+        }
+        else if (globalclass.randnum.getrandomnumber(1, 9) == 7) {
+            var1 = globalclass.randnum.getrandomnumber(-100, -10);
+            var2 = 345;
+        }
+        else if (globalclass.randnum.getrandomnumber(1, 9) == 8) {
+            var1 = globalclass.randnum.getrandomnumber(408, 470);
+            var2 = 153;
+        }
+        else if (globalclass.randnum.getrandomnumber(1, 9) == 9) {
+            var1 = 141;
+            var2 = globalclass.randnum.getrandomnumber(-220, -183);
+        }
+        globalclass.randnum.getrandomnumber(1, 9);
+        return new basicpoint(var1, 100, var2);
+    }
+    
+    method ysubtract(param1, param2) {
+        return new basicpoint(param1.x, param1.y - param2, param1.z);
+    }
+    
+    method detonate(param1) {
+        if (param1 == scslosifoundation::stringtoidentifier("cnt1")) {
+            this.explodesound.setvolume(100);
+            globalclass.level.cam.shakecamera(0.5, 0.08);
+        }
+        else {
+            this.explodesound.setvolume(70);
+        }
+        this.explodesound.play(0);
+        return null;
+    }
+}

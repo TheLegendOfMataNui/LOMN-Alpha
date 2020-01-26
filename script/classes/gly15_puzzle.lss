@@ -1,0 +1,98 @@
+class gly15_puzzle {
+    property parent;
+    property thermalarray;
+    property glyph;
+    property showpickup;
+    
+    method gly15_puzzle(param1) {
+        this.parent = param1;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        this.thermalarray = [ new thermal("tm01"), 
+            new thermal("tm02"), 
+            new thermal("tm03"), 
+            new thermal("tm04"), 
+            new thermal("tm05"), 
+            new thermal("tm06"), 
+            new thermal("tm07"), 
+            new thermal("tm08"), 
+            new thermal("tm09"), 
+            new thermal("tm10"), 
+            new thermal("tm11"), 
+            new thermal("tm12"), 
+            new thermal("tm13") ];
+        var1 = gcsaver::findglyph(scslosifoundation::stringtoidentifier("glyp"));
+        if (var1) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup == 1) {
+            this.glyph = new lego_pickup("glyp", 14, 2, "item", 4, 1);
+            this.glyph.initfull();
+            this.glyph.show();
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.thermalarray.__length - 1) >= var1) {
+            this.thermalarray[var1].cleanupfull();
+            var1 = var1 + 1;
+        }
+        this.thermalarray = null;
+        if (!(this.glyph == null)) {
+            this.glyph.cleanupfull();
+            this.glyph = null;
+        }
+        return null;
+    }
+    
+    method exit() {
+        var var1;
+        this.parent = null;
+        var1 = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.thermalarray.__length - 1) >= var1) {
+            this.thermalarray[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.thermalarray.__length - 1) >= var1) {
+            this.thermalarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+        }
+        else if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("shrn"), scslosifoundation::stringtoidentifier("str1"), scslosifoundation::stringtoidentifier("lok1"));
+            }
+            param1.args[0];
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

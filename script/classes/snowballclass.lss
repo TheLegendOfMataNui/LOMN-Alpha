@@ -1,0 +1,176 @@
+class snowballclass {
+    property obj;
+    property stringid;
+    property parent;
+    property curentscale;
+    property snowball_1;
+    property snowball_2;
+    property snowball_1_name;
+    property snowball_2_name;
+    property numofsnowballs_alive;
+    property bigsound;
+    property medsound;
+    property smlsound;
+    
+    method snowballclass(param1, param2, param3, param4) {
+        this.parent = param4;
+        this.stringid = param1;
+        this.obj = new lego_projectileobject(this.stringid, this.parent.parent.name);
+        this.snowball_1_name = param2;
+        this.snowball_2_name = param3;
+        this.snowball_1 = new smallsnowballclass(this.snowball_1_name, this);
+        this.snowball_2 = new smallsnowballclass(this.snowball_2_name, this);
+        this.curentscale = 1.0;
+        this.numofsnowballs_alive = 0;
+        return null;
+    }
+    
+    method initfull() {
+        this.obj.init(0.7, 0, 0, 0, 0, 2.3, "bld0", "Root/data/levels/lev1/clf2", 60);
+        this.obj.setbouncefactor(0.75);
+        this.obj.setobjgravity(30);
+        this.obj.show();
+        this.snowball_1.initfull();
+        this.snowball_2.initfull();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.obj.cleanupfull();
+        this.obj = null;
+        this.snowball_1.cleanupfull();
+        this.snowball_1 = null;
+        this.snowball_2.cleanupfull();
+        this.snowball_2 = null;
+        return null;
+    }
+    
+    method process(param1) {
+        if (this.obj.gety() < -50) {
+            this.startdropping();
+        }
+        this.snowball_1.process(param1);
+        this.snowball_2.process(param1);
+        return null;
+    }
+    
+    method show() {
+        this.obj.show();
+        this.snowball_1.show();
+        this.snowball_2.show();
+        return null;
+    }
+    
+    method hide() {
+        this.obj.hide();
+        this.snowball_1.hide();
+        this.snowball_2.hide();
+        return null;
+    }
+    
+    method startdropping() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        this.obj.show();
+        var1 = globalclass.randnum.getrandomnumber(3, 17.5);
+        var2 = globalclass.randnum.getrandomnumber(-185, -125);
+        var3 = globalclass.randnum.getrandomnumber(250, 400);
+        this.curentscale = var3 * 0.01;
+        this.obj.setobjscale(this.curentscale);
+        this.obj.setposition(var1, 115, var2);
+        this.obj.setnudgetarget(-200, var2, 5.0);
+        this.obj.setmoveableflags(1, 1, 0, 1);
+        this.obj.setvelocity(0.0, 0.0, 0.0);
+        var4 = globalclass.randnum.getrandomnumber(0, 5);
+        this.obj.setvelocity(var4, 0, 0);
+        return null;
+    }
+    
+    method stopdropping() {
+        this.obj.setvelocity(0, 0, 0);
+        this.obj.setmoveableflags(0, 0, 0, 0);
+        this.obj.setposition(1000, 0, 0);
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 1) {
+            
+        }
+        else if (param1.eventid == 8) {
+            
+        }
+        else if (param1.eventid == 19) {
+            if (param1.args[0] == this.obj.id) {
+                this.hit();
+            }
+        }
+        this.snowball_1.onevent(param1);
+        this.snowball_2.onevent(param1);
+        return null;
+    }
+    
+    method hit() {
+        this.curentscale = this.obj.getscale();
+        if (this.curentscale < 3) {
+            this.split();
+        }
+        else {
+            this.obj.setobjscale(this.curentscale - 1);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        this.snowball_1.input(param1);
+        this.snowball_2.input(param1);
+        if (param1.event == 2) {
+            if (param1.button == 79) {
+                this.hit();
+            }
+        }
+        if (param1.event == 2) {
+            if (param1.button == 84) {
+                this.dropsmallsnowball_1();
+            }
+        }
+        return null;
+    }
+    
+    method split() {
+        if (this.curentscale > 2) {
+            this.dropsmallsnowball_1();
+            this.dropsmallsnowball_2();
+            this.stopdropping();
+        }
+        else if (this.curentscale > 1) {
+            this.dropsmallsnowball_1();
+            this.stopdropping();
+        }
+        else {
+            this.startdropping();
+        }
+        return null;
+    }
+    
+    method dropsmallsnowball_1() {
+        this.snowball_1.startdropping(this.obj.getx(), this.obj.gety(), this.obj.getz() + 5);
+        return null;
+    }
+    
+    method dropsmallsnowball_2() {
+        this.snowball_2.startdropping(this.obj.getx(), this.obj.gety(), this.obj.getz() - 5);
+        return null;
+    }
+    
+    method killsmallsnowball(param1) {
+        this.numofsnowballs_alive = this.numofsnowballs_alive + param1;
+        debug::print("*** # of snowBalls " + __tostring(this.numofsnowballs_alive));
+        if (this.numofsnowballs_alive < 1) {
+            this.startdropping();
+        }
+        return null;
+    }
+}

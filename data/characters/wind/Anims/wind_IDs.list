@@ -1,0 +1,13 @@
+ANIMLIST for wind
+wi00.bkd        wi_idle
+root.bkd        wi_idle
+wi05.bkd        wi_throw
+root.bkd        wi_throw
+root.bkd        wi_take_damage
+wi06.bkd        wi_take_damage
+wi03.bkd        wi_taunt
+wi02.bkd        wi_float_rt
+wi04.bkd        wi_float_lft
+wi07.bkd        wi_rise_up
+wi08.bkd        wi_death
+wi09.bkd        wi_idle_underwater

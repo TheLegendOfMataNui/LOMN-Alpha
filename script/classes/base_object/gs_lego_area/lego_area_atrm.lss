@@ -1,0 +1,78 @@
+class lego_area_atrm : gs_lego_area {
+    property target;
+    property bugpickup;
+    property showbug;
+    
+    method lego_area_atrm(param1) {
+        this.gs_lego_area("atrm", param1, 0, 0);
+        gcareadirector::setnearestmax(50);
+        this.lego_area_initfull();
+        this.bugpickup = null;
+        this.showbug = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        this.lego_area_show();
+        gcareadirector::setfog(-402183, 0 - 40.0, 0 - 1200.0, 0.05);
+        globalclass.player.actor.setcontext(1);
+        gclightdirector::setcavelighting(0);
+        this.target = new lego_moveableobject("hot0");
+        this.target.initfull();
+        this.target.setmytargetingflags(1);
+        this.target.setresponse(1, 1, 1);
+        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vlgr"), 0);
+        gccharacter::sethafu(var1);
+        var2 = gcsaver::finditem(scslosifoundation::stringtoidentifier("bbug"));
+        if (var2) {
+            this.showbug = 0;
+        }
+        if (this.showbug == 1) {
+            this.bugpickup = new lego_pickup("bbug", 0, 5, "item", 10, 1);
+            this.bugpickup.initfull();
+            this.bugpickup.show();
+            this.bugpickup.setcondition(131072);
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.enterstartid, this.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.level.cam.setaimode(11);
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        if (!(this.bugpickup == null)) {
+            this.showbug = this.bugpickup.objshown;
+            this.bugpickup.cleanupfull();
+            this.bugpickup = null;
+        }
+        this.target.cleanupfull();
+        this.target = null;
+        this.lego_area_hide();
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+}

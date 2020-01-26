@@ -1,0 +1,75 @@
+class l1a1_puzzle : base_object {
+    property parent;
+    property clawpickup;
+    property showclaw;
+    property hooks;
+    property pickpickup;
+    property showpick;
+    
+    method l1a1_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        this.hooks = [ new lego_moveableobject("hot2") ];
+        var1 = 0;
+        while ((this.hooks.__length - 1) >= var1) {
+            this.hooks[var1].initfull();
+            this.hooks[var1].setmytargetingflags(1);
+            this.hooks[var1].setresponse(1, 1, 1);
+            var1 = var1 + 1;
+        }
+        if (gcsaver::finditem(scslosifoundation::stringtoidentifier("claw")) == 0) {
+            this.clawpickup = new lego_pickup("claw", 0, 3, "item", 1, 3);
+            this.clawpickup.initfull();
+            this.clawpickup.show();
+        }
+        var2 = gcsaver::finditem(scslosifoundation::stringtoidentifier("pic1"));
+        if (var2) {
+            this.showpick = 0;
+        }
+        else {
+            this.showpick = 1;
+        }
+        if (this.showpick == 1) {
+            this.pickpickup = new lego_pickup("pic1", 0, 5, "item", 11, 1);
+            this.pickpickup.initfull();
+            this.pickpickup.show();
+            this.pickpickup.setcondition(8192);
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        if (!(this.pickpickup == null)) {
+            this.showpick = this.pickpickup.objshown;
+            this.pickpickup.cleanupfull();
+            this.pickpickup = null;
+        }
+        if (!(this.clawpickup == null)) {
+            this.showclaw = this.clawpickup.objshown;
+            if (this.showclaw == 0) {
+                gcsaver::setcondition(134217728, 1);
+            }
+            this.clawpickup.cleanupfull();
+            this.clawpickup = null;
+        }
+        var1 = 0;
+        while ((this.hooks.__length - 1) >= var1) {
+            this.hooks[var1].cleanupfull();
+            this.hooks[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.hooks = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

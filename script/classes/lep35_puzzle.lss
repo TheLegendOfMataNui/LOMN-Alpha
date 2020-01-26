@@ -1,0 +1,65 @@
+class lep35_puzzle {
+    property parent;
+    property glyph;
+    property showpickup;
+    
+    method lep35_puzzle(param1) {
+        this.parent = param1;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var1 = gcsaver::findglyph(scslosifoundation::stringtoidentifier("gly2"));
+        if (var1) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup) {
+            this.glyph = new lego_pickup("gly2", 15, 2, "item", 5, 1);
+            this.glyph.initfull();
+            this.glyph.show();
+        }
+        return null;
+    }
+    
+    method initshort() {
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var var2;
+        this.glyph.cleanupfull();
+        var1 = null;
+        var2 = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                globalclass.player.kill();
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            this.initshort();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

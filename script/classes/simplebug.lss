@@ -1,0 +1,148 @@
+class simplebug {
+    property obj;
+    property id;
+    property name;
+    property puzzlepointer;
+    property alive;
+    property life;
+    property damagesound;
+    property resurrectsound;
+    property attacksound;
+    
+    method simplebug(param1, param2, param3, param4, param5, param6, param7, param8) {
+        var var1;
+        var var2;
+        this.id = scslosifoundation::stringtoidentifier(param2);
+        this.name = param2;
+        var1 = param4;
+        this.puzzlepointer = param1;
+        this.alive = 1;
+        this.life = 100.0;
+        var2 = this.makename(param4);
+        this.obj = new gs_lego_character(param2, param3, "bugs", param5, param6, param7, param8, "aiin");
+        return null;
+    }
+    
+    method initfull() {
+        this.obj.initfull();
+        this.obj.add();
+        this.damagesound = new tablecopysound(580);
+        this.damagesound.synctocharacter(this.id);
+        this.resurrectsound = new tablecopysound(582);
+        this.resurrectsound.synctocharacter(this.id);
+        this.attacksound = new tablecopysound(581);
+        this.attacksound.synctocharacter(this.id);
+        this.obj.aisethandlereaction(0);
+        this.obj.aisetbecomeshappy(0);
+        this.obj.setevil(0.0);
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 1) {
+            if (param1.args[1] == this.id) {
+                if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                    
+                }
+            }
+        }
+        else if (param1.eventid == 36) {
+            if (param1.args[0] == this.id) {
+                this.reserect();
+            }
+        }
+        else if (param1.eventid == 19) {
+            if (param1.args[0] == this.id) {
+                debug::print("hit bug " + __tostring(this.name));
+                this.hit(101);
+            }
+        }
+        return null;
+    }
+    
+    method show() {
+        this.obj.show();
+        return null;
+    }
+    
+    method hide() {
+        this.obj.hide();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.obj.cleanupfull();
+        this.obj = null;
+        this.id = null;
+        this.name = null;
+        this.alive = null;
+        this.life = null;
+        this.damagesound = null;
+        this.resurrectsound = null;
+        this.attacksound = null;
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.alive = 1;
+        this.life = 100;
+        this.damagesound.stop();
+        this.resurrectsound.stop();
+        this.attacksound.stop();
+        return null;
+    }
+    
+    method hit(param1) {
+        if (this.alive) {
+            this.damagesound.play(0);
+            this.life = this.life - param1;
+            if (this.life < 0) {
+                this.killbug();
+            }
+        }
+        return null;
+    }
+    
+    method killbug() {
+        if (this.alive) {
+            this.alive = 0;
+            this.life = 0;
+            debug::print("killing bug " + __tostring(this.name));
+            this.puzzlepointer.bugdied(1);
+            this.obj.aidie(60.0);
+        }
+        return null;
+    }
+    
+    method reserect() {
+        if (this.alive == 0) {
+            this.life = 100;
+            this.alive = 1;
+            this.resurrectsound.play(0);
+            debug::print("the return of " + __tostring(this.name));
+            this.puzzlepointer.bugresurrects(1);
+            this.obj.setevil(0.0);
+        }
+        return null;
+    }
+    
+    method remove() {
+        this.obj.remove();
+        this.obj = null;
+        return null;
+    }
+    
+    method explode(param1, param2, param3) {
+        return null;
+    }
+    
+    method makename(param1) {
+        if (param1 < 10) {
+            return "tim" + __tostring(param1);
+        }
+        else {
+            return "ti" + __tostring(param1);
+        }
+        return null;
+    }
+}

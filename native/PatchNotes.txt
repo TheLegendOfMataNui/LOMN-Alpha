@@ -1,0 +1,159 @@
+BIONICLE The Legend of Mata Nui (Alpha 0.006) Patch Notes
+
+v0.001:
+• Upscaled the game's default resolution									----		(JrMasterModelBuilder)
+
+Per-level fixes:
+• ONUA:   Fixed Onu-Matoran dancers being invisible 						----		(Omega12)
+• KOPAKA: Fixed Turaga Nuju's animations 									----		(Omega12)
+
+v0.002:
+• POHATU: Fixed Po-Wahi crash 												----		(shadowknight)
+• LEWA:   Fixed Le-Koro crash 												----		(Omega12)
+• MAKUTA: Fixed Akamai crash 												----		(Vahkiti)
+
+v0.003:
+• Added Windows 10 support 													----		(JrMasterModelBuilder)
+
+Per-level fixes:
+• GALI:   Fixed Turaga Nokama rendering invisible 							----		(shadowknight)
+• GALI:   Fixed crash on warping to Gali's shrine 							----		(shadowknight)
+
+v0.004:
+• Patches are now included in a fancy new installer! Ooh! Ahhh! 			----		(Vahkiti)
+
+Per-level fixes:
+• ONUA:   Fixed Onu-Matoran dancers For real this time! 					----		(Vahkiti)
+
+v0.005:
+• Added DGVoodoo to the patch, fixing the following graphical bugs:
+	• Window mode (Toggle in game with Alt+Enter) 							----		(Vahkiti)
+	• Improper texture filtering 											----		(Ascendancy)
+	• Improper antialiasing 												----		(Ascendancy)
+	• Uncapped FPS (Causing certain animations to run too fast) 			----		(Vahkiti)
+	• Missing death screen transitions 										----		(Ascendancy)
+• Temporarily dummied out intro FMVs until an outstanding bug can be fixed	----		(Vahkiti)
+• Added autohotkey script to make navigating the debug menu easier.			----		(Vahkiti)
+
+v0.006:
+• Laid ground work for a universal game updater, patcher, and launcher 		----		(Vahkiti, Benji, Snowcone)
+• Patch installer can now install to a custom game location 				----		(Vahkiti)
+• Fixed objects rendering through walls 									----		(Benji & JrMasterModelBuilder)
+• Fixed jagged edges on object intersections 								----		(Benji & JrMasterModelBuilder)
+• Fixed 99% of rendering issues with Kanohi items 							----		(shadowknight)
+• Updated the AutoHotkey script for the debug menu with debug cam options	----		(Vahkiti)
+• Added a new help screen. Now shows extra controls not detailed			----		(Vahkiti)
+
+Per-level fixes:
+• FREN:   Fixed load crash. Currently only has barebones functionality 		----		(Vahkiti)
+• FREN:   Added placeholders for missing textures							----		(Vahkiti)
+• KOPAKA: Fixed Kopaka's Takara not rendering* 								----		(Omega12)
+• KOPAKA: Fixed missing bat and ice bat animations 							----		(Vahkiti)
+• LEWA:   Fixed Lewa's Takara not rendering* 								----		(Omega12)
+
+*Currently Kopaka and Lewa share the same dance as Onua. We know not whether original dance animations exist for them
+
+v0.006.1:
+• Fixed an issue with the patcher throwing a setup error 					----		(Vahkiti)
+• Reverted a change involving Takara breaking Tohunga elsewhere				----		(Vahkiti)
+• Cleaned up redundant files in the installer 								----		(Vahkiti)
+• Increased the brightness of the game to 140% 								----		(Vahkiti)
+
+Per-level fixes:
+• FREN:   Replaced placeholder textures for Frontend 						----		(Vahkiti)
+
+v0.007:
+• Reworked patching system once again. Game now runs from a new launcher 	----		(Vahkiti, benji, snowcone)
+• Updated various Toa animations with those from DeepBrick's onua.blk 		----		(Vahkiti, shadowknight)
+• Fixed various objects from rendering incorrectly 							----		(shadowknight, Vahkiti)
+• Fixed various areas that previously crashed due to lack of collision data ----		(Vahkiti, shadowknight, benji)
+• Fixed various text issues 												----		(Omega12, shadowknight, Hexadecimal Mantis)
+• Updated AutoHotkey script to close when the game is no longer running 	----		(Vahkiti)
+
+Per-level fixes:
+• ONUA:   Replaced missing sign & trees in Onua's PTV2 						----		(2tie)
+• ONUA:   Fixed Onua's SCRP crashing outright on Windows 10 machines 		----		(Vahkiti, Benji)
+• GALI:   Fixed all water in Ga-Wahi lacking animations 					----		(Vahkiti)
+• GALI:   Fixed Ga-Koro Takara softlock 									----		(Omega12)
+• KOPAKA: Fixed Nuju not rendering in his hut 								----		(Omega12)
+• KOPAKA: Fixed typo in BRD3 exit trigger that caused a crash 				----		(Vahkiti)
+• KOPAKA: Fixed Ice Bats lacking animations (For real this time!) 			----		(Vahkiti)
+• LEWA:   Fixed Nui Rama lacking animations 								----		(Vahkiti)
+• TAHU:   Fixed Vakama not rendering in his hut 							----		(Omega12) 
+• MAKUTA: Pointed Tahu's door to the unused Kuta level						----		(Vahkiti, shadowknight)
+
+
+v1.0.0:
+• Backported graphical fixes from the beta 									----		(JrMasterModelBuilder)
+• Backported Takara animations from beta to replace those that were missing	----		(Vahkiti)
+• Reverted beta animation changes for alpha content preservation 			----		(Vahkiti)
+• Removed various non-functional warp list entries and reorganized the rest	----		(shadowknight)
+• Fixed various objects from rendering incorrectly 							----		(shadowknight)
+• Fixed various text issues 												----		(Hexadecimal Mantis)
+• Fixed Kanohi Mask rooms shutting down on re-entry							----		(shadowknight)
+
+Per-level fixes:
+• ONUA:   Fixed Whenua not rendering in Onua's Takara 						----		(Omega12)
+• GALI:   Fixed Onua Meets Gali not playing									----		(Vahkiti)
+• GALI:   Fixed Nokama's spawn position 									----		(shadowknight)
+• KOPAKA: Fixed Pohatu Meets Kopaka cinematic not playing					----		(Vahkiti)
+• KOPAKA: Backported beta animations for Pohatu due to missing data			----		(Vahkiti)
+• KOPAKA: Fixed Nuju's spawn position 										----		(shadowknight)
+• LEWA:   Fixed an issue with the Takara causing the camera to clip Matau	----		(OndrikB)
+• TAHU:   Backported Lewa Meets Tahu from beta due to missing data			----		(Vahkiti)
+• TAHU:   Fixed Vakama's spawn position 									----		(shadowknight)
+• TAHU:   Fixed MOSH shutdown on re-entry									----		(shadowknight)
+
+v1.1.0
+• Restored FMVs that were disabled due to rendering issues*					----		(Vahkiti)
+• Fixed an issue with falltodeath sounds not playing						----		(shadowknight)
+• Added code to global_class exit subroutine, fixing various crashes		----		(shadowknight)
+• Added code to lego_area_cleanup subroutines, fixing various cache issues	----		(shadowknight)
+• Fixed Turaga vertex colors issues											----		(shadowknight)
+
+Per-level fixes:
+• ONUA:   Fixed text issues with Fikou-Nui fight							----		(shadowknight)
+• ONUA:   Removed Kaita sounds from L1A8 platforms							----		(shadowknight)
+• ONUA:   Fixed Kaita sound playing on CLF1 killbox death					----		(shadowknight)
+• ONUA:   Fixed diggable wall shutdown in SCRP								----		(Vahkiti)
+• GALI:   Fixed an issue with animated textures causing death in water		----		(shadowknight)
+• GALI:   Fixed issue where collecting air bubbles would result in a crash	----		(shadowknight)
+• GALI:   Fixed issue with fish sticking to the floor in TTUN				----		(shadowknight)
+• GALI:   Fixed a model issue with GLY3 causing a crash						----		(shadowknight)
+• GALI:   Fixed a typo in OSI code causing the Ga-Koro horn shutdown 		----		(shadowknight)
+• GALI:   Fixed GLY3 doors rendering invisible								----		(ReeseB)
+• POHATU: Restored missing sky animations									----		(shadowknight)
+• POHATU: Removed extra music track that overlaps the cinematic in MTUP		----		(shadowknight)
+• POHATU: Fixed an issue with music playback in MTUP						----		(shadowknight)
+• POHATU: Fixed incorrect music playing in VLLG								----		(shadowknight)
+• POHATU: Fixed BLR6 from crashing upon exiting area						----		(shadowknight)
+• KOPAKA: Fixed upgraded energy ball textures from not rendering			----		(shadowknight)
+• KOPAKA: Fixed backtracking crash issues for all affected areas			----		(shadowknight)
+• KOPAKA: Fixed a number of incorrect door triggers							----		(shadowknight)
+• KOPAKA: Fixed an issue in STRT where the button would clip the floor		----		(OndrikB)
+• KOPAKA: Fixed Matatu collection causing a cutscene softlock				----		(shadowknight)
+• KOPAKA: Fixed shutdown in WELL											----		(shadowknight)
+• KOPAKA: Fixed ice bridge causing a game freeze in SHRN					----		(shadowknight)
+• KOPAKA: Backported missing boss door textures/added animations for them	----		(shadowknight)
+• KOPAKA: Backported missing ice skates and Element of Melting textures		----		(shadowknight)
+• LEWA:   Fixed an issue with the camera clipping a wall in CIN1			----		(OndrikB)
+• LEWA:   Fixed LE10 spawn point so Toa faces proper direction				----		(shadowknight)
+• LEWA:   Backported missing slb to fix Kapura's lack of dialogue			----		(ReeseB)
+• MAKUTA: Fixed KUTA spawn point so Toa faces proper direction				----		(shadowknight)
+
+*Note: FMVs do not currently work unless compatibility mode is set to XP, (any Service Pack ver.) or in widescreen mode. If you encounter any issues, simply delete or move the files from the "cinematics" folder.
+
+v1.1.1
+
+Per-level fixes:
+• ONUA:   Fixed invisible dancy bois once and for all						----		(Vahkiti)
+
+v1.1.2
+• Fixed some texture antialiasing and alpha issues with masks				----		(Vahkiti, Fraug J. Coolman)
+
+Per-level fixes:
+• ONUA:   Fixed some Onu-Matoran dialogue showing up as XXX					----		(shadowknight)
+• ONUA:   Properly fixed Whenua from not appearing in the Takara			----		(shadowknight)
+• GALI:   Fixed AI issue causing sfsh to stick to floor						----		(ReeseB)
+• POHATU: Added coloring and mask to Husi rider								----		(shadowknight)
+• KOPAKA: Fixed Ice Elemental crash											----		(shadowknight)

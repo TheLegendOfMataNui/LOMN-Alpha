@@ -1,0 +1,50 @@
+class boss5_waterfall {
+    property mobject;
+    property misactive;
+    property mposition;
+    property morientation;
+    
+    method boss5_waterfall(param1, param2, param3) {
+        this.misactive = 1;
+        this.mposition = param2;
+        this.morientation = param3;
+        debug::print("Making a waterfall named: " + param1);
+        this.mobject = new lego_moveableobject(param1);
+        this.mobject.initfull();
+        this.mobject.setresponse(4, 4, 4);
+        this.mobject.ignorecollisionswith(scslosifoundation::stringtoidentifier("wndy"));
+        return null;
+    }
+    
+    method inrange(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.morientation.__length - 1) >= var1) {
+            if ((this.morientation[var1] <= param1) && (param1 < this.morientation[var1 + 1])) {
+                return 1;
+            }
+            var1 = var1 + 2;
+        }
+        return 0;
+    }
+    
+    method isactive() {
+        return this.misactive;
+    }
+    
+    method enable(param1) {
+        this.misactive = param1;
+        if (this.misactive) {
+            this.mobject.fadein(2.0);
+        }
+        else {
+            this.mobject.fadeout(2.0);
+        }
+        return null;
+    }
+    
+    method process() {
+        this.mobject.process();
+        return null;
+    }
+}

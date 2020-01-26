@@ -1,0 +1,137 @@
+class gs_lego_frontendscreen : base_screen {
+    property menu;
+    property nextscreen;
+    property selected;
+    property temptimer;
+    property mousex;
+    property mousey;
+    
+    method gs_lego_frontendscreen(param1) {
+        this.menu = param1;
+        return null;
+    }
+    
+    method initfull() {
+        this.menu.initfull();
+        this.selected = 0;
+        return null;
+    }
+    
+    method initshort() {
+        this.menu.initshort();
+        return null;
+    }
+    
+    method cleanupfull() {
+        debug::print("[][0][] cleanup Gs_Lego_FrontEndScreen");
+        if (!(this.menu == null)) {
+            this.menu.cleanupfull();
+            this.menu = null;
+        }
+        debug::print("[][1][] cleanup Gs_Lego_FrontEndScreen");
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.cleanupfull();
+        return null;
+    }
+    
+    method process(param1) {
+        this.menu.process(param1);
+        if (this.selected == 1) {
+            if (this.temptimer > 0.25) {
+                if (this.menu.startgame() == 1) {
+                    this.startnewgame();
+                }
+            }
+            else {
+                this.temptimer = this.temptimer + param1.deltatime;
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 25) {
+            this.menu.mousebuttonreleased(param1.args[0], this.mousex, this.mousey);
+        }
+        else if (param1.eventid == 26) {
+            this.mousex = param1.args[0];
+            this.mousey = param1.args[1];
+            this.menu.setmenupointer(this.mousex, this.mousey);
+            this.menu.checkhighlites(this.mousex, this.mousey);
+        }
+        else if (param1.eventid == 6) {
+            this.menu.resetcamera();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        this.menu.input(param1);
+        if (param1.button == 6) {
+            if (param1.event == 1) {
+                this.selectobject();
+            }
+        }
+        if (param1.button == 13) {
+            if (param1.event == 1) {
+                this.selectobject();
+            }
+        }
+        if (param1.button == 32) {
+            if (param1.event == 1) {
+                this.selectobject();
+            }
+        }
+        if (param1.button == 98) {
+            if (param1.event == 1) {
+                this.selectobject();
+            }
+        }
+        return null;
+    }
+    
+    method startnewgame() {
+        var var1;
+        var var2;
+        this.nextscreen = 9;
+        var1 = this.menu.argarray;
+        if (!(this.nextscreen == null)) {
+            var2 = screenlist.getscreen(this.nextscreen);
+            if (!(var1 == null)) {
+                var2.screen.setargs(var1);
+            }
+            screenlist.forward(this.nextscreen);
+        }
+        return null;
+    }
+    
+    method navforward() {
+        var var1;
+        var var2;
+        this.nextscreen = this.menu.destination;
+        var1 = this.menu.argarray;
+        if (!(this.nextscreen == null)) {
+            var2 = screenlist.getscreen(this.nextscreen);
+            if (!(var1 == null)) {
+                var2.screen.setargs(var1);
+            }
+            screenlist.forward(this.nextscreen);
+        }
+        return null;
+    }
+    
+    method navbackward() {
+        screenlist.backward();
+        return null;
+    }
+    
+    method selectobject() {
+        this.selected = 1;
+        this.temptimer = 0;
+        this.menu.hidenonselected();
+        return null;
+    }
+}

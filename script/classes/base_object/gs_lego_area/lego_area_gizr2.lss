@@ -1,0 +1,38 @@
+class lego_area_gizr2 : gs_lego_area {
+    
+    method lego_area_gizr2(param1) {
+        this.gs_lego_area("giza", param1, 0, 0);
+        this.lego_area_initfull();
+        return null;
+    }
+    
+    method initfull() {
+        gcareadirector::setfog(-16777216, 0 - 70.0, 0 - 1200.0, 0.05);
+        gclightdirector::setcavelighting(1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        if (param1.eventid == 4) {
+            var1 = param1.args[0];
+            var2 = param1.args[1];
+            if (var1 == scslosifoundation::stringtoidentifier("tpb0")) {
+                if (var2 == 1) {
+                    this.level.areasetactive(scslosifoundation::stringtoidentifier("vill"));
+                    this.level.areasetactive(scslosifoundation::stringtoidentifier("bmta"));
+                }
+            }
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+}

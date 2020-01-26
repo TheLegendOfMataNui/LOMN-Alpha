@@ -1,0 +1,42 @@
+class ptv1_puzzle {
+    property parent;
+    
+    method ptv1_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

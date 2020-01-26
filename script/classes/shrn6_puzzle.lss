@@ -1,0 +1,318 @@
+class shrn6_puzzle {
+    property parent;
+    property doorsclosed;
+    property doors;
+    property cinema;
+    property music;
+    
+    method shrn6_puzzle(param1) {
+        this.parent = param1;
+        this.doorsclosed = [ 1, 
+            1, 
+            1, 
+            1 ];
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        this.music = new legomp3player();
+        this.music.setupforplay("Root/Data/sounds/MusicShrine");
+        this.music.play(1);
+        this.doors = [ new lego_moveableobject("drs1"), 
+            new lego_moveableobject("drs2"), 
+            new lego_moveableobject("drs3"), 
+            new lego_moveableobject("drs4") ];
+        var1 = 0;
+        while ((this.doors.__length - 1) >= var1) {
+            this.doors[var1].initfull();
+            this.doors[var1].show();
+            var1 = var1 + 1;
+        }
+        var1 = 1;
+        while (4 >= var1) {
+            this.movedoorsdown(var1);
+            var1 = var1 + 1;
+        }
+        var2 = gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin3"));
+        if (var2 == 0) {
+            this.cinema = gccinemaengine::create();
+            gccinemaengine::load(this.cinema, "cin3");
+            globalclass.hud.hide();
+            if (globalclass.player.maskcontrol.isactive() == 1) {
+                globalclass.player.maskcontrol.toggleactive();
+            }
+            gccinemaengine::play(this.cinema);
+        }
+        return null;
+    }
+    
+    method initshort() {
+        this.music.play(1);
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.music.stop();
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.doors.__length - 1) >= var1) {
+            this.doors[var1].cleanupfull();
+            this.doors[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.doors = null;
+        this.cinema = null;
+        this.music.stop();
+        this.music.cleanupfordestroy();
+        this.music = null;
+        return null;
+    }
+    
+    method exit() {
+        var var1;
+        this.parent = null;
+        var1 = 0;
+        while ((this.doorsclosed.__length - 1) >= var1) {
+            this.doorsclosed[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.doorsclosed = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 30) {
+            globalclass.hud.show();
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+            this.cleanupshort();
+        }
+        else if (param1.eventid == 27) {
+            this.initshort();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+        }
+        else if (param1.eventid == 4) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tp07")) {
+                if (((this.doorsclosed[0] == 0) && (this.doorsclosed[1] == 0)) && (this.doorsclosed[2] == 0)) {
+                    this.doorsclosed[0] = 1;
+                    this.doorsclosed[1] = 1;
+                    this.doorsclosed[2] = 1;
+                    this.movedoorsdown(1);
+                    this.movedoorsdown(2);
+                    this.movedoorsdown(3);
+                    this.openbossdoor(1);
+                }
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tp08")) {
+                if (((this.doorsclosed[0] == 0) && (this.doorsclosed[1] == 0)) && (this.doorsclosed[2] == 0)) {
+                    this.doorsclosed[0] = 1;
+                    this.doorsclosed[1] = 1;
+                    this.doorsclosed[2] = 1;
+                    this.movedoorsdown(1);
+                    this.movedoorsdown(2);
+                    this.movedoorsdown(3);
+                    this.openbossdoor(1);
+                }
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tp09")) {
+                if (((this.doorsclosed[0] == 0) && (this.doorsclosed[1] == 0)) && (this.doorsclosed[2] == 0)) {
+                    this.doorsclosed[0] = 1;
+                    this.doorsclosed[1] = 1;
+                    this.doorsclosed[2] = 1;
+                    this.movedoorsdown(1);
+                    this.movedoorsdown(2);
+                    this.movedoorsdown(3);
+                    this.openbossdoor(1);
+                }
+            }
+        }
+        else if (param1.eventid == 14) {
+            this.openbossdoor(2);
+        }
+        else if (param1.eventid == 12) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("drs4")) {
+                this.openbossdoor(3);
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 27) {
+            this.parent.level.cam.setaimode(11);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 255) {
+                if (!(this.cinema == null)) {
+                    gccinemaengine::stop(this.cinema);
+                }
+            }
+            param1.button;
+        }
+        if (param1.button == 90) {
+            if (param1.event == 2) {
+                this.cheat(1);
+            }
+        }
+        if (param1.button == 88) {
+            if (param1.event == 2) {
+                this.cheat(2);
+            }
+        }
+        if (param1.button == 67) {
+            if (param1.event == 2) {
+                this.cheat(3);
+            }
+        }
+        if (param1.button == 86) {
+            if (param1.event == 2) {
+                this.cheat(4);
+            }
+        }
+        return null;
+    }
+    
+    method movedoorsdown(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var1 = param1;
+        if (var1 == 1) {
+            if (this.doorsclosed[var1 - 1]) {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES DOWN");
+                var2 = this.doors[var1 - 1].getx();
+                var3 = this.doors[var1 - 1].getz();
+                this.doors[var1 - 1].interpolate(var2, 0 - 4.8, var3, 1.5);
+            }
+            else {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES UP");
+                var2 = this.doors[var1 - 1].getx();
+                var3 = this.doors[var1 - 1].getz();
+                this.doors[var1 - 1].interpolate(var2, 2.8, var3, 1.5);
+            }
+        }
+        else if (var1 == 2) {
+            if (this.doorsclosed[var1 - 1]) {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES DOWN");
+                var2 = this.doors[var1 - 1].getx();
+                var3 = this.doors[var1 - 1].getz();
+                this.doors[var1 - 1].interpolate(var2, 18.7, var3, 1.5);
+            }
+            else {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES UP");
+                var2 = this.doors[var1 - 1].getx();
+                var3 = this.doors[var1 - 1].getz();
+                this.doors[var1 - 1].interpolate(var2, 24.7, var3, 1.5);
+            }
+        }
+        else if (var1 == 3) {
+            if (this.doorsclosed[var1 - 1]) {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES DOWN");
+                var2 = this.doors[var1 - 1].getx();
+                var3 = this.doors[var1 - 1].getz();
+                this.doors[var1 - 1].interpolate(var2, 26.5, var3, 1.5);
+            }
+            else {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES UP");
+                var2 = this.doors[var1 - 1].getx();
+                var3 = this.doors[var1 - 1].getz();
+                this.doors[var1 - 1].interpolate(var2, 32.5, var3, 1.5);
+            }
+        }
+        return null;
+    }
+    
+    method switchit(param1) {
+        if (param1 == 0) {
+            this.doorsclosed[param1] = 0;
+        }
+        else if (param1 == 1) {
+            this.doorsclosed[param1] = 0;
+        }
+        else if (param1 == 2) {
+            this.doorsclosed[param1] = 0;
+        }
+        else if (param1 == 3) {
+            this.doorsclosed[param1] = 0;
+        }
+        return null;
+    }
+    
+    method openbossdoor(param1) {
+        var var1;
+        var var2;
+        if (param1 == 1) {
+            this.parent.level.cam.setaimode(0);
+            this.parent.level.cam.interpolate(0 - 194.1, 60.8, 1.9, 0 - 209.6, 54.7, 0.9, 4.0);
+        }
+        else if (param1 == 2) {
+            debug::print("*****OPENING BOSS DOOR");
+            var1 = this.doors[3].getx();
+            var2 = this.doors[3].getz();
+            this.doors[3].interpolate(var1, 58.3, var2, 1.5);
+        }
+        else if (param1 == 3) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        return null;
+    }
+    
+    method cheat(param1) {
+        var var1;
+        var1 = param1;
+        if (var1 == 1) {
+            if (this.doorsclosed[0]) {
+                this.doorsclosed[0] = 0;
+                this.movedoorsdown(var1);
+            }
+            else {
+                this.doorsclosed[0] = 1;
+                this.movedoorsdown(var1);
+            }
+        }
+        else if (var1 == 2) {
+            if (this.doorsclosed[1]) {
+                this.doorsclosed[1] = 0;
+                this.movedoorsdown(var1);
+            }
+            else {
+                this.doorsclosed[1] = 1;
+                this.movedoorsdown(var1);
+            }
+        }
+        else if (var1 == 3) {
+            if (this.doorsclosed[2]) {
+                this.doorsclosed[2] = 0;
+                this.movedoorsdown(var1);
+            }
+            else {
+                this.doorsclosed[2] = 1;
+                this.movedoorsdown(var1);
+            }
+        }
+        else if (var1 == 4) {
+            if (this.doorsclosed[3]) {
+                this.doorsclosed[3] = 0;
+                this.movedoorsdown(var1);
+            }
+            else {
+                this.doorsclosed[3] = 1;
+                this.movedoorsdown(var1);
+            }
+        }
+        return null;
+    }
+}

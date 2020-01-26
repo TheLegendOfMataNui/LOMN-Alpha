@@ -1,0 +1,237 @@
+class bkik_puzzle {
+    property parent;
+    property boulders;
+    property miniboulders;
+    property incme;
+    property doorswitch;
+    property door;
+    property hitswitch;
+    property hidetimer;
+    property bgmusic;
+    property doorswitchtimer;
+    
+    method bkik_puzzle(param1) {
+        this.parent = param1;
+        this.hitswitch = 0;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(50);
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICLEGOUNDERGROUND");
+        this.bgmusic.play(1);
+        this.hidetimer = new lego_timer("char", 3.5, 0);
+        this.doorswitch = new lego_moveableobject("sw00", this.parent.name);
+        this.door = new lego_moveableobject("door", this.parent.name);
+        this.boulders = [ new bkik_boulder("bld2", this.parent.name, this, "wimb"), 
+            new bkik_boulder("bld3", this.parent.name, this, "wamb"), 
+            new bkik_boulder("bld1", this.parent.name, this, "womb"), 
+            new bkik_boulder("bld5", this.parent.name, this, "waab"), 
+            new bkik_boulder("bld4", this.parent.name, this, "chok") ];
+        this.miniboulders = [ new lego_projectileobject("mb01", this.parent.name), 
+            new lego_projectileobject("mb02", this.parent.name), 
+            new lego_projectileobject("mb03", this.parent.name), 
+            new lego_projectileobject("mb04", this.parent.name), 
+            new lego_projectileobject("mb05", this.parent.name), 
+            new lego_projectileobject("mb06", this.parent.name), 
+            new lego_projectileobject("mb07", this.parent.name), 
+            new lego_projectileobject("mb08", this.parent.name), 
+            new lego_projectileobject("mb09", this.parent.name), 
+            new lego_projectileobject("mb10", this.parent.name), 
+            new lego_projectileobject("mb11", this.parent.name), 
+            new lego_projectileobject("mb12", this.parent.name), 
+            new lego_projectileobject("mb13", this.parent.name), 
+            new lego_projectileobject("mb14", this.parent.name), 
+            new lego_projectileobject("mb15", this.parent.name) ];
+        this.incme = 0;
+        this.doorswitch.initfull();
+        this.doorswitch.setresponse(0, 0, 0);
+        this.door.initfull();
+        this.hidetimer.initfull();
+        var1 = 0;
+        while ((this.boulders.__length - 1) >= var1) {
+            this.boulders[var1].initfull();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.miniboulders.__length - 1) >= var1) {
+            this.miniboulders[var1].init(0.1, 0, 0, 0, 0, 0.8, "bld0", "Root/data/levels/lev1/clf2", 60);
+            this.miniboulders[var1].setresponse(4, 4, 4);
+            this.miniboulders[var1].setposition(0.0, 0.0, 0.0);
+            var1 = var1 + 1;
+        }
+        this.doorswitchtimer = new lego_timer("drst", 2.0, 0);
+        this.doorswitchtimer.initfull();
+        var1 = 0;
+        while ((this.boulders.__length - 1) >= var1) {
+            this.boulders[var1].boulder.enablecollisions();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        if (param1.eventid == 35) {
+            var1 = 0;
+            while ((this.miniboulders.__length - 1) >= var1) {
+                if (param1.args[0] == this.miniboulders[var1].id) {
+                    if (param1.args[1]) {
+                        this.miniboulders[var1].hide();
+                    }
+                }
+                var1 = var1 + 1;
+            }
+        }
+        else if (param1.eventid == 8) {
+            if (scslosifoundation::identifiertostring(param1.args[0]) == "drst") {
+                globalclass.level.cam.interpolate(0 - 62.13, 21.37, 0 - 291.6, 0 - 73.37, 9.75, 0 - 331.96, 5.0);
+                var2 = this.door.getx();
+                var3 = this.door.gety() + 20.0;
+                var4 = this.door.getz();
+                this.door.interpolate(var2, var3, var4, 5.0);
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[0]) == "char") {
+                var1 = 0;
+                while ((this.miniboulders.__length - 1) >= var1) {
+                    this.miniboulders[var1].setmoveableflags(0, 0, 0, 0);
+                    this.miniboulders[var1].fadeout(2.5);
+                    var1 = var1 + 1;
+                }
+            }
+            scslosifoundation::identifiertostring(param1.args[0]);
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("abld")) {
+                var1 = 0;
+                while ((this.boulders.__length - 1) >= var1) {
+                    if (param1.args[1] == this.boulders[var1].id) {
+                        this.boulders[var1].explode();
+                        this.hidetimer.reset(0);
+                        this.hidetimer.start();
+                    }
+                    var1 = var1 + 1;
+                }
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("bbld")) {
+                var1 = 0;
+                while ((this.boulders.__length - 1) >= var1) {
+                    if (param1.args[1] == this.boulders[var1].id) {
+                        this.boulders[var1].explode();
+                        this.hidetimer.reset(0);
+                        this.hidetimer.start();
+                    }
+                    var1 = var1 + 1;
+                }
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cbld")) {
+                var1 = 0;
+                while ((this.boulders.__length - 1) >= var1) {
+                    if (param1.args[1] == this.boulders[var1].id) {
+                        this.boulders[var1].explode();
+                        this.hidetimer.reset(0);
+                        this.hidetimer.start();
+                    }
+                    var1 = var1 + 1;
+                }
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (param1.args[1] == scslosifoundation::stringtoidentifier("sw00")) {
+                    if (this.hitswitch == 0) {
+                        this.doorswitch.interpolate(this.doorswitch.getx(), this.doorswitch.gety() - 0.75, this.doorswitch.getz(), 2);
+                        this.doorswitchtimer.reset(0);
+                        this.doorswitchtimer.start();
+                        this.hitswitch = 1;
+                    }
+                }
+                param1.args[1];
+            }
+        }
+        else if (param1.eventid == 3) {
+            debug::print("You hit triggerbox: " + scslosifoundation::identifiertostring(param1.args[0]));
+            this.parent.level.cam.setaimode(7);
+            globalclass.player.actor.setinputstate("none");
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("p000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        this.doorswitch.show();
+        this.door.show();
+        var1 = 0;
+        while ((this.boulders.__length - 1) >= var1) {
+            this.boulders[var1].show();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.miniboulders.__length - 1) >= var1) {
+            this.miniboulders[var1].show();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.doorswitchtimer.cleanupfull();
+        this.doorswitchtimer = null;
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        var1 = 0;
+        while ((this.boulders.__length - 1) >= var1) {
+            this.boulders[var1].hide();
+            this.boulders[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.boulders = null;
+        var1 = 0;
+        while ((this.miniboulders.__length - 1) >= var1) {
+            this.miniboulders[var1].cleanupfull();
+            this.miniboulders[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.miniboulders = null;
+        this.incme = null;
+        this.doorswitch.cleanupfull();
+        this.doorswitch = null;
+        this.door.cleanupfull();
+        this.door = null;
+        this.hitswitch = null;
+        this.hidetimer.cleanupfull();
+        this.hidetimer = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

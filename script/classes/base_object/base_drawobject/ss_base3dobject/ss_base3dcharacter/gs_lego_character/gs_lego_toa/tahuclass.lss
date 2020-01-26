@@ -1,0 +1,30 @@
+class tahuclass : gs_lego_toa {
+    property walkspeed;
+    property runspeed;
+    property standingjumpheight;
+    property standingjumplength;
+    property runningjumpheight;
+    property runningjumplength;
+    property swimingabilty;
+    property bounce;
+    property slopeclimbability;
+    
+    method tahuclass(param1, param2, param3, param4, param5) {
+        this.gs_lego_toa(param1, param2, param3, param4, param5);
+        this.walkspeed = 4;
+        this.runspeed = 15;
+        this.standingjumpheight = 6;
+        this.standingjumplength = 6;
+        this.runningjumpheight = 4;
+        this.runningjumplength = 8;
+        this.slopeclimbability = 5;
+        this.swimingabilty = 0;
+        this.bounce = 0;
+        return null;
+    }
+    
+    method setclimbability(param1) {
+        gccharacter::setslopeclimbability(this.handle, param1);
+        return null;
+    }
+}

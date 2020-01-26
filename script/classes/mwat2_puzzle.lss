@@ -1,0 +1,280 @@
+class mwat2_puzzle {
+    property parent;
+    property bubbles;
+    property maskx;
+    property deltatm;
+    property rotator;
+    property maskup;
+    property currentpillar;
+    property hitonce;
+    property maxchase;
+    property incrementor;
+    property piras;
+    property wirly1;
+    property wirly2;
+    property showpickup;
+    property puzzlesolved;
+    
+    method mwat2_puzzle(param1) {
+        this.parent = param1;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        this.puzzlesolved = 0;
+        this.deltatm = 0;
+        this.rotator = 0;
+        this.incrementor = 0;
+        this.maskup = 1;
+        this.hitonce = 1;
+        this.currentpillar = 4;
+        this.maxchase = 4;
+        this.wirly1 = new lego_moveableobject("prt1");
+        this.wirly1.initfull();
+        this.wirly1.hide();
+        this.wirly2 = new lego_moveableobject("prt2");
+        this.wirly2.initfull();
+        this.wirly2.settweakable();
+        this.wirly2.hide();
+        this.piras = [ new gs_lego_character("pir0", "pira", "wthk", 0, 7.7, 20.6, 0 - 28.3, "none"), 
+            new gs_lego_character("pir1", "pira", "wthk", 0, 34.5, 21.4, 15.3, "none"), 
+            new gs_lego_character("pir2", "pira", "wthk", 0, 12.8, 19.2, 35.9, "none"), 
+            new gs_lego_character("pir3", "pira", "wthk", 0, 0 - 23.6, 13.7, 14.4, "none") ];
+        var1 = gcsaver::findmask(scslosifoundation::stringtoidentifier("mask"));
+        if (var1) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup) {
+            this.maskx = new lego_pickup("mask", 1, 1, "item", 4, 1);
+            this.maskx.initfull();
+            this.maskx.show();
+        }
+        var2 = 0;
+        while ((this.piras.__length - 1) >= var2) {
+            this.piras[var2].initfull();
+            this.piras[var2].add();
+            var2 = var2 + 1;
+        }
+        globalclass.player.actor.setunderwater(1);
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.bubbles = null;
+        if (!(this.maskx == null)) {
+            this.maskx.cleanupfull();
+            this.maskx = null;
+        }
+        this.deltatm = null;
+        this.rotator = null;
+        this.maskup = null;
+        this.currentpillar = null;
+        this.hitonce = null;
+        this.maxchase = null;
+        this.incrementor = null;
+        var1 = 0;
+        while ((this.piras.__length - 1) >= var1) {
+            this.piras[var1].cleanupfull();
+            this.piras[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.piras = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method initshort() {
+        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        globalclass.player.unkill();
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (param1.args[1] == scslosifoundation::stringtoidentifier("mask")) {
+                    if (this.puzzlesolved) {
+                        this.wirly2.show();
+                        this.maskx.pickup();
+                    }
+                }
+                else if (param1.args[1] == this.wirly2.id) {
+                    gcstaticsoundsptrarray::playtablesound(774);
+                    gccollisionphysicsgroup::spinmask(1.2);
+                    gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("isld"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+                }
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 12) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("mask")) {
+                if (this.maskup == 0) {
+                    this.nextpos();
+                }
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                if (param1.args[1] == 1) {
+                    if (this.incrementor >= this.maxchase) {
+                        
+                    }
+                    else if (this.currentpillar == 0) {
+                        if (this.hitonce) {
+                            this.interpdown(0);
+                            this.hitonce = 0;
+                        }
+                    }
+                }
+                param1.args[1];
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
+                if (param1.args[1] == 1) {
+                    if (this.incrementor >= this.maxchase) {
+                        
+                    }
+                    else if (this.currentpillar == 1) {
+                        if (this.hitonce) {
+                            this.interpdown(1);
+                            this.hitonce = 0;
+                        }
+                    }
+                }
+                param1.args[1];
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb02")) {
+                if (param1.args[1] == 1) {
+                    if (this.incrementor >= this.maxchase) {
+                        
+                    }
+                    else if (this.currentpillar == 2) {
+                        if (this.hitonce) {
+                            this.interpdown(2);
+                            this.hitonce = 0;
+                        }
+                    }
+                }
+                param1.args[1];
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb03")) {
+                if (param1.args[1] == 1) {
+                    if (this.incrementor >= this.maxchase) {
+                        
+                    }
+                    else if (this.currentpillar == 3) {
+                        if (this.hitonce) {
+                            this.interpdown(3);
+                            this.hitonce = 0;
+                        }
+                    }
+                }
+                param1.args[1];
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb04")) {
+                if (param1.args[1] == 1) {
+                    if (this.incrementor >= this.maxchase) {
+                        
+                    }
+                    else if (this.currentpillar == 4) {
+                        if (this.hitonce) {
+                            this.interpdown(4);
+                            this.hitonce = 0;
+                        }
+                    }
+                }
+                param1.args[1];
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 90) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        this.wirly2.show();
+        return null;
+    }
+    
+    method interpup() {
+        this.maskx.obj.interpolate(this.maskx.obj.getx(), this.maskx.obj.gety() + 10.0, this.maskx.obj.getz(), 0.2);
+        this.maskup = 1;
+        this.hitonce = 1;
+        this.incrementor = this.incrementor + 1;
+        return null;
+    }
+    
+    method interpdown(param1) {
+        this.maskx.obj.interpolate(this.maskx.obj.getx(), this.maskx.obj.gety() - 10.0, this.maskx.obj.getz(), 0.2);
+        this.currentpillar = param1;
+        this.maskup = 0;
+        return null;
+    }
+    
+    method nextpos() {
+        var var1;
+        var var2;
+        var1 = 0;
+        while (!var1) {
+            var2 = globalclass.randnum.getrandomnumber(0, 4);
+            if (var2 == this.currentpillar) {
+                var1 = 0;
+            }
+            else {
+                var1 = 1;
+            }
+        }
+        if (var2 == 0) {
+            this.maskx.obj.setposition(28.8, 16.3, 0 - 5.6);
+            this.interpup();
+            this.currentpillar = 0;
+        }
+        else if (var2 == 1) {
+            this.maskx.obj.setposition(43.7, 16.3, 27.0);
+            this.interpup();
+            this.currentpillar = 1;
+        }
+        else if (var2 == 2) {
+            this.maskx.obj.setposition(0 - 16.1, 8.8, 30.5);
+            this.interpup();
+            this.currentpillar = 2;
+        }
+        else if (var2 == 3) {
+            this.maskx.obj.setposition(0 - 10.7, 10.4, 0 - 4.5);
+            this.interpup();
+            this.currentpillar = 3;
+        }
+        else if (var2 == 4) {
+            this.maskx.obj.setposition(10.9, 20.9, 12.3);
+            this.interpup();
+            this.puzzlesolved = 1;
+            this.currentpillar = 4;
+        }
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

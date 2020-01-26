@@ -1,0 +1,45 @@
+class lego_area_hutt : gs_lego_area {
+    property puzzle;
+    property parent;
+    
+    method lego_area_hutt(param1) {
+        this.parent = param1;
+        this.gs_lego_area("hutt", param1, 0, 0);
+        this.puzzle = new hutt_class(this);
+        this.lego_area_initfull();
+        return null;
+    }
+    
+    method initfull() {
+        this.lego_area_show();
+        this.puzzle.initfull();
+        this.puzzle.show();
+        return null;
+    }
+    
+    method process(param1) {
+        this.puzzle.process(param1);
+        return null;
+    }
+    
+    method input(param1) {
+        this.puzzle.input(param1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        this.puzzle.onevent(param1);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.lego_area_hide();
+        this.puzzle.hide();
+        return null;
+    }
+    
+    method exit() {
+        this.puzzle.exit();
+        return null;
+    }
+}

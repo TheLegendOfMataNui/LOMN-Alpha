@@ -1,0 +1,53 @@
+class gs_lego_stringtable : base_object {
+    property tablename;
+    property languagearray;
+    
+    method gs_lego_stringtable(param1) {
+        this.tablename = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        this.languagearray = null;
+        if (globalclass.language == 0) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "English.tbl";
+        }
+        else if (globalclass.language == 2) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "German.tbl";
+        }
+        else if (globalclass.language == 1) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "French.tbl";
+        }
+        else if (globalclass.language == 3) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "Danish.tbl";
+        }
+        else if (globalclass.language == 4) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "Swedish.tbl";
+        }
+        else if (globalclass.language == 5) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "Norwegian.tbl";
+        }
+        else if (globalclass.language == 6) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "Finnish.tbl";
+        }
+        else if (globalclass.language == 7) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "Italian.tbl";
+        }
+        else if (globalclass.language == 8) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "Spanish.tbl";
+        }
+        else if (globalclass.language == 9) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "Dutch.tbl";
+        }
+        else if (globalclass.language == 10) {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "Japanese.tbl";
+        }
+        else {
+            var1 = ("Root/Data/Strings/" + this.tablename) + "lang7.tbl";
+        }
+        globalclass.language;
+        this.languagearray = scslosistringfuncs::getstringtable(var1);
+        return null;
+    }
+}

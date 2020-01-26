@@ -1,0 +1,123 @@
+class lego_area_vllg : gs_lego_area {
+    property cinema;
+    property door;
+    property takaradone;
+    
+    method lego_area_vllg(param1) {
+        this.gs_lego_area("vllg", param1, 0, 0);
+        this.lego_area_initfull();
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        var var3;
+        this.lego_area_show();
+        var1 = gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin2"));
+        if (var1 == 0) {
+            this.cinema = gccinemaengine::create();
+            gccinemaengine::load(this.cinema, "cin2");
+            gccinemaengine::setnextarea(this.cinema, scslosifoundation::stringtoidentifier("tura"));
+            globalclass.hud.hide();
+            gccinemaengine::play(this.cinema);
+        }
+        globalclass.player.actor.setcontext(2);
+        gclightdirector::setcavelighting(1);
+        this.takaradone = gcsaver::isconditionset(7);
+        if (this.takaradone == 0) {
+            var2 = scslosifoundation::stringtoidentifier("????");
+            gccollisionphysicsgroup::settriggerplanedestination(scslosifoundation::stringtoidentifier("tp04"), var2, var2, var2);
+        }
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("1hat"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk9a"));
+        gccharacter::setinputstate(var3, scslosifoundation::stringtoidentifier("none"));
+        gccharacter::inithaka(var3);
+        gccharacter::playhakasequence(var3, 0, 1);
+        gccharacter::setupmoveable(var3, 1.5, 0.8, 1, 0, 0);
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vlgr"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk6a"));
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl01"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk4a"));
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl02"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk6a"));
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("1h01"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk9a"));
+        gccharacter::setinputstate(var3, scslosifoundation::stringtoidentifier("none"));
+        gccharacter::inithaka(var3);
+        gccharacter::playhakasequence(var3, 1, 1);
+        gccharacter::setupmoveable(var3, 1.5, 0.8, 1, 0, 0);
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl03"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk4a"));
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl04"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk6a"));
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl05"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk4a"));
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl06"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk0a"));
+        gccharacter::setinputstate(var3, scslosifoundation::stringtoidentifier("none"));
+        gccharacter::setupmoveable(var3, 1.5, 0.8, 1, 0, 0);
+        var3 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("1h02"), 0);
+        gccharacter::settohunga(var3, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk9a"));
+        gccharacter::setinputstate(var3, scslosifoundation::stringtoidentifier("none"));
+        gccharacter::inithaka(var3);
+        gccharacter::playhakasequence(var3, 2, 1);
+        gccharacter::setupmoveable(var3, 1.5, 0.8, 1, 0, 0);
+        this.door = new lego_moveableobject("dr00");
+        this.door.initfull();
+        this.door.setresponse(3, 3, 3);
+        if (gcsaver::isconditionset(268435456)) {
+            this.door.hide();
+        }
+        else {
+            this.door.show();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 255) {
+                if (!(this.cinema == null)) {
+                    gccinemaengine::stop(this.cinema);
+                }
+            }
+            param1.button;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.enterstartid, this.enterlookid);
+        }
+        else if (param1.eventid == 30) {
+            globalclass.hud.show();
+        }
+        else if (param1.eventid == 41) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tn06")) {
+                this.takaradone = gcsaver::isconditionset(7);
+                if (this.takaradone == 1) {
+                    gccollisionphysicsgroup::settriggerplanedestination(scslosifoundation::stringtoidentifier("tp04"), scslosifoundation::stringtoidentifier("haka"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+                }
+            }
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.cinema = null;
+        this.door.cleanupfull();
+        this.door = null;
+        this.lego_area_hide();
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+}

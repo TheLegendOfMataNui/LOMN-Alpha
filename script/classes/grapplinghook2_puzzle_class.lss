@@ -1,0 +1,328 @@
+class grapplinghook2_puzzle_class {
+    property parent;
+    property exitdoor;
+    property resetpoint;
+    property oreantation;
+    property areaid;
+    property temptriggername;
+    property glyph;
+    property showglyph;
+    property music;
+    property bat0;
+    property bat1;
+    property bat2;
+    property bat3;
+    property bat4;
+    property bat0id;
+    property bat1id;
+    property bat2id;
+    property bat3id;
+    property bat4id;
+    property ledgearray;
+    property ledge0;
+    property ledge1;
+    property ledge2;
+    property ledge3;
+    property ledge4;
+    property ledge5;
+    property targetarray;
+    property target0;
+    property target1;
+    property target2;
+    property target3;
+    property target4;
+    property target5;
+    property target6;
+    property target7;
+    property target8;
+    property target9;
+    property targeta;
+    property targetb;
+    property watchtimer;
+    
+    method grapplinghook2_puzzle_class(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        this.music = new legomp3player();
+        this.music.setupforplay("Root/Data/sounds/MUSIClegoTRANCE.wav");
+        this.music.play(1);
+        this.exitdoor = new lego_moveableobject("dr02", this.parent.name);
+        var1 = 0;
+        this.resetpoint = new basicpoint(0.0, 0.0, 0.0);
+        this.areaid = scslosifoundation::stringtoidentifier(this.parent.name);
+        this.temptriggername = null;
+        this.bat0id = scslosifoundation::stringtoidentifier("bats");
+        this.bat1id = scslosifoundation::stringtoidentifier("ba01");
+        this.bat2id = scslosifoundation::stringtoidentifier("ba02");
+        this.bat3id = scslosifoundation::stringtoidentifier("ba03");
+        this.bat4id = scslosifoundation::stringtoidentifier("ba04");
+        this.bat0 = gcmodeldirector::getcharacter(this.bat0id, scslosifoundation::stringtoidentifier("hk01"));
+        this.bat1 = gcmodeldirector::getcharacter(this.bat1id, scslosifoundation::stringtoidentifier("hk01"));
+        this.bat2 = gcmodeldirector::getcharacter(this.bat2id, scslosifoundation::stringtoidentifier("hk01"));
+        this.bat3 = gcmodeldirector::getcharacter(this.bat3id, scslosifoundation::stringtoidentifier("hk01"));
+        this.bat4 = gcmodeldirector::getcharacter(this.bat4id, scslosifoundation::stringtoidentifier("hk01"));
+        this.ledgearray = [  ];
+        this.ledge0 = new platform("hld0", this.parent.name);
+        this.ledge1 = new platform("hld1", this.parent.name);
+        this.ledge2 = new platform("hld2", this.parent.name);
+        this.ledge3 = new platform("hld3", this.parent.name);
+        this.ledge4 = new platform("hld4", this.parent.name);
+        this.ledge5 = new platform("hld5", this.parent.name);
+        this.ledgearray.__append(this.ledge0);
+        this.ledgearray.__append(this.ledge1);
+        this.ledgearray.__append(this.ledge2);
+        this.ledgearray.__append(this.ledge3);
+        this.ledgearray.__append(this.ledge4);
+        this.ledgearray.__append(this.ledge5);
+        this.targetarray = [  ];
+        this.target0 = new lego_moveableobject("hot0", this.parent.name);
+        this.target3 = new lego_moveableobject("hot3", this.parent.name);
+        this.target4 = new lego_moveableobject("hot4", this.parent.name);
+        this.target5 = new lego_moveableobject("hot5", this.parent.name);
+        this.target6 = new lego_moveableobject("hot6", this.parent.name);
+        this.target7 = new lego_moveableobject("hot7", this.parent.name);
+        this.target8 = new lego_moveableobject("hot8", this.parent.name);
+        this.target9 = new lego_moveableobject("hot9", this.parent.name);
+        this.targeta = new lego_moveableobject("hota", this.parent.name);
+        this.targetb = new lego_moveableobject("hotb", this.parent.name);
+        var2 = new lego_moveableobject("hotc", this.parent.name);
+        this.targetarray.__append(this.target0);
+        this.targetarray.__append(this.target3);
+        this.targetarray.__append(this.target4);
+        this.targetarray.__append(this.target5);
+        this.targetarray.__append(this.target6);
+        this.targetarray.__append(this.target7);
+        this.targetarray.__append(this.target8);
+        this.targetarray.__append(this.target9);
+        this.targetarray.__append(this.targeta);
+        this.targetarray.__append(this.targetb);
+        this.targetarray.__append(var2);
+        this.watchtimer = new lego_timer("wtim", 2, 0);
+        var3 = gcsaver::findglyph(scslosifoundation::stringtoidentifier("gly1"));
+        if (var3) {
+            this.showglyph = 0;
+        }
+        else {
+            this.showglyph = 1;
+        }
+        if (this.showglyph) {
+            this.glyph = new lego_pickup("glyl", 4, 2, "item", 8, 1);
+            this.glyph.initfull();
+        }
+        var4 = 0;
+        while ((this.ledgearray.__length - 1) >= var4) {
+            this.ledgearray[var4].initfull();
+            var4 = var4 + 1;
+        }
+        var4 = 0;
+        while ((this.targetarray.__length - 1) >= var4) {
+            this.targetarray[var4].initfull();
+            this.targetarray[var4].setresponse(1, 1, 1);
+            var4 = var4 + 1;
+        }
+        this.target8.setposition(661.7, 160, 133);
+        this.watchtimer.initfull();
+        this.ledge0.setupfall(15, "tim0");
+        this.ledge0.setuptouchshakerotate(0.0, 0.0, 2.0, 0.5);
+        this.ledge1.setupfall(15, "tim1");
+        this.ledge1.setuptouchshakerotate(0.0, 0.0, 5.0, 0.2);
+        this.ledge2.setupfall(15, "tim2");
+        this.ledge2.setuptouchshakerotate(0.0, 0.0, 2.0, 0.2);
+        this.ledge3.setupfall(15, "tim3");
+        this.ledge3.setuptouchshakerotate(0.0, 0.0, 10.0, 2.0);
+        this.ledge4.setupfall(15, "tim4");
+        this.ledge4.setuptouchshakerotate(0.0, 0.0, 10.0, 0.7);
+        this.ledge5.setupfall(10, "tim5");
+        this.ledge5.setuptouchshakerotate(0.0, 0.0, 5.0, 0.7);
+        this.exitdoor.initfull();
+        this.showledges();
+        var4 = 0;
+        while ((this.targetarray.__length - 1) >= var4) {
+            this.targetarray[var4].show();
+            this.targetarray[var4].setmytargetingflags(1);
+            var4 = var4 + 1;
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.exitdoor.cleanupfull();
+        this.exitdoor = null;
+        this.watchtimer.cleanupfull();
+        this.watchtimer = null;
+        var1 = 0;
+        while ((this.targetarray.__length - 1) >= var1) {
+            this.targetarray[var1].cleanupfull();
+            this.targetarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.targetarray = null;
+        var1 = 0;
+        while ((this.ledgearray.__length - 1) >= var1) {
+            this.ledgearray[var1].cleanupfull();
+            this.ledgearray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.ledgearray = null;
+        if (!(this.glyph == null)) {
+            if (this.glyph.objshown == 0) {
+                this.showglyph = 0;
+            }
+            this.glyph.cleanupfull();
+            this.glyph = null;
+        }
+        this.bat0 = null;
+        this.bat1 = null;
+        this.bat2 = null;
+        this.bat3 = null;
+        this.bat4 = null;
+        this.resetpoint = null;
+        this.temptriggername = null;
+        this.music.stop();
+        this.music = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.ledgearray.__length - 1) >= var1) {
+            this.ledgearray[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var1 = 0;
+        while ((this.ledgearray.__length - 1) >= var1) {
+            this.ledgearray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("glyl")) {
+                debug::print("** HIDE DOOR **");
+                this.exitdoor.changeposition(0, 10, 0, 10);
+            }
+            if (param1.args[1] == globalclass.player.actor.contid) {
+                if (param1.args[0] == this.bat0id) {
+                    if (gccharacter::aiisbenign(this.bat0) == 0) {
+                        gccharacter::aiattackcurrenttarget(this.bat0);
+                    }
+                }
+                if (param1.args[0] == this.bat1id) {
+                    if (gccharacter::aiisbenign(this.bat1) == 0) {
+                        gccharacter::aiattackcurrenttarget(this.bat1);
+                    }
+                }
+                if (param1.args[0] == this.bat2id) {
+                    if (gccharacter::aiisbenign(this.bat2) == 0) {
+                        gccharacter::aiattackcurrenttarget(this.bat2);
+                    }
+                }
+                if (param1.args[0] == this.bat3id) {
+                    if (gccharacter::aiisbenign(this.bat3) == 0) {
+                        gccharacter::aiattackcurrenttarget(this.bat3);
+                    }
+                }
+                if (param1.args[0] == this.bat4id) {
+                    if (gccharacter::aiisbenign(this.bat4) == 0) {
+                        gccharacter::aiattackcurrenttarget(this.bat4);
+                    }
+                }
+            }
+        }
+        else if (param1.eventid == 8) {
+            var2 = param1.args[0];
+            if (var2 == scslosifoundation::stringtoidentifier("wtim")) {
+                this.resetb();
+            }
+        }
+        else if (param1.eventid == 3) {
+            var3 = param1.args[0];
+            if (var3 == scslosifoundation::stringtoidentifier("tbha")) {
+                this.reseta(651, 147, 143, 270, "tbha");
+                debug::print("** top");
+            }
+            if (var3 == scslosifoundation::stringtoidentifier("tbhb")) {
+                this.reseta(651, 147, 143, 270, "tbhb");
+                debug::print("** top");
+            }
+            if (var3 == scslosifoundation::stringtoidentifier("tbhf")) {
+                this.reseta(668, 1, 173, 180, "tbhf");
+                debug::print("** bottom");
+            }
+        }
+        else if (param1.eventid == 27) {
+            debug::print("Screen Black Event");
+            this.resetc();
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        return null;
+    }
+    
+    method reseta(param1, param2, param3, param4, param5) {
+        this.parent.level.cam.setaimode(7);
+        this.resetpoint.x = param1;
+        this.resetpoint.y = param2;
+        this.resetpoint.z = param3;
+        this.oreantation = param4;
+        this.temptriggername = param5;
+        this.watchtimer.reset();
+        this.watchtimer.start();
+        return null;
+    }
+    
+    method resetb() {
+        globalclass.player.kill();
+        gccollisionphysicsgroup::spinmask(1.2);
+        return null;
+    }
+    
+    method resetc() {
+        var var1;
+        globalclass.player.unkill();
+        globalclass.player.actor.setpos(this.resetpoint.x, this.resetpoint.y, this.resetpoint.z);
+        gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier(this.temptriggername), 0);
+        globalclass.player.actor.setorientation(this.oreantation);
+        var1 = 0;
+        while ((this.ledgearray.__length - 1) >= var1) {
+            this.ledgearray[var1].reset();
+            var1 = var1 + 1;
+        }
+        this.parent.level.cam.setaimode(11);
+        return null;
+    }
+    
+    method showledges() {
+        var var1;
+        var1 = 0;
+        while ((this.ledgearray.__length - 1) >= var1) {
+            this.ledgearray[var1].show();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+}

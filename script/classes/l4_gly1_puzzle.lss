@@ -1,0 +1,366 @@
+class l4_gly1_puzzle {
+    property parent;
+    property columns;
+    property door1;
+    property door2;
+    property glyph;
+    property xpndotimer;
+    property canvibrate;
+    property currentpil;
+    property puzinc;
+    property rotation;
+    property tohunga;
+    property callonce;
+    property platforms;
+    property founditem;
+    property showpickup;
+    
+    method l4_gly1_puzzle(param1) {
+        this.parent = param1;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        gcareadirector::setnearestmax(50);
+        this.tohunga = new gs_lego_character("litl", "vlgr", "gly1", 0, 255.4, 13.6, 0 - 1506.1, "none");
+        this.columns = [ new lego_moveableobject("cl00", this.parent.name), 
+            new lego_moveableobject("cl01", this.parent.name), 
+            new lego_moveableobject("cl02", this.parent.name), 
+            new lego_moveableobject("cl03", this.parent.name) ];
+        this.door1 = new l4_gly1_chomperdoor("drt1", "drb1", 21.5, 16.5);
+        this.door2 = new l4_gly1_chomperdoor("drt2", "drb2", 14, 11);
+        this.founditem = gcsaver::findglyph(scslosifoundation::stringtoidentifier("glya"));
+        if (this.founditem) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup) {
+            this.glyph = new lego_pickup("glya", 11, 2, "item", 4, 1);
+            this.glyph.initfull();
+            this.glyph.show();
+        }
+        this.xpndotimer = new lego_timer("xpnd", 1.0, 0);
+        this.platforms = [ new platform("pf15"), 
+            new platform("pf18"), 
+            new platform("pf19") ];
+        this.tohunga.initfull();
+        this.tohunga.add();
+        var1 = 0;
+        while ((this.columns.__length - 1) >= var1) {
+            this.columns[var1].initfull();
+            var2 = this.columns[var1];
+            var2.collidetimer = 10;
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].initfull();
+            this.platforms[var1].setresponse(0, 0, 3);
+            var1 = var1 + 1;
+        }
+        this.door1.initfull();
+        this.door2.initfull();
+        this.xpndotimer.initfull();
+        this.canvibrate = 0;
+        this.callonce = 1;
+        this.currentpil = null;
+        this.puzinc = 0;
+        this.rotation = 0;
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        if (!(this.glyph == null)) {
+            this.glyph.cleanupfull();
+            this.glyph = null;
+        }
+        this.tohunga.cleanupfull();
+        this.tohunga = null;
+        var1 = 0;
+        while ((this.columns.__length - 1) >= var1) {
+            this.columns[var1].cleanupfull();
+            this.columns[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.columns = null;
+        this.door1.cleanupfull();
+        this.door1 = null;
+        this.door2.cleanupfull();
+        this.door2 = null;
+        this.xpndotimer.cleanupfull();
+        this.xpndotimer = null;
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].cleanupfull();
+            this.platforms[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.platforms = null;
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        this.tohunga.show();
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            if (var1 == 0) {
+                this.platforms[var1].setuppath([ new basicpoint(174.088, 0 - 11.353, 0 - 1298.42), 
+                    new basicpoint(174.088, 0 - 9.353, 0 - 1298.42) ], [ 1.5, 
+                    1.5 ]);
+            }
+            else if (var1 == 1) {
+                this.platforms[var1].setuppath([ new basicpoint(155.514, 0 - 9.03918, 0 - 1297.37), 
+                    new basicpoint(155.514, 0 - 5.03918, 0 - 1297.37) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 2) {
+                this.platforms[var1].setuppath([ new basicpoint(163.382, 0 - 5.33623, 0 - 1307.18), 
+                    new basicpoint(163.382, 0.33623, 0 - 1307.18) ], [ 1.3, 
+                    1.3 ]);
+            }
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method hide() {
+        this.tohunga.hide();
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        if (param1.eventid == 19) {
+            if (param1.args[0] == this.columns[0].id) {
+                if (this.columns[0].collide == 0) {
+                    debug::print("Hit 0");
+                    if (this.puzinc < 4) {
+                        if (this.puzinc == 1) {
+                            this.currentpil = this.columns[0];
+                            this.canvibrate = 1;
+                            this.xpndotimer.reset(0);
+                            this.xpndotimer.start();
+                            this.parent.level.cam.shakecamera(0.1, 0.08);
+                            this.puzinc = this.puzinc + 1;
+                        }
+                        else {
+                            this.puzinc = 0;
+                        }
+                    }
+                }
+                this.columns[0].setcollide();
+            }
+            else if (param1.args[0] == this.columns[1].id) {
+                if (this.columns[1].collide == 0) {
+                    debug::print("Hit 1");
+                    if (this.puzinc < 4) {
+                        if (this.puzinc == 2) {
+                            this.currentpil = this.columns[1];
+                            this.canvibrate = 1;
+                            this.xpndotimer.reset(0);
+                            this.xpndotimer.start();
+                            this.parent.level.cam.shakecamera(0.1, 0.08);
+                            this.puzinc = this.puzinc + 1;
+                        }
+                        else {
+                            this.puzinc = 0;
+                        }
+                    }
+                }
+                this.columns[1].setcollide();
+            }
+            else if (param1.args[0] == this.columns[2].id) {
+                if (this.columns[2].collide == 0) {
+                    debug::print("Hit 2");
+                    if (this.puzinc < 4) {
+                        if (this.puzinc == 0) {
+                            this.currentpil = this.columns[2];
+                            this.canvibrate = 1;
+                            this.xpndotimer.reset(0);
+                            this.xpndotimer.start();
+                            this.parent.level.cam.shakecamera(0.1, 0.08);
+                            this.puzinc = this.puzinc + 1;
+                        }
+                        else {
+                            this.puzinc = 0;
+                        }
+                    }
+                }
+                this.columns[2].setcollide();
+            }
+            else if (param1.args[0] == this.columns[3].id) {
+                if (this.columns[3].collide == 0) {
+                    debug::print("Hit 3");
+                    if (this.puzinc < 4) {
+                        if (this.puzinc == 3) {
+                            this.currentpil = this.columns[3];
+                            this.canvibrate = 1;
+                            this.xpndotimer.reset(0);
+                            this.xpndotimer.start();
+                            this.parent.level.cam.shakecamera(0.1, 0.08);
+                            this.puzinc = this.puzinc + 1;
+                            this.door1.open();
+                        }
+                        else {
+                            this.puzinc = 0;
+                        }
+                    }
+                }
+                this.columns[3].setcollide();
+            }
+        }
+        else if (param1.eventid == 8) {
+            this.canvibrate = 0;
+            var1 = null;
+        }
+        else if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                this.parent.level.cam.setaimode(7);
+                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.actor.setinputstate("none");
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
+                this.parent.level.cam.setaimode(7);
+                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.actor.setinputstate("none");
+            }
+        }
+        else if (param1.eventid == 4) {
+            debug::print("HIT " + scslosifoundation::identifiertostring(param1.args[0]));
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tp01")) {
+                debug::print("HIT TP01");
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tp02")) {
+                if (this.callonce) {
+                    this.door2.close();
+                    this.callonce = 0;
+                }
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tp03")) {
+                debug::print("HIT TP03");
+            }
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("k000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb01"), 0);
+        }
+        else if (param1.eventid == 7) {
+            if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
+                gcstaticsoundsptrarray::playtablesound(144);
+            }
+        }
+        var2 = 0;
+        while ((this.platforms.__length - 1) >= var2) {
+            this.platforms[var2].onevent(param1);
+            var2 = var2 + 1;
+        }
+        this.door1.onevent(param1);
+        this.door2.onevent(param1);
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 80) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        if (param1.button == 89) {
+            if (param1.event == 2) {
+                this.opendoor(1);
+            }
+        }
+        if (param1.button == 85) {
+            if (param1.event == 2) {
+                this.closedoor(1);
+            }
+        }
+        if (param1.button == 73) {
+            if (param1.event == 2) {
+                this.opendoor(2);
+            }
+        }
+        if (param1.button == 79) {
+            if (param1.event == 2) {
+                this.closedoor(2);
+            }
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        if (this.canvibrate) {
+            if (!(this.currentpil == null)) {
+                this.vibrate(this.currentpil);
+            }
+        }
+        var1 = 0;
+        while ((this.columns.__length - 1) >= var1) {
+            this.columns[var1].process();
+            var1 = var1 + 1;
+        }
+        if (this.rotation >= 360) {
+            this.rotation = 0;
+        }
+        else {
+            this.rotation = this.rotation + 5;
+        }
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method vibrate(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var1 = globalclass.randnum.getrandomfloat(0 - 0.05, 0.05);
+        var2 = globalclass.randnum.getrandomfloat(0 - 0.05, 0.05);
+        var3 = globalclass.randnum.getrandomfloat(1.0, 1.17);
+        param1.setobjscale(var3);
+        param1.setposition(param1.getx() + var1, param1.gety(), param1.getz() + var2);
+        return null;
+    }
+    
+    method cheat() {
+        globalclass.player.addelement(11);
+        return null;
+    }
+    
+    method opendoor(param1) {
+        if (param1 == 1) {
+            this.door1.open();
+        }
+        else if (param1 == 2) {
+            this.door2.open();
+        }
+        return null;
+    }
+    
+    method closedoor(param1) {
+        if (param1 == 1) {
+            this.door1.close();
+        }
+        else if (param1 == 2) {
+            this.door2.close();
+        }
+        return null;
+    }
+}

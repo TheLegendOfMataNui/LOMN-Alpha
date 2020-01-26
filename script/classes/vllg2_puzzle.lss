@@ -1,0 +1,370 @@
+class vllg2_puzzle {
+    property parent;
+    property oldplatform;
+    property newplatform;
+    property printwhichplatformimon;
+    property logarray;
+    property horns;
+    property puzinc;
+    property currentlycollidingwith;
+    property tempplatform;
+    property canblow;
+    property currentsound;
+    property testplatforms;
+    property firsttouch;
+    property logarrayubound;
+    property testplatformsubound;
+    property cinema;
+    property cinema_shown;
+    property wirlpool;
+    property show_wirlpool;
+    property gearpickup;
+    property bgmusic;
+    
+    method vllg2_puzzle(param1) {
+        this.parent = param1;
+        this.firsttouch = 1;
+        this.cinema_shown = 0;
+        this.show_wirlpool = 0;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        var var3;
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MusicVillage");
+        this.bgmusic.play(1);
+        if (this.cinema_shown == 0) {
+            this.cinema = gccinemaengine::create();
+            gccinemaengine::load(this.cinema, "cin2");
+        }
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("g054"));
+        this.wirlpool = new lego_moveableobject("vwhp");
+        this.wirlpool.initfull();
+        if (this.show_wirlpool) {
+            this.wirlpool.show();
+        }
+        else {
+            this.wirlpool.hide();
+        }
+        this.testplatforms = [ new lego_moveableobject("pl01"), 
+            new lego_moveableobject("pl02"), 
+            new lego_moveableobject("pl03"), 
+            new lego_moveableobject("pl04"), 
+            new lego_moveableobject("pl05") ];
+        var1 = 0;
+        while ((this.testplatforms.__length - 1) >= var1) {
+            this.testplatforms[var1].initfull();
+            this.testplatforms[var1].settweakable();
+            this.testplatforms[var1].setresponse(0, 0, 0);
+            this.testplatforms[var1].movebboxsides(1.7, 1.7, 1.7, 0 - 1.7, 0 - 1.7, 0 - 1.7);
+            var1 = var1 + 1;
+        }
+        this.testplatforms[4].setalpha(0.0);
+        this.testplatformsubound = this.testplatforms.__length - 1;
+        this.logarray = [ new logplatform("lg01"), 
+            new logplatform("lg02"), 
+            new logplatform("lg03"), 
+            new logplatform("lg04"), 
+            new logplatform("lg05"), 
+            new logplatform("lg06"), 
+            new logplatform("lg07"), 
+            new logplatform("lg08"), 
+            new logplatform("lg09"), 
+            new logplatform("lg10"), 
+            new logplatform("lg11"), 
+            new logplatform("lg12"), 
+            new logplatform("lg13"), 
+            new logplatform("lg14") ];
+        var1 = 0;
+        while ((this.logarray.__length - 1) >= var1) {
+            this.logarray[var1].initfull();
+            this.logarray[var1].obj.setresponse(1, 0, 1);
+            this.logarray[var1].setstartingycoord(this.logarray[var1].obj.gety());
+            this.logarray[var1].setfinalycoord(this.logarray[var1].obj.gety() - 1.0);
+            var1 = var1 + 1;
+        }
+        this.logarrayubound = this.logarray.__length - 1;
+        this.puzinc = 1;
+        var2 = null;
+        this.canblow = 0;
+        this.tempplatform = this.testplatforms[0];
+        this.tempplatform.collide = 0;
+        var3 = gcsaver::finditem(scslosifoundation::stringtoidentifier("gear"));
+        if (var3 == 0) {
+            this.gearpickup = new lego_pickup("gear", 0, 5, "item", 10, 1);
+            this.gearpickup.initfull();
+            this.gearpickup.show();
+            this.gearpickup.setcondition(131072);
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.bgmusic.stop();
+        this.bgmusic = null;
+        if (!(this.cinema == null)) {
+            this.cinema = null;
+        }
+        this.oldplatform = null;
+        this.newplatform = null;
+        this.printwhichplatformimon = null;
+        var1 = 0;
+        while ((this.logarray.__length - 1) >= var1) {
+            this.logarray[var1].cleanupfull();
+            this.logarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.logarray = null;
+        this.puzinc = null;
+        this.currentlycollidingwith = null;
+        this.tempplatform = null;
+        this.canblow = null;
+        this.currentsound = null;
+        var1 = 0;
+        while ((this.testplatforms.__length - 1) >= var1) {
+            this.testplatforms[var1].cleanupfull();
+            this.testplatforms[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.testplatforms = null;
+        if (!(this.gearpickup == null)) {
+            this.gearpickup.cleanupfull();
+            this.gearpickup = null;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while (this.testplatformsubound >= var1) {
+            this.testplatforms[var1].process();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while (this.logarrayubound >= var1) {
+            this.logarray[var1].obj.process();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while (this.logarrayubound >= var1) {
+            if (this.logarray[var1].obj.collide == 0) {
+                if (!(this.logarray[var1].obj.gety() == this.logarray[var1].startingycoord)) {
+                    this.logarray[var1].setfirsttouch("true");
+                    this.logarray[var1].obj.interpolate(this.logarray[var1].obj.getx(), this.logarray[var1].startingycoord, this.logarray[var1].obj.getz(), 0.2);
+                }
+            }
+            var1 = var1 + 1;
+        }
+        this.tempplatform.process();
+        if (this.tempplatform.collide == 0) {
+            this.canblow = 0;
+        }
+        this.testplatforms[4].process();
+        if (this.testplatforms[4].collide == 0) {
+            this.firsttouch = 1;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        if (param1.eventid == 4) {
+            if ((param1.args[0] == scslosifoundation::stringtoidentifier("tp05")) && (param1.args[1] == 0)) {
+                this.firsttouch = 1;
+            }
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (!(param1.args[1] == scslosifoundation::stringtoidentifier("cnt1"))) {
+                    this.newplatform = param1.args[1];
+                    if (!(this.oldplatform == this.newplatform)) {
+                        this.printwhichplatformimon = 1;
+                    }
+                    if (this.printwhichplatformimon) {
+                        debug::print("You're on platform " + scslosifoundation::identifiertostring(param1.args[1]));
+                        this.oldplatform = param1.args[1];
+                        this.printwhichplatformimon = 0;
+                    }
+                }
+            }
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (param1.args[1] == this.wirlpool.id) {
+                    gccollisionphysicsgroup::spinmask(1.2);
+                    gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("isld"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+                }
+                param1.args[1];
+            }
+            param1.args[0];
+            if (param1.args[2] == 0) {
+                if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                    if (param1.args[1] == this.testplatforms[0].id) {
+                        this.currentlycollidingwith = this.testplatforms[0].id;
+                        this.tempplatform = this.testplatforms[0];
+                        this.canblow = 1;
+                        this.tempplatform.setcollide();
+                    }
+                    else if (param1.args[1] == this.testplatforms[1].id) {
+                        this.currentlycollidingwith = this.testplatforms[1].id;
+                        this.tempplatform = this.testplatforms[1];
+                        this.canblow = 1;
+                        this.tempplatform.setcollide();
+                    }
+                    else if (param1.args[1] == this.testplatforms[2].id) {
+                        this.currentlycollidingwith = this.testplatforms[2].id;
+                        this.tempplatform = this.testplatforms[2];
+                        this.canblow = this.testplatforms;
+                        this.tempplatform.setcollide();
+                    }
+                    else if (param1.args[1] == this.testplatforms[3].id) {
+                        this.currentlycollidingwith = this.testplatforms[3].id;
+                        this.tempplatform = this.testplatforms[3];
+                        this.canblow = 1;
+                        this.tempplatform.setcollide();
+                    }
+                    else if (param1.args[1] == this.testplatforms[4].id) {
+                        if (this.firsttouch == 1) {
+                            if ((globalclass.player.whichmaskonface() == 9) && (globalclass.player.ismaskpoweron() == 1)) {
+                                globalclass.scriptmessage("Play the cinematic here.", 3);
+                                this.firsttouch = 0;
+                            }
+                        }
+                        this.testplatforms[4].setcollide();
+                    }
+                }
+                param1.args[0];
+            }
+            param1.args[2];
+        }
+        else if (param1.eventid == 11) {
+            if (scslosifoundation::identifiertostring(param1.args[1]) == "g054") {
+                globalclass.player.actor.setinputstate("ninp");
+                globalclass.level.cam.setaimode(11);
+            }
+            scslosifoundation::identifiertostring(param1.args[1]);
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("g000"));
+            this.parent.level.cam.setaimode(11);
+        }
+        var1 = 0;
+        while ((this.logarray.__length - 1) >= var1) {
+            this.logarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 90) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        if (param1.button == 32) {
+            if (param1.event == 2) {
+                this.blowtheconch();
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        this.puzinc = 7;
+        return null;
+    }
+    
+    method soundthehorn(param1) {
+        return null;
+    }
+    
+    method blowtheconch() {
+        if (this.canblow) {
+            if ((globalclass.player.actor.getorientation() > 66) && (globalclass.player.actor.getorientation() < 136)) {
+                globalclass.player.actor.setorientation(101);
+                this.parent.level.cam.interpolate(0 - 402.795, 141.426, 0 - 319.191, 0 - 83.924, 28.418, 0 - 400.667, 5.5);
+                if (this.currentlycollidingwith == this.testplatforms[0].id) {
+                    gcstaticsoundsptrarray::playtablesound(733);
+                    globalclass.player.actor.setpos(0 - 393.692, 130.667, 0 - 327.884);
+                    globalclass.player.actor.setinputstate("none");
+                    globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("g054"));
+                    this.soundthehorn(this.currentsound);
+                    if (this.puzinc < 8) {
+                        if ((this.puzinc == 1) || (this.puzinc == 6)) {
+                            this.puzinc = this.puzinc + 1;
+                        }
+                        else {
+                            this.puzinc = 1;
+                        }
+                    }
+                }
+                else if (this.currentlycollidingwith == this.testplatforms[1].id) {
+                    gcstaticsoundsptrarray::playtablesound(734);
+                    globalclass.player.actor.setpos(0 - 393.263, 130.533, 0 - 325.39);
+                    globalclass.player.actor.setinputstate("none");
+                    globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("g054"));
+                    this.soundthehorn(this.currentsound);
+                    if (this.puzinc < 8) {
+                        if (this.puzinc == 4) {
+                            this.puzinc = this.puzinc + 1;
+                        }
+                        else {
+                            this.puzinc = 1;
+                        }
+                    }
+                }
+                else if (this.currentlycollidingwith == this.testplatforms[2].id) {
+                    gcstaticsoundsptrarray::playtablesound(735);
+                    globalclass.player.actor.setpos(0 - 391.711, 130.621, 0 - 318.006);
+                    globalclass.player.actor.setinputstate("none");
+                    globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("g054"));
+                    this.soundthehorn(this.currentsound);
+                    if (this.puzinc < 8) {
+                        if ((this.puzinc == 2) || (this.puzinc == 7)) {
+                            if (this.puzinc == 7) {
+                                if (this.cinema_shown == 0) {
+                                    globalclass.scriptmessage("Puzzle Solved!! Play Cinematic.", 3);
+                                    this.show_wirlpool = 1;
+                                    this.wirlpool.show();
+                                    gccinemaengine::play(this.cinema);
+                                }
+                            }
+                            this.puzinc = this.puzinc + 1;
+                        }
+                        else {
+                            this.puzinc = 1;
+                        }
+                    }
+                }
+                else if (this.currentlycollidingwith == this.testplatforms[3].id) {
+                    gcstaticsoundsptrarray::playtablesound(736);
+                    globalclass.player.actor.setpos(0 - 391.111, 130.602, 0 - 315.418);
+                    globalclass.player.actor.setinputstate("none");
+                    globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("g054"));
+                    this.soundthehorn(this.currentsound);
+                    if (this.puzinc < 8) {
+                        if ((this.puzinc == 3) || (this.puzinc == 5)) {
+                            this.puzinc = this.puzinc + 1;
+                        }
+                        else {
+                            this.puzinc = 1;
+                        }
+                    }
+                }
+            }
+            else {
+                debug::print("you are not within the orientation range limit....");
+            }
+        }
+        return null;
+    }
+}

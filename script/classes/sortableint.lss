@@ -1,0 +1,35 @@
+class sortableint {
+    property number;
+    property evaluate;
+    
+    method sortableint(param1, param2) {
+        if (!(param1 == null) && !(param2 == null)) {
+            this.number = param1;
+            this.evaluate = param2;
+        }
+        else {
+            this.number = 0;
+            this.evaluate = 0;
+        }
+        return null;
+    }
+    
+    method setevaluate(param1) {
+        this.evaluate = param1;
+        return null;
+    }
+    
+    method getevaluate() {
+        return this.evaluate;
+    }
+    
+    method getnumber() {
+        return this.number;
+    }
+    
+    method cleanupfull() {
+        this.number = null;
+        this.evaluate = null;
+        return null;
+    }
+}

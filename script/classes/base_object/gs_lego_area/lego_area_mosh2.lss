@@ -1,0 +1,79 @@
+class lego_area_mosh2 : gs_lego_area {
+    property cinema;
+    property safecount;
+    
+    method lego_area_mosh2(param1) {
+        this.gs_lego_area("mosh", param1, 0, 0);
+        this.cinema = null;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var1 = gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin3"));
+        if (var1 == 0) {
+            this.cinema = gccinemaengine::create();
+            gccinemaengine::load(this.cinema, "cin3");
+            globalclass.hud.hide();
+            gccinemaengine::play(this.cinema);
+            gccinemaengine::setnextarea(this.cinema, scslosifoundation::stringtoidentifier("ghut"));
+        }
+        this.safecount = 0;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        if ((param1.event == 2) && (param1.button == 255)) {
+            if (!(this.cinema == null)) {
+                gccinemaengine::stop(this.cinema);
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        if (!(this.cinema == null)) {
+            if (param1.eventid == 44) {
+                if (this.safecount < 3) {
+                    this.safecount = this.safecount + 1;
+                    if (this.safecount == 2) {
+                        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vlgr"), 0);
+                        gccharacter::settohunga(var1, rgba(0, 150, 121, 255), rgba(0, 0, 255, 255), scslosifoundation::stringtoidentifier("mk7a"));
+                        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl01"), 0);
+                        gccharacter::settohunga(var1, rgba(0, 0, 255, 255), rgba(72, 117, 174, 255), scslosifoundation::stringtoidentifier("mk7a"));
+                        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl02"), 0);
+                        gccharacter::settohunga(var1, rgba(0, 150, 121, 255), rgba(72, 117, 174, 255), scslosifoundation::stringtoidentifier("mk7a"));
+                        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl03"), 0);
+                        gccharacter::settohunga(var1, rgba(0, 0, 255, 255), rgba(187, 231, 133, 255), scslosifoundation::stringtoidentifier("mk9a"));
+                        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl04"), 0);
+                        gccharacter::settohunga(var1, rgba(0, 0, 255, 255), rgba(0, 0, 255, 255), scslosifoundation::stringtoidentifier("mk7a"));
+                        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl05"), 0);
+                        gccharacter::settohunga(var1, rgba(0, 0, 255, 255), rgba(72, 117, 174, 255), scslosifoundation::stringtoidentifier("mk9a"));
+                        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl06"), 0);
+                        gccharacter::settohunga(var1, rgba(0, 150, 121, 255), rgba(72, 117, 174, 255), scslosifoundation::stringtoidentifier("mk9a"));
+                        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vl07"), 0);
+                        gccharacter::settohunga(var1, rgba(0, 0, 255, 255), rgba(187, 231, 133, 255), scslosifoundation::stringtoidentifier("mk9a"));
+                    }
+                }
+            }
+            if (param1.eventid == 30) {
+                globalclass.hud.show();
+            }
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.cinema = null;
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+}

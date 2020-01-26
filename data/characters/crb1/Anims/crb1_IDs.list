@@ -1,0 +1,6 @@
+ANIMLIST for crb1
+cr01.bkd        cr_walk
+cr04.bkd        cr_run_to_attack
+cr00.bkd        cr_idle
+cr03.bkd        cr_hit
+cr02.bkd        cr_attack

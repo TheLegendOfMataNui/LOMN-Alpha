@@ -1,0 +1,270 @@
+class bullrunglyph {
+    property parea;
+    property bully;
+    property wallparts;
+    property walldefaults;
+    property wallstate;
+    property wallplane;
+    property resettimer;
+    property bricks;
+    property glyph;
+    property founditem;
+    property showpickup;
+    property bgmusic;
+    
+    method bullrunglyph(param1) {
+        var var1;
+        this.parea = param1;
+        this.bully = null;
+        this.wallparts = null;
+        this.walldefaults = null;
+        this.wallstate = 0;
+        this.wallplane = null;
+        this.resettimer = null;
+        this.bricks = null;
+        var1 = null;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method init() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        this.founditem = gcsaver::findglyph(scslosifoundation::stringtoidentifier("glyp"));
+        if (this.founditem) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup) {
+            this.glyph = new lego_pickup("glyp", 8, 2, "item", 4, 1);
+            this.glyph.initfull();
+            this.glyph.show();
+        }
+        debug::print("Init bull glyph area");
+        this.bully = this.parea.level.getbull();
+        this.bully.changearea(scslosifoundation::stringtoidentifier(this.parea.name));
+        this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+        this.bricks = [ new lego_projectileobject("1br0", this.parea.name), 
+            new lego_projectileobject("1br1", this.parea.name), 
+            new lego_projectileobject("1br2", this.parea.name), 
+            new lego_projectileobject("1br3", this.parea.name), 
+            new lego_projectileobject("1br4", this.parea.name), 
+            new lego_projectileobject("1br5", this.parea.name), 
+            new lego_projectileobject("1br6", this.parea.name), 
+            new lego_projectileobject("1br7", this.parea.name), 
+            new lego_projectileobject("1br8", this.parea.name), 
+            new lego_projectileobject("1br9", this.parea.name) ];
+        var1 = 0;
+        while ((this.bricks.__length - 1) >= var1) {
+            this.bricks[var1].init(0.1, 1, 1, 1, 0, 0.8, "1brk", "Root/data/levels/lev3/bglf", 60);
+            this.bricks[var1].setresponse(4, 4, 4);
+            this.bricks[var1].setposition(0.0, 0.0, 0.0);
+            this.bricks[var1].show();
+            var1 = var1 + 1;
+        }
+        this.wallparts = [ new lego_moveableobject("brk1", this.parea.name), 
+            new lego_moveableobject("brk2", this.parea.name), 
+            new lego_moveableobject("brk3", this.parea.name), 
+            new lego_moveableobject("brk4", this.parea.name), 
+            new lego_moveableobject("brk5", this.parea.name), 
+            new lego_moveableobject("brk6", this.parea.name), 
+            new lego_moveableobject("brk7", this.parea.name), 
+            new lego_moveableobject("brk8", this.parea.name), 
+            new lego_moveableobject("brk9", this.parea.name) ];
+        this.walldefaults = [  ];
+        var1 = 0;
+        while ((this.wallparts.__length - 1) >= var1) {
+            this.wallparts[var1].initfull();
+            this.wallparts[var1].setmoveable(3.0, 0.7, 0, 0, 0, 0);
+            this.wallparts[var1].setbouncefactor(0.15);
+            this.wallparts[var1].disablecollisions();
+            var2 = [  ];
+            var3 = this.wallparts[var1].getx();
+            var4 = this.wallparts[var1].gety();
+            var5 = this.wallparts[var1].getz();
+            var2.__append(var3);
+            var2.__append(var4);
+            var2.__append(var5);
+            this.walldefaults.__append(var2);
+            var1 = var1 + 1;
+        }
+        this.wallstate = 0;
+        this.bully.ignorecollisionswith(scslosifoundation::stringtoidentifier("tp02"));
+        this.wallplane = new lego_triggerobject("tp02", this.parea.name, 0);
+        this.wallplane.initfull();
+        this.wallplane.setresponse(2, 2);
+        this.resettimer = new lego_timer("tm99", 5.1, 0);
+        this.resettimer.initfull();
+        globalclass.player.actor.ride(scslosifoundation::stringtoidentifier(this.bully.contstring), scslosifoundation::stringtoidentifier(this.bully.area), 2063160497);
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("bl09"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("p047"));
+        return null;
+    }
+    
+    method cleanup() {
+        var var1;
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        if (!(this.glyph == null)) {
+            this.glyph.cleanupfull();
+            this.glyph = null;
+        }
+        this.founditem = null;
+        this.showpickup = null;
+        var1 = 0;
+        while ((this.bricks.__length - 1) >= var1) {
+            this.bricks[var1].cleanupfull();
+            this.bricks[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.bricks = null;
+        var1 = 0;
+        while ((this.wallparts.__length - 1) >= var1) {
+            this.wallparts[var1].cleanupfull();
+            this.wallparts[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.wallparts = null;
+        var1 = 0;
+        while ((this.walldefaults.__length - 1) >= var1) {
+            this.walldefaults[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.walldefaults = null;
+        this.wallstate = null;
+        this.wallplane = null;
+        this.resettimer.cleanupfull();
+        this.resettimer = null;
+        this.founditem = null;
+        this.showpickup = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 79) {
+                this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            }
+            else if (param1.button == 80) {
+                this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str1"), scslosifoundation::stringtoidentifier("lok1"));
+            }
+            else if (param1.button == 73) {
+                this.resetwall();
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        if (param1.eventid == 11) {
+            if (scslosifoundation::identifiertostring(param1.args[1]) == "p047") {
+                globalclass.player.actor.ride(scslosifoundation::stringtoidentifier(this.bully.contstring), scslosifoundation::stringtoidentifier(this.bully.area), 2063160497);
+                this.bully.setinputstate("ninp");
+            }
+            scslosifoundation::identifiertostring(param1.args[1]);
+        }
+        else if (param1.eventid == 1) {
+            if ((param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) && (param1.args[1] == scslosifoundation::stringtoidentifier("glyp"))) {
+                this.bully.setsplitanimation(scslosifoundation::stringtoidentifier("bl00"));
+                this.bully.setinputstate("none");
+            }
+        }
+        else if (param1.eventid == 4) {
+            debug::print("hit " + scslosifoundation::identifiertostring(param1.args[0]));
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tp02")) {
+                if (this.bully.getcurrentanimationid() == scslosifoundation::stringtoidentifier("bl02")) {
+                    this.wallhit();
+                }
+            }
+        }
+        else if (param1.eventid == 29) {
+            
+        }
+        else if (param1.eventid == 8) {
+            if (param1.args[0] == this.resettimer.id) {
+                var1 = 0;
+                while ((this.bricks.__length - 1) >= var1) {
+                    debug::print("hide litle bricks");
+                    this.bricks[var1].setposition(0, 0, 0);
+                    var1 = var1 + 1;
+                }
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parea.enterstartid, this.parea.enterlookid);
+            this.bully.setsplitanimation(scslosifoundation::stringtoidentifier("bl00"));
+            globalclass.player.unkill();
+            globalclass.player.actor.setinputstate("ninp");
+            this.parea.level.cam.setaimode(11);
+        }
+        return null;
+    }
+    
+    method wallhit() {
+        debug::print("+++++++++++++++++WALL HIT++++++++++++++++++");
+        if (this.wallstate == 0) {
+            this.wallparts[1].setposition(0, 0, 0);
+            this.wallparts[4].setposition(0, 0, 0);
+            this.wallparts[3].setposition(0, 0, 0);
+            this.explode(this.wallparts[2]);
+            this.wallparts[5].setposition(0, 0, 0);
+            this.wallparts[6].setposition(0, 0, 0);
+            this.wallparts[7].setposition(0, 0, 0);
+            this.wallstate = 3;
+            this.wallplane.setresponse(4, 4);
+        }
+        else if (this.wallstate == 3) {
+            
+        }
+        if (!(this.wallstate == 3)) {
+            this.bully.react(0, 10, scslosifoundation::stringtoidentifier("brk5"), scslosifoundation::stringtoidentifier("bglf"));
+        }
+        return null;
+    }
+    
+    method explode(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        var var7;
+        var var8;
+        var var9;
+        var var10;
+        debug::print("brick explosion");
+        var1 = param1.getx();
+        var2 = param1.gety();
+        var3 = param1.getz();
+        var4 = 0;
+        while ((this.bricks.__length - 1) >= var4) {
+            var5 = globalclass.randnum.getrandomfloat(0 - 25.0, -1);
+            var6 = globalclass.randnum.getrandomfloat(0 - 5.0, 15.0);
+            var7 = globalclass.randnum.getrandomfloat(1.0, 25.0);
+            var8 = globalclass.randnum.getrandomfloat(var1, var1 + 1.0);
+            var9 = globalclass.randnum.getrandomfloat(var2, var2 + 1.0);
+            var10 = globalclass.randnum.getrandomfloat(var3, var3 + 1.0);
+            this.bricks[var4].setposition(var8, var9, var10);
+            this.bricks[var4].setvelocity(var5, var6, var7);
+            var4 = var4 + 1;
+        }
+        return null;
+    }
+    
+    method resetwall() {
+        return null;
+    }
+}

@@ -1,0 +1,115 @@
+class glyph2_lev4_puzzle {
+    property parent;
+    property gyzerarray;
+    property lastgyzer;
+    property glyph;
+    property door;
+    property showpickup;
+    
+    method glyph2_lev4_puzzle(param1) {
+        this.parent = param1;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        globalclass.player.actor.setunderwater(1);
+        var1 = gcsaver::findglyph(scslosifoundation::stringtoidentifier("glyp"));
+        if (var1) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup) {
+            this.glyph = new lego_pickup("glyp", 6, 2, "item", 7, 1);
+            this.glyph.initfull();
+        }
+        this.door = new lego_moveableobject("gld2");
+        this.door.initfull();
+        this.door.hide();
+        gcareadirector::setnearestmax(20);
+        this.gyzerarray = [ new gizzer("sw00", "giz1", "tim0", this), 
+            new gizzer("sw01", "giz3", "tim1", this), 
+            new gizzer("sw02", "giz2", "tim2", this), 
+            new gizzer("sw03", "giz4", "tim3", this), 
+            new gizzer("sw04", "giz5", "tim4", this), 
+            new gizzer("sw05", "giz6", "tim5", this), 
+            new gizzer("sw06", "giz7", "tim6", this) ];
+        var2 = 0;
+        while ((this.gyzerarray.__length - 1) >= var2) {
+            this.gyzerarray[var2].initfull();
+            this.gyzerarray[var2].show();
+            var2 = var2 + 1;
+        }
+        this.lastgyzer = new lego_moveableobject("giz8");
+        this.lastgyzer.initfull();
+        this.lastgyzer.setpos(this.lastgyzer.getx(), 10, this.lastgyzer.getz());
+        this.lastgyzer.setresponse(1, 0, 1);
+        this.lastgyzer.setslidetimer(0, 16, 0, 2, -1, 1);
+        globalclass.player.actor.setunderwater(1);
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 89) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.gyzerarray.__length - 1) >= var1) {
+            this.gyzerarray[var1].cleanupfull();
+            var1 = var1 + 1;
+        }
+        this.lastgyzer.cleanupfull();
+        this.lastgyzer = null;
+        if (!(this.glyph == null)) {
+            this.glyph.cleanupfull();
+            this.glyph = null;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.setunderwater(1);
+        }
+        else if (param1.eventid == 1) {
+            
+        }
+        else if (param1.eventid == scslosifoundation::stringtoidentifier("cnt1")) {
+            if (param1.args[1] == scslosifoundation::stringtoidentifier("glyp")) {
+                this.glyph.pickup();
+            }
+            param1.args[1];
+        }
+        else if (param1.eventid == 4) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tp01")) {
+                screenlist.screens[2].screen.areas[12].puzzle.needstobeunderwater(1);
+                screenlist.screens[2].screen.areas[12].puzzle.switchit(1);
+            }
+            param1.args[0];
+        }
+        var1 = 0;
+        while ((this.gyzerarray.__length - 1) >= var1) {
+            this.gyzerarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+}

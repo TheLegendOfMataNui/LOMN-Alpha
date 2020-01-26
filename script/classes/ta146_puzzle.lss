@@ -1,0 +1,118 @@
+class ta146_puzzle {
+    property mparent;
+    property mdoors;
+    property discpickup;
+    property music;
+    
+    method ta146_puzzle(param1) {
+        this.mparent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        globalclass.player.actor.setcrushfromtop(1);
+        this.mdoors = [ new ta14_door("dr00"), 
+            new ta14_door("dr01"), 
+            new ta14_door("dr02"), 
+            new ta14_door("dr03"), 
+            new ta14_door("dr04"), 
+            new ta14_door("dr05"), 
+            new ta14_door("dr06"), 
+            new ta14_door("dr07"), 
+            new ta14_door("dr08"), 
+            new ta14_door("dr09"), 
+            new ta14_door("dr10") ];
+        var1 = 0;
+        while ((this.mdoors.__length - 1) >= var1) {
+            this.mdoors[var1].object.initfull();
+            this.mdoors[var1].object.settweakable();
+            this.mdoors[var1].object.setcrushflags(0, 0, 0, 0, 1, 0);
+            this.mdoors[var1].object.setslidetimer(0, 8.0, 0, 0.25, -1, 0.5);
+            var1 = var1 + 1;
+        }
+        var2 = gcsaver::finditem(scslosifoundation::stringtoidentifier("dsc6"));
+        if (var2 == 0) {
+            this.discpickup = new lego_pickup("dsc6", 0, 5, "item", 10, 1);
+            this.discpickup.initfull();
+            this.discpickup.show();
+            this.discpickup.setcondition(131072);
+        }
+        this.music = new legomp3player();
+        this.music.setupforplay("Root/Data/sounds/MUSICPart2LegoUNDERGROUND");
+        this.music.play(1);
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        var1 = 0;
+        while ((this.mdoors.__length - 1) >= var1) {
+            this.mdoors[var1].object.show();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        globalclass.player.actor.setcrushfromtop(0);
+        var1 = 0;
+        while ((this.mdoors.__length - 1) >= var1) {
+            this.mdoors[var1].object.hide();
+            var1 = var1 + 1;
+        }
+        this.mdoors = null;
+        if (!(this.discpickup == null)) {
+            this.discpickup.cleanupfull();
+            this.discpickup = null;
+        }
+        this.music.stop();
+        this.music.cleanupfordestroy();
+        this.music = null;
+        return null;
+    }
+    
+    method exit() {
+        this.mparent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.mdoors.__length - 1) >= var1) {
+            this.mdoors[var1].object.process();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+            this.music.stop();
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.mparent.enterstartid, this.mparent.enterlookid);
+            globalclass.player.unkill();
+            this.music.play(1);
+        }
+        else if (param1.eventid == 4) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tp02")) {
+                debug::print("OPENING THE LAST DOOR IN THE SHRINE");
+                screenlist.screens[9].screen.areas[13].puzzle.switchit(2);
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 1) {
+            
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

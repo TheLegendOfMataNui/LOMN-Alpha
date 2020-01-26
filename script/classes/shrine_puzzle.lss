@@ -1,0 +1,57 @@
+class shrine_puzzle {
+    property parent;
+    property blocks;
+    property icicles;
+    property edoor;
+    
+    method shrine_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        gcareadirector::setnearestmax(10);
+        this.edoor = new lego_moveableobject("etdr", this.parent.name);
+        this.edoor.initfull();
+        this.edoor.setalpha(0.3);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.edoor.cleanupfull();
+        this.edoor = null;
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 1) {
+            
+        }
+        else if (param1.eventid == 7) {
+            if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
+                gcstaticsoundsptrarray::playtablesound(144);
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method cheat() {
+        return null;
+    }
+}

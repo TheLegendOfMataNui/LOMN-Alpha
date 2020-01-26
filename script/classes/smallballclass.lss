@@ -1,0 +1,138 @@
+class smallballclass {
+    property obj;
+    property name;
+    property parent;
+    property curentscale;
+    property x;
+    property y;
+    property z;
+    property bigsound;
+    property medsound;
+    property smlsound;
+    
+    method smallballclass(param1, param2) {
+        this.parent = param2;
+        this.name = param1;
+        this.obj = new lego_projectileobject(this.name, this.parent.parent.parent.name);
+        this.curentscale = 1.0;
+        return null;
+    }
+    
+    method initfull() {
+        this.obj.init(0.7, 0, 0, 0, 0, 2.3, "bld0", "Root/data/levels/lev1/clf2", 60, -3, -3, -3, 3, 3, 3);
+        this.obj.setbouncefactor(0.75);
+        this.obj.setbounceeventrepoert(1);
+        this.obj.setobjgravity(30);
+        this.obj.show();
+        this.obj.setresponse(2, 2, 2);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.obj.cleanupfull();
+        this.obj = null;
+        return null;
+    }
+    
+    method process(param1) {
+        if (this.obj.gety() < this.parent.lowestpointbeforredrop) {
+            this.stopdropping();
+        }
+        if (this.obj.getz() > 1936) {
+            this.stopdropping();
+        }
+        return null;
+    }
+    
+    method show() {
+        this.obj.show();
+        return null;
+    }
+    
+    method hide() {
+        this.obj.hide();
+        return null;
+    }
+    
+    method startdropping(param1, param2, param3) {
+        var var1;
+        var var2;
+        var var3;
+        this.obj.show();
+        var1 = globalclass.randnum.getrandomnumber(-5, 5);
+        var2 = globalclass.randnum.getrandomnumber(0, 15);
+        var3 = globalclass.randnum.getrandomnumber(-5, 5);
+        this.obj.setposition(param1, param2, param3);
+        this.obj.setmoveableflags(1, 1, 0, 1);
+        this.obj.setvelocity(var1, var2, var3);
+        this.obj.setobjscale(1.7);
+        this.parent.killsmallsnowball(1);
+        return null;
+    }
+    
+    method stopdropping() {
+        this.obj.setvelocity(0, 0, 0);
+        this.obj.setmoveableflags(0, 0, 0, 0);
+        this.obj.setposition(1000, 0, 0);
+        this.parent.killsmallsnowball(-1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 1) {
+            
+        }
+        else if (param1.eventid == 8) {
+            
+        }
+        else if (param1.eventid == 19) {
+            if (param1.args[0] == this.obj.id) {
+                this.hit();
+            }
+        }
+        else if (param1.eventid == 17) {
+            if (param1.args[0] == this.obj.id) {
+                this.shakecam(param1.args[1]);
+            }
+        }
+        return null;
+    }
+    
+    method hit() {
+        this.curentscale = this.obj.getscale();
+        this.stopdropping();
+        return null;
+    }
+    
+    method shakecam(param1) {
+        var var1;
+        this.y = this.obj.gety();
+        this.z = this.obj.getz();
+        var1 = globalclass.player.actor.getpos().z;
+        if ((this.y > -380) & (this.y < -350)) {
+            if ((this.z > (var1 - 10)) & (this.z < (var1 + 10))) {
+                if (param1 > 40) {
+                    this.parent.parent.parent.level.cam.shakecamera(0.1, 0.18);
+                }
+                else if (param1 > 20) {
+                    this.parent.parent.parent.level.cam.shakecamera(0.1, 0.1);
+                }
+            }
+            else if ((this.z > (var1 - 30)) & (this.z < (var1 + 30))) {
+                if (param1 > 20) {
+                    this.parent.parent.parent.level.cam.shakecamera(0.05, 0.05);
+                }
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 79) {
+                this.hit();
+            }
+        }
+        return null;
+    }
+}

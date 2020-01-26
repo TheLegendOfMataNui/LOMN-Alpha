@@ -1,0 +1,98 @@
+class ta036_puzzle {
+    property mparent;
+    property mthermals;
+    property mask;
+    property music;
+    
+    method ta036_puzzle(param1) {
+        this.mparent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        this.mthermals = [ new thermal("tm10"), 
+            new thermal("tm11"), 
+            new thermal("tm12"), 
+            new thermal("tm13"), 
+            new thermal("tm14"), 
+            new thermal("tm15"), 
+            new thermal("tm16"), 
+            new thermal("tm17"), 
+            new thermal("tm18"), 
+            new thermal("tm19"), 
+            new thermal("tm20"), 
+            new thermal("tm21"), 
+            new thermal("tm22"), 
+            new thermal("tm23"), 
+            new thermal("tm24"), 
+            new thermal("tm25"), 
+            new thermal("tm26"), 
+            new thermal("tm27"), 
+            new thermal("tm28"), 
+            new thermal("tm29"), 
+            new thermal("tm30"), 
+            new thermal("tm31"), 
+            new thermal("tm32"), 
+            new thermal("tm33"), 
+            new thermal("tm34"), 
+            new thermal("tm35") ];
+        this.mask = new lego_pickup("mk6a", 6, 1, "item", 1, 1);
+        this.mask.initfull();
+        if (gcsaver::findmaska(scslosifoundation::stringtoidentifier("mk6a"), scslosifoundation::stringtoidentifier("ra03"))) {
+            this.mask.hide();
+        }
+        else {
+            this.mask.show();
+        }
+        this.music = new legomp3player();
+        this.music.setupforplay("Root/Data/sounds/MUSICPart2LegoUNDERGROUND");
+        this.music.play(1);
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.mthermals.__length - 1) >= var1) {
+            this.mthermals[var1].cleanupfull();
+            var1 = var1 + 1;
+        }
+        this.music.stop();
+        this.music.cleanupfordestroy();
+        this.music = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.mthermals.__length - 1) >= var1) {
+            this.mthermals[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+            this.music.stop();
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.mparent.enterstartid, this.mparent.enterlookid);
+            globalclass.player.unkill();
+            this.music.play(1);
+        }
+        var1 = 0;
+        while ((this.mthermals.__length - 1) >= var1) {
+            this.mthermals[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

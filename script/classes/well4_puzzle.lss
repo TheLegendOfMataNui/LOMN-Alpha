@@ -1,0 +1,379 @@
+class well4_puzzle {
+    property parent;
+    property platformarray;
+    property rotatetimer;
+    property pointa;
+    property pointb;
+    property pointc;
+    property rotatecase;
+    property yvalue;
+    property glyph;
+    property founditem;
+    property showpickup;
+    property starttimeronce;
+    
+    method well4_puzzle(param1) {
+        this.parent = param1;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(20);
+        this.starttimeronce = 1;
+        this.founditem = gcsaver::findglyph(scslosifoundation::stringtoidentifier("glya"));
+        if (this.founditem) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup) {
+            this.glyph = new lego_pickup("glya", 13, 2, "item", 6, 1);
+            this.glyph.initfull();
+            this.glyph.show();
+        }
+        this.rotatetimer = new lego_timer("rott", 2.0, this.parent.name, 0);
+        this.rotatetimer.initfull();
+        this.rotatecase = 0;
+        this.platformarray = [ new platform("pf36"), 
+            new platform("pf21"), 
+            new lego_moveableobject("pf15"), 
+            new lego_moveableobject("pf19"), 
+            new lego_moveableobject("pf18"), 
+            new platform("pf22"), 
+            new platform("pf16"), 
+            new lego_moveableobject("pf17"), 
+            new lego_moveableobject("pf40"), 
+            new lego_moveableobject("pf41"), 
+            new lego_moveableobject("pf43"), 
+            new lego_moveableobject("pf42"), 
+            new lego_moveableobject("pf44"), 
+            new platform("pf33"), 
+            new platform("pf34"), 
+            new platform("pf37"), 
+            new platform("pf35"), 
+            new platform("pf48"), 
+            new platform("pf50"), 
+            new platform("pf52"), 
+            new platform("pf54"), 
+            new lego_moveableobject("pf55"), 
+            new lego_moveableobject("pf56"), 
+            new lego_moveableobject("pf57"), 
+            new lego_moveableobject("pf58"), 
+            new lego_moveableobject("pf60"), 
+            new lego_moveableobject("pf62"), 
+            new lego_moveableobject("pf27"), 
+            new lego_moveableobject("pf28"), 
+            new lego_moveableobject("pf29"), 
+            new lego_moveableobject("pf30"), 
+            new lego_moveableobject("pf31"), 
+            new lego_moveableobject("pf38") ];
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            this.platformarray[var1].initfull();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            this.platformarray[var1].setresponse(1, 0, 1);
+            var1 = var1 + 1;
+        }
+        gcareadirector::setallobjectsalpha(0.0);
+        this.pointa = new basicpoint(this.platformarray[2].getx(), this.platformarray[2].gety(), this.platformarray[2].getz());
+        this.pointb = new basicpoint(this.platformarray[3].getx(), this.platformarray[3].gety(), this.platformarray[3].getz());
+        this.pointc = new basicpoint(this.platformarray[4].getx(), this.platformarray[4].gety(), this.platformarray[4].getz());
+        this.platformarray[0].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[0].setupfall(1.0, "tm21", 2.0, "hp10");
+        this.platformarray[1].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[1].setupfall(1.0, "tm22", 2.0, "hp11");
+        this.platformarray[5].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[5].setupfall(1.0, "tma5", 2.0, "hp00");
+        this.platformarray[6].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[6].setupfall(1.0, "tma6", 2.0, "hp01");
+        this.platformarray[13].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[13].setupfall(1.0, "tm13", 2.0, "hp02");
+        this.platformarray[14].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[14].setupfall(1.0, "tm14", 2.0, "hp03");
+        this.platformarray[15].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[15].setupfall(1.0, "tm15", 2.0, "hp04");
+        this.platformarray[16].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[16].setupfall(1.0, "tm16", 2.0, "hp05");
+        this.platformarray[17].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[17].setupfall(1.0, "tm17", 2.0, "hp06");
+        this.platformarray[18].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[18].setupfall(1.0, "tm18", 2.0, "hp07");
+        this.platformarray[19].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[19].setupfall(1.0, "tm19", 2.0, "hp08");
+        this.platformarray[20].setuptouchshakerotate(1.0, 1.5, 1.0, 0.9);
+        this.platformarray[20].setupfall(1.0, "tm20", 2.0, "hp09");
+        this.platformarray[7].setslidetimer(0 - 20.0, 0.7, 14.0, 1.0, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[8].setslidetimer(0.0, 0 - 12.0, 0.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[9].setslidetimer(0.0, 12.0, 0.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[10].setslidetimer(0.0, 0 - 12.0, 0.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[11].setslidetimer(0.0, 12.0, 0.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[12].setslidetimer(0.0, 0 - 12.0, 0.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[27].setslidetimer(0.0, 0.0, 0 - 10.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[28].setslidetimer(0.0, 0.0, 10.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[29].setslidetimer(0.0, 0.0, 0 - 10.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[30].setslidetimer(0.0, 0.0, 10.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[31].setslidetimer(0.0, 0.0, 0 - 10.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        this.platformarray[32].setslidetimer(0.0, 0.0, 10.0, 1.5, -1, globalclass.randnum.getrandomfloat(0.3, 0.9));
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        if (!(this.glyph == null)) {
+            this.glyph.cleanupfull();
+            this.glyph = null;
+        }
+        this.founditem = null;
+        this.showpickup = null;
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            this.platformarray[var1].cleanupfull();
+            this.platformarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.platformarray = null;
+        this.pointa = null;
+        this.pointb = null;
+        this.pointc = null;
+        this.yvalue = null;
+        this.rotatetimer.cleanupfull();
+        this.rotatetimer = null;
+        this.rotatecase = null;
+        this.starttimeronce = null;
+        return null;
+    }
+    
+    method process(param1) {
+        this.platformarray[0].process(param1);
+        this.platformarray[1].process(param1);
+        this.platformarray[5].process(param1);
+        this.platformarray[6].process(param1);
+        this.platformarray[13].process(param1);
+        this.platformarray[14].process(param1);
+        this.platformarray[15].process(param1);
+        this.platformarray[16].process(param1);
+        this.platformarray[17].process(param1);
+        this.platformarray[18].process(param1);
+        this.platformarray[19].process(param1);
+        this.platformarray[20].process(param1);
+        this.platformarray[21].process();
+        this.platformarray[22].process();
+        this.platformarray[23].process();
+        this.platformarray[24].process();
+        this.platformarray[25].process();
+        this.platformarray[26].process();
+        if (this.platformarray[21].collide == 0) {
+            if (this.platformarray[21].gety() <= 6.15821) {
+                this.platformarray[21].interpolate(this.platformarray[21].getx(), this.platformarray[21].gety() + 2, this.platformarray[21].getz(), 0.4);
+            }
+        }
+        if (this.platformarray[22].collide == 0) {
+            if (this.platformarray[22].gety() <= 6.15821) {
+                this.platformarray[22].interpolate(this.platformarray[22].getx(), this.platformarray[22].gety() + 2, this.platformarray[22].getz(), 0.4);
+            }
+        }
+        if (this.platformarray[23].collide == 0) {
+            if (this.platformarray[23].gety() <= 6.15821) {
+                this.platformarray[23].interpolate(this.platformarray[23].getx(), this.platformarray[23].gety() + 2, this.platformarray[23].getz(), 0.4);
+            }
+        }
+        if (this.platformarray[24].collide == 0) {
+            if (this.platformarray[24].gety() <= 6.15821) {
+                this.platformarray[24].interpolate(this.platformarray[24].getx(), this.platformarray[24].gety() + 2, this.platformarray[24].getz(), 0.4);
+            }
+        }
+        if (this.platformarray[25].collide == 0) {
+            if (this.platformarray[25].gety() <= 6.15821) {
+                this.platformarray[25].interpolate(this.platformarray[25].getx(), this.platformarray[25].gety() + 2, this.platformarray[25].getz(), 0.4);
+            }
+        }
+        if (this.platformarray[26].collide == 0) {
+            if (this.platformarray[26].gety() <= 6.15821) {
+                this.platformarray[26].interpolate(this.platformarray[26].getx(), this.platformarray[26].gety() + 2, this.platformarray[26].getz(), 0.4);
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        this.platformarray[0].onevent(param1);
+        this.platformarray[1].onevent(param1);
+        this.platformarray[5].onevent(param1);
+        this.platformarray[6].onevent(param1);
+        this.platformarray[13].onevent(param1);
+        this.platformarray[14].onevent(param1);
+        this.platformarray[15].onevent(param1);
+        this.platformarray[16].onevent(param1);
+        this.platformarray[17].onevent(param1);
+        this.platformarray[18].onevent(param1);
+        this.platformarray[19].onevent(param1);
+        this.platformarray[20].onevent(param1);
+        if (param1.eventid == 44) {
+            if (this.starttimeronce) {
+                this.starttimeronce = 0;
+                this.rotatetimer.reset(0);
+                this.rotatetimer.start();
+                debug::print("******TIMER STARTED***********");
+            }
+        }
+        else if (param1.eventid == 8) {
+            debug::print("*********TIMER " + scslosifoundation::identifiertostring(param1.args[0]));
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("rott")) {
+                debug::print("***********timer event for rott");
+                if (this.rotatecase == 0) {
+                    this.platformarray[2].interpolate(this.pointb.x, this.pointb.y, this.pointb.z, 1.5);
+                    this.platformarray[3].interpolate(this.pointc.x, this.pointc.y, this.pointc.z, 1.5);
+                    this.platformarray[4].interpolate(this.pointa.x, this.pointa.y, this.pointa.z, 1.5);
+                    this.rotatecase = 1;
+                    this.rotatetimer.reset(0);
+                    this.rotatetimer.start();
+                }
+                else if (this.rotatecase == 1) {
+                    this.platformarray[2].interpolate(this.pointc.x, this.pointc.y, this.pointc.z, 1.5);
+                    this.platformarray[3].interpolate(this.pointa.x, this.pointa.y, this.pointa.z, 1.5);
+                    this.platformarray[4].interpolate(this.pointb.x, this.pointb.y, this.pointb.z, 1.5);
+                    this.rotatecase = 2;
+                    this.rotatetimer.reset(0);
+                    this.rotatetimer.start();
+                }
+                else if (this.rotatecase == 2) {
+                    this.platformarray[2].interpolate(this.pointa.x, this.pointa.y, this.pointa.z, 1.5);
+                    this.platformarray[3].interpolate(this.pointb.x, this.pointb.y, this.pointb.z, 1.5);
+                    this.platformarray[4].interpolate(this.pointc.x, this.pointc.y, this.pointc.z, 1.5);
+                    this.rotatecase = 0;
+                    this.rotatetimer.reset(0);
+                    this.rotatetimer.start();
+                }
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 1002) {
+            if (param1.args[0] == 1) {
+                gcareadirector::setallobjectsadfade(1);
+            }
+            if (param1.args[0] == 0) {
+                gcareadirector::setallobjectsalpha(0.0);
+            }
+        }
+        else if (param1.eventid == 1) {
+            if (scslosifoundation::identifiertostring(param1.args[1]) == "pf55") {
+                this.platformarray[21].setcollide();
+                this.yvalue = 6.15821 - this.platformarray[21].gety();
+                if (this.yvalue < 12.0) {
+                    this.platformarray[21].interpolate(this.platformarray[21].getx(), this.platformarray[21].gety() - 2, this.platformarray[21].getz(), 0.4);
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "pf56") {
+                this.platformarray[22].setcollide();
+                this.yvalue = 6.15821 - this.platformarray[22].gety();
+                if (this.yvalue < 12.0) {
+                    this.platformarray[22].interpolate(this.platformarray[22].getx(), this.platformarray[22].gety() - 2, this.platformarray[22].getz(), 0.4);
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "pf57") {
+                this.platformarray[23].setcollide();
+                this.yvalue = 6.15821 - this.platformarray[23].gety();
+                if (this.yvalue < 12.0) {
+                    this.platformarray[23].interpolate(this.platformarray[23].getx(), this.platformarray[23].gety() - 2, this.platformarray[23].getz(), 0.4);
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "pf58") {
+                this.platformarray[24].setcollide();
+                this.yvalue = 6.15821 - this.platformarray[24].gety();
+                if (this.yvalue < 12.0) {
+                    this.platformarray[24].interpolate(this.platformarray[24].getx(), this.platformarray[24].gety() - 2, this.platformarray[24].getz(), 0.4);
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "pf60") {
+                this.platformarray[25].setcollide();
+                this.yvalue = 6.15821 - this.platformarray[25].gety();
+                if (this.yvalue < 12.0) {
+                    this.platformarray[25].interpolate(this.platformarray[25].getx(), this.platformarray[25].gety() - 2, this.platformarray[25].getz(), 0.4);
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "pf62") {
+                this.platformarray[26].setcollide();
+                this.yvalue = 6.15821 - this.platformarray[26].gety();
+                if (this.yvalue < 12.0) {
+                    this.platformarray[26].interpolate(this.platformarray[26].getx(), this.platformarray[26].gety() - 2, this.platformarray[26].getz(), 0.4);
+                }
+            }
+            scslosifoundation::identifiertostring(param1.args[1]);
+        }
+        else if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                globalclass.player.kill();
+                this.parent.level.cam.setaimode(7);
+                globalclass.player.actor.setinputstate("none");
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
+                globalclass.player.kill();
+                this.parent.level.cam.setaimode(7);
+                globalclass.player.actor.setinputstate("none");
+            }
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            this.resetplatforms();
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("k000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb01"), 0);
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 7) {
+            if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
+                gcstaticsoundsptrarray::playtablesound(144);
+            }
+        }
+        return null;
+    }
+    
+    method resetplatforms() {
+        this.platformarray[0].reset();
+        this.platformarray[1].reset();
+        this.platformarray[5].reset();
+        this.platformarray[6].reset();
+        this.platformarray[13].reset();
+        this.platformarray[14].reset();
+        this.platformarray[15].reset();
+        this.platformarray[16].reset();
+        this.platformarray[17].reset();
+        this.platformarray[18].reset();
+        this.platformarray[19].reset();
+        this.platformarray[20].reset();
+        this.platformarray[21].setposition(this.platformarray[21].getx(), 6.15821, this.platformarray[21].getz());
+        this.platformarray[22].setposition(this.platformarray[22].getx(), 6.15821, this.platformarray[22].getz());
+        this.platformarray[23].setposition(this.platformarray[23].getx(), 6.15821, this.platformarray[23].getz());
+        this.platformarray[24].setposition(this.platformarray[24].getx(), 6.15821, this.platformarray[24].getz());
+        this.platformarray[25].setposition(this.platformarray[25].getx(), 6.15821, this.platformarray[25].getz());
+        this.platformarray[26].setposition(this.platformarray[26].getx(), 6.15821, this.platformarray[26].getz());
+        gcareadirector::setallobjectsalpha(0.0);
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 67) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        globalclass.player.addmask("mks2", 3);
+        return null;
+    }
+}

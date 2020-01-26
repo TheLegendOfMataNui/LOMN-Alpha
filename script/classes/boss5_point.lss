@@ -1,0 +1,10 @@
+class boss5_point {
+    property x;
+    property y;
+    
+    method boss5_point(param1, param2) {
+        this.x = param1;
+        this.y = param2;
+        return null;
+    }
+}

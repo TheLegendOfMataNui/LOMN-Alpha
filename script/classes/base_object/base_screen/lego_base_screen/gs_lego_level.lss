@@ -1,0 +1,345 @@
+class gs_lego_level : lego_base_screen {
+    property name;
+    property id;
+    property toa;
+    property areas;
+    property active_areas;
+    property cam;
+    property startingarea;
+    
+    method gs_lego_level(param1, param2, param3) {
+        this.name = param1;
+        this.id = scslosifoundation::stringtoidentifier(param1);
+        this.toa = param2;
+        this.startingarea = param3;
+        this.areas = [  ];
+        this.active_areas = [  ];
+        return null;
+    }
+    
+    method initfull() {
+        this.lego_level_initfull();
+        return null;
+    }
+    
+    method lego_level_initfull() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        debug::print("[][][] set current level in globalclass");
+        globalclass.setcurrentlevel(this);
+        if (this.areas == null) {
+            this.areas = [  ];
+        }
+        if (this.active_areas == null) {
+            this.active_areas = [  ];
+        }
+        debug::print("[][][] set current level in AreaDirector");
+        gcareadirector::setcurrentlevel(this.name);
+        debug::print("[][][] load stuff from saver if it is loaded");
+        if (globalclass.saverloaded) {
+            var1 = gcsaver::getarea();
+            this.startingarea = scslosifoundation::identifiertostring(var1);
+        }
+        else if (!(this.argarray == null)) {
+            this.startingarea = this.argarray[0];
+        }
+        debug::print("[][][] create the camera");
+        this.cam = new gs_legocamera(0 - 1000.0, 1500.0, 3000.0, 0 - 1000.0, 800.0, 0.0);
+        this.cam.initfull();
+        debug::print("[][][] set the actor");
+        if (globalclass.saverloaded) {
+            this.toa = scslosifoundation::identifiertostring(gcsaver::gettoa());
+            debug::print(("[][][] toa " + this.toa) + " loaded from saver");
+        }
+        if (!(this.toa == "none") && !(this.toa == null)) {
+            globalclass.player.setactor("cnt1", this.toa, 0.0, 0.0, 0.0, 0.0, "ninp");
+        }
+        debug::print("[][][] Load in the current area");
+        this.areasetcurrent(scslosifoundation::stringtoidentifier(this.startingarea));
+        debug::print("[][][] initfull the actor");
+        if (!(this.toa == "none")) {
+            globalclass.player.actorinitfull();
+        }
+        debug::print("[][][] init the active area");
+        this.areasetactive(scslosifoundation::stringtoidentifier(this.startingarea));
+        debug::print("[][][] do some other stuff");
+        if (globalclass.saverloaded) {
+            this.areasaveenterlocation(scslosifoundation::stringtoidentifier(this.startingarea), gcsaver::getstart(), gcsaver::getlook());
+        }
+        else {
+            this.areasaveenterlocation(scslosifoundation::stringtoidentifier(this.startingarea), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+        }
+        gclightdirector::toggleconstantlights();
+        debug::print("[][][] more player init stuff");
+        if (!(this.toa == "none")) {
+            if (globalclass.saverloaded) {
+                globalclass.player.actor.gotopos(gcsaver::getstart(), gcsaver::getlook());
+            }
+            else {
+                globalclass.player.actor.gotopos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            }
+            var2 = this.cam.getaimode();
+            if (!(var2 == 9)) {
+                this.cam.setaimode(11);
+            }
+        }
+        this.cam.settweakable();
+        if (!(var2 == 9)) {
+            debug::print("[][][]show the hud");
+            globalclass.hud.show();
+        }
+        debug::print("[][][]set tokens");
+        if (globalclass.saverloaded) {
+            var3 = gcsaver::gettokencount();
+            if (!(var3 == null)) {
+                globalclass.player.settokens(var3);
+            }
+        }
+        debug::print("[][][]what the hell does this do anyway?");
+        var4 = 0;
+        while ((this.areas.__length - 1) >= var4) {
+            globalclass.render.addareatorender(this.areas[var4].id);
+            var4 = var4 + 1;
+        }
+        if (globalclass.saverloaded) {
+            globalclass.player.initfromsaver();
+        }
+        return null;
+    }
+    
+    method initshort() {
+        this.lego_level_initshort();
+        return null;
+    }
+    
+    method lego_level_initshort() {
+        var var1;
+        var1 = 0;
+        while ((this.areas.__length - 1) >= var1) {
+            this.areas[var1].initfull();
+            var1 = var1 + 1;
+        }
+        gcareadirector::switchareas(scslosifoundation::stringtoidentifier(this.startingarea), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+        globalclass.player.actor.gotopos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+        this.cam.setaimode(11);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.lego_level_cleanupfull();
+        return null;
+    }
+    
+    method lego_level_cleanupfull() {
+        var var1;
+        var var2;
+        debug::print("\\\\\cleaning up level");
+        if (!(this.active_areas == null)) {
+            var1 = this.active_areas.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                gcareadirector::removearea(this.active_areas[var2].id);
+                this.active_areas[var2] = null;
+                var2 = var2 + 1;
+            }
+            this.active_areas = null;
+        }
+        if (!(this.cam == null)) {
+            this.cam.cleanupfull();
+            this.cam = null;
+        }
+        return null;
+    }
+    
+    method exit() {
+        var var1;
+        var var2;
+        this.cleanupfull();
+        if (!(this.areas == null)) {
+            var1 = this.areas.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.areas[var2] = null;
+                var2 = var2 + 1;
+            }
+            this.areas = null;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        this.lego_level_process(param1);
+        return null;
+    }
+    
+    method lego_level_process(param1) {
+        var var1;
+        if (!(this.cam == null)) {
+            var1 = 0;
+            while ((this.active_areas.__length - 1) >= var1) {
+                this.active_areas[var1].process(param1);
+                var1 = var1 + 1;
+            }
+            this.cam.process(param1);
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        this.lego_level_onevent(param1);
+        return null;
+    }
+    
+    method lego_level_onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        if (!(this.cam == null)) {
+            if (param1.eventid == 20) {
+                var1 = param1.args[0];
+                this.areasetinactive(var1);
+            }
+            else if (param1.eventid == 21) {
+                var1 = param1.args[0];
+                this.areasetactive(var1);
+                this.areasaveenterlocation(var1, param1.args[1], param1.args[2]);
+                globalclass.player.savetosaver();
+            }
+            else if (param1.eventid == 28) {
+                globalclass.hud.hide();
+            }
+            else if (param1.eventid == 29) {
+                var2 = this.cam.getaimode();
+                if (!(var2 == 9)) {
+                    globalclass.hud.show();
+                }
+            }
+            else if (param1.eventid == 20) {
+                var3 = [  ];
+                var4 = 0;
+                while ((this.active_areas.__length - 1) >= var4) {
+                    var3.__append(this.active_areas[var4].id);
+                    var4 = var4 + 1;
+                }
+                var4 = 0;
+                while ((var3.__length - 1) >= var4) {
+                    if (!(var3[var4] == var1)) {
+                        this.areasetinactive(var3[var4]);
+                    }
+                    var4 = var4 + 1;
+                }
+            }
+            var4 = 0;
+            while ((this.active_areas.__length - 1) >= var4) {
+                this.active_areas[var4].onevent(param1);
+                var4 = var4 + 1;
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        this.lego_level_input(param1);
+        return null;
+    }
+    
+    method lego_level_input(param1) {
+        var var1;
+        if (!(this.cam == null)) {
+            var1 = 0;
+            while ((this.active_areas.__length - 1) >= var1) {
+                this.active_areas[var1].input(param1);
+                var1 = var1 + 1;
+            }
+            this.cam.input(param1);
+            if (param1.button == 8) {
+                if (param1.event == 2) {
+                    this.backtomenu();
+                }
+            }
+        }
+        return null;
+    }
+    
+    method areasetactive(param1) {
+        var var1;
+        if (this.getactive(param1) == null) {
+            var1 = this.getarea(param1);
+            if (!(var1 == null)) {
+                this.areas[var1].initfull();
+                this.active_areas.__append(this.areas[var1]);
+            }
+            else {
+                debug::print(("Area '" + scslosifoundation::identifiertostring(param1)) + "' is not in the areas array!");
+            }
+        }
+        return null;
+    }
+    
+    method areasetcurrent(param1) {
+        var var1;
+        var1 = this.getarea(param1);
+        this.areas[var1].setcurrent();
+        return null;
+    }
+    
+    method areasetinactive(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.active_areas.__length - 1) >= var1) {
+            if (this.active_areas[var1].id == param1) {
+                this.active_areas[var1].cleanupfull();
+                this.active_areas.__removeat(var1);
+                return 1;
+            }
+            var1 = var1 + 1;
+        }
+        return 0;
+    }
+    
+    method areasaveenterlocation(param1, param2, param3) {
+        var var1;
+        var var2;
+        var1 = 0;
+        while ((this.active_areas.__length - 1) >= var1) {
+            if (this.active_areas[var1].id == param1) {
+                var2 = this.active_areas[var1];
+                var2.enterstartid = param2;
+                var2.enterlookid = param3;
+            }
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method getarea(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.areas.__length - 1) >= var1) {
+            if (this.areas[var1].id == param1) {
+                return var1;
+            }
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method getactive(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.active_areas.__length - 1) >= var1) {
+            if (this.active_areas[var1].id == param1) {
+                return var1;
+            }
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method backtomenu() {
+        return null;
+    }
+}

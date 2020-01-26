@@ -1,0 +1,47 @@
+class legomp3player {
+    property handle;
+    
+    method legomp3player() {
+        this.handle = gcmp3player::create();
+        return null;
+    }
+    
+    method setupforplay(param1) {
+        gcmp3player::setupforplay(this.handle, param1);
+        return null;
+    }
+    
+    method cleanupfordestroy() {
+        gcmp3player::cleanupfordestroy(this.handle);
+        return null;
+    }
+    
+    method play(param1) {
+        gcmp3player::play(this.handle, param1);
+        return null;
+    }
+    
+    method isplaying() {
+        return gcmp3player::isplaying(this.handle);
+    }
+    
+    method pause() {
+        gcmp3player::pause(this.handle);
+        return null;
+    }
+    
+    method stop() {
+        gcmp3player::stop(this.handle);
+        return null;
+    }
+    
+    method setvolume(param1) {
+        gcmp3player::setvolume(this.handle, param1);
+        return null;
+    }
+    
+    method setbalance(param1) {
+        gcmp3player::setbalance(this.handle, param1);
+        return null;
+    }
+}

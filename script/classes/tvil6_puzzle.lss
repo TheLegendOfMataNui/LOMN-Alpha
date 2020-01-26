@@ -1,0 +1,56 @@
+class tvil6_puzzle {
+    property parent;
+    
+    method tvil6_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        return null;
+    }
+    
+    method cleanupfull() {
+        return null;
+    }
+    
+    method initshort() {
+        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        globalclass.player.unkill();
+        globalclass.player.actor.setinputstate("ninp");
+        return null;
+    }
+    
+    method cleanupshort() {
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 1) {
+            if (param1.args[1] == scslosifoundation::stringtoidentifier("cnt1")) {
+                
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+            this.cleanupshort();
+        }
+        else if (param1.eventid == 27) {
+            this.initshort();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

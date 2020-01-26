@@ -1,0 +1,1109 @@
+class boss6_puzzle {
+    property parent;
+    property platformpiecearray;
+    property chunksarray;
+    property chunkarraytimers;
+    property dropplatformstimer;
+    property checkplatformyposition;
+    property puffthemagicdragon;
+    property letthebattlebegin;
+    property animationboundtimer;
+    property attacktimer;
+    property sitidleunderwatertimer;
+    property fallingspikes;
+    property spike1coords;
+    property spike2coords;
+    property spike3coords;
+    property spike4coords;
+    property spike5coords;
+    property spike6coords;
+    property shakefallingspiketimerarray;
+    property currentspike;
+    property canvibrate;
+    property newarray;
+    property anarray;
+    property arrayposition;
+    property resetspike1timer;
+    property resetspike2timer;
+    property resetspike3timer;
+    property resetspike4timer;
+    property resetspike5timer;
+    property resetspike6timer;
+    property tempscale1;
+    property tempscale2;
+    property tempscale3;
+    property tempscale4;
+    property tempscale5;
+    property tempscale6;
+    property changespike1scale;
+    property changespike2scale;
+    property changespike3scale;
+    property changespike4scale;
+    property changespike5scale;
+    property changespike6scale;
+    property firsthit1;
+    property firsthit2;
+    property firsthit3;
+    property firsthit4;
+    property firsthit5;
+    property firsthit6;
+    property fireballs;
+    property platformtobreak;
+    property anarrayexists;
+    property startingpos;
+    property puffcanbehit;
+    property attackcase;
+    property dragon_hit_points;
+    property spitfireball2timer;
+    property spitfireball3timer;
+    property candovolcanopower;
+    property tahumustdie;
+    property movebasedontimer;
+    
+    method boss6_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        this.platformpiecearray = [ new platform("pa01"), 
+            new platform("pa02"), 
+            new platform("pa03"), 
+            new platform("pa04"), 
+            new platform("pb01"), 
+            new platform("pb02"), 
+            new platform("pb03"), 
+            new platform("pb04"), 
+            new platform("pc01"), 
+            new platform("pc02"), 
+            new platform("pc03"), 
+            new platform("pc04"), 
+            new platform("pd01"), 
+            new platform("pd02"), 
+            new platform("pd03"), 
+            new platform("pd04"), 
+            new platform("pe01"), 
+            new platform("pe02"), 
+            new platform("pe03"), 
+            new platform("pe04"), 
+            new platform("pf01"), 
+            new platform("pf02"), 
+            new platform("pf03"), 
+            new platform("pf04") ];
+        this.chunksarray = [ new platform("ch00"), 
+            new platform("ch01"), 
+            new platform("ch02"), 
+            new platform("ch03"), 
+            new platform("ch04"), 
+            new platform("ch05"), 
+            new platform("ch06"), 
+            new platform("ch07") ];
+        this.chunkarraytimers = [ new lego_timer("cat0", 0.1, 0), 
+            new lego_timer("cat1", 1.5, 0), 
+            new lego_timer("cat2", 1.1, 0), 
+            new lego_timer("cat3", 1.6, 0), 
+            new lego_timer("cat4", 0.4, 0), 
+            new lego_timer("cat5", 1.3, 0), 
+            new lego_timer("cat6", 0.9, 0), 
+            new lego_timer("cat7", 1.7, 0) ];
+        this.fallingspikes = [ new spike("tip1"), 
+            new spike("tip2"), 
+            new spike("tip3"), 
+            new spike("tip4"), 
+            new spike("tip5"), 
+            new spike("tip6") ];
+        this.fireballs = [ new lego_projectileobject("spl1"), 
+            new lego_projectileobject("spl2"), 
+            new lego_projectileobject("spl3") ];
+        this.dropplatformstimer = new lego_timer("drpt", 0.2, 0);
+        this.attacktimer = new lego_timer("atkt", 8.0, 0);
+        this.animationboundtimer = new lego_timer("abtm", 8.0 - 2, 0);
+        this.sitidleunderwatertimer = new lego_timer("sitt", 2.0, 0);
+        this.spitfireball2timer = new lego_timer("spt2", 0.3, 0);
+        this.spitfireball3timer = new lego_timer("spt3", 0.6, 0);
+        this.checkplatformyposition = 1;
+        this.letthebattlebegin = 0;
+        gcareadirector::setnearestmax(50);
+        var1 = 0;
+        while ((this.platformpiecearray.__length - 1) >= var1) {
+            this.platformpiecearray[var1].initfull();
+            this.platformpiecearray[var1].obj.setobjgravity(20.0);
+            this.platformpiecearray[var1].obj.setresponse(1, 0, 1);
+            this.platformpiecearray[var1].obj.setmoveable(0);
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.chunksarray.__length - 1) >= var1) {
+            this.chunksarray[var1].initfull();
+            this.chunksarray[var1].obj.setobjgravity(5.0);
+            this.chunksarray[var1].obj.setresponse(1, 0, 1);
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.chunkarraytimers.__length - 1) >= var1) {
+            this.chunkarraytimers[var1].initfull();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.fallingspikes.__length - 1) >= var1) {
+            this.fallingspikes[var1].obj.initfull();
+            this.fallingspikes[var1].obj.setmoveable(null, null, 0, 0, 0, 0);
+            var1 = var1 + 1;
+        }
+        this.dropplatformstimer.initfull();
+        this.attacktimer.initfull();
+        this.animationboundtimer.initfull();
+        this.sitidleunderwatertimer.initfull();
+        this.spike1coords = new basicpoint(this.fallingspikes[0].obj.getx(), this.fallingspikes[0].obj.gety(), this.fallingspikes[0].obj.getz());
+        this.spike2coords = new basicpoint(this.fallingspikes[1].obj.getx(), this.fallingspikes[1].obj.gety(), this.fallingspikes[1].obj.getz());
+        this.spike3coords = new basicpoint(this.fallingspikes[2].obj.getx(), this.fallingspikes[2].obj.gety(), this.fallingspikes[2].obj.getz());
+        this.spike4coords = new basicpoint(this.fallingspikes[3].obj.getx(), this.fallingspikes[3].obj.gety(), this.fallingspikes[3].obj.getz());
+        this.spike5coords = new basicpoint(this.fallingspikes[4].obj.getx(), this.fallingspikes[4].obj.gety(), this.fallingspikes[4].obj.getz());
+        this.spike6coords = new basicpoint(this.fallingspikes[5].obj.getx(), this.fallingspikes[5].obj.gety(), this.fallingspikes[5].obj.getz());
+        this.startingpos = globalclass.randnum.getrandomnumber(0, 5);
+        this.puffthemagicdragon = new gs_lego_character("puff", "drag", "fake", 0, this.fallingspikes[this.startingpos].obj.getx(), 0 - 43.11758, this.fallingspikes[this.startingpos].obj.getz(), "aiin");
+        this.puffthemagicdragon.initfull();
+        this.puffthemagicdragon.add();
+        this.puffthemagicdragon.show();
+        this.puffthemagicdragon.disableai();
+        this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr02"));
+        this.shakefallingspiketimerarray = [ new lego_timer("sfs1", 0.3, 0), 
+            new lego_timer("sfs2", 0.3, 0), 
+            new lego_timer("sfs3", 0.3, 0), 
+            new lego_timer("sfs4", 0.3, 0), 
+            new lego_timer("sfs5", 0.3, 0), 
+            new lego_timer("sfs6", 0.3, 0) ];
+        var1 = 0;
+        while ((this.shakefallingspiketimerarray.__length - 1) >= var1) {
+            this.shakefallingspiketimerarray[var1].initfull();
+            var1 = var1 + 1;
+        }
+        this.resetspike1timer = new lego_timer("rst1", 7.0, 0);
+        this.resetspike2timer = new lego_timer("rst2", 7.0, 0);
+        this.resetspike3timer = new lego_timer("rst3", 7.0, 0);
+        this.resetspike4timer = new lego_timer("rst4", 7.0, 0);
+        this.resetspike5timer = new lego_timer("rst5", 7.0, 0);
+        this.resetspike6timer = new lego_timer("rst6", 7.0, 0);
+        this.resetspike1timer.initfull();
+        this.resetspike2timer.initfull();
+        this.resetspike3timer.initfull();
+        this.resetspike4timer.initfull();
+        this.resetspike5timer.initfull();
+        this.resetspike6timer.initfull();
+        this.spitfireball2timer.initfull();
+        this.spitfireball3timer.initfull();
+        this.newarray = [  ];
+        this.arrayposition = 0;
+        this.tempscale1 = 0.1;
+        this.tempscale2 = 0.1;
+        this.tempscale3 = 0.1;
+        this.tempscale4 = 0.1;
+        this.tempscale5 = 0.1;
+        this.tempscale6 = 0.1;
+        this.changespike1scale = 0;
+        this.changespike2scale = 0;
+        this.changespike3scale = 0;
+        this.changespike4scale = 0;
+        this.changespike5scale = 0;
+        this.changespike6scale = 0;
+        this.anarrayexists = 0;
+        this.puffcanbehit = 0;
+        this.attackcase = 1;
+        this.dragon_hit_points = 7;
+        this.candovolcanopower = 1;
+        this.tahumustdie = 0;
+        this.movebasedontimer = 1;
+        this.firsthit1 = 1;
+        this.firsthit2 = 1;
+        this.firsthit3 = 1;
+        this.firsthit4 = 1;
+        this.firsthit5 = 1;
+        this.firsthit6 = 1;
+        var1 = 0;
+        while ((this.fireballs.__length - 1) >= var1) {
+            this.fireballs[var1].init(0.7, 0, 0, 0, 0, 1.0, "bl00", "Root/data/levels/lev6/ta10");
+            this.fireballs[var1].setscale(0.8);
+            this.fireballs[var1].setbounceeventrepoert(1);
+            this.fireballs[var1].setalpha();
+            this.fireballs[var1].setprojectileoffset(-5, 40, 0);
+            this.fireballs[var1].settargettoa(1);
+            var1 = var1 + 1;
+        }
+        this.anarray = this.scramble(1, 2, 3, 4, 5, 6, 6);
+        this.anarrayexists = 1;
+        this.platformtobreak = 0;
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("t036"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("dr04"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("dr05"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("dr06"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("dr07"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("dr09"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("dr11"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("dr13"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("dr14"));
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        var1 = 0;
+        while ((this.platformpiecearray.__length - 1) >= var1) {
+            this.platformpiecearray[var1].cleanupfull();
+            this.platformpiecearray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.platformpiecearray = null;
+        var1 = 0;
+        while ((this.chunksarray.__length - 1) >= var1) {
+            this.chunksarray[var1].cleanupfull();
+            this.chunksarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.chunksarray = null;
+        var1 = 0;
+        while ((this.chunkarraytimers.__length - 1) >= var1) {
+            this.chunkarraytimers[var1].cleanupfull();
+            this.chunkarraytimers[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.chunkarraytimers = null;
+        this.dropplatformstimer.cleanupfull();
+        this.dropplatformstimer = null;
+        this.checkplatformyposition = null;
+        this.puffthemagicdragon.cleanupfull();
+        this.puffthemagicdragon = null;
+        this.letthebattlebegin = null;
+        this.animationboundtimer.cleanupfull();
+        this.animationboundtimer = null;
+        this.attacktimer.cleanupfull();
+        this.attacktimer = null;
+        this.sitidleunderwatertimer.cleanupfull();
+        this.sitidleunderwatertimer = null;
+        var1 = 0;
+        while ((this.fallingspikes.__length - 1) >= var1) {
+            this.fallingspikes[var1].cleanupfull();
+            var1 = var1 + 1;
+        }
+        this.fallingspikes = null;
+        this.spike1coords.cleanupfull();
+        this.spike1coords = null;
+        this.spike2coords.cleanupfull();
+        this.spike2coords = null;
+        this.spike3coords.cleanupfull();
+        this.spike3coords = null;
+        this.spike4coords.cleanupfull();
+        this.spike4coords = null;
+        this.spike5coords.cleanupfull();
+        this.spike5coords = null;
+        this.spike6coords.cleanupfull();
+        this.spike6coords = null;
+        var1 = 0;
+        while ((this.shakefallingspiketimerarray.__length - 1) >= var1) {
+            this.shakefallingspiketimerarray[var1].cleanupfull();
+            this.shakefallingspiketimerarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.shakefallingspiketimerarray = null;
+        this.currentspike = null;
+        this.canvibrate = null;
+        var1 = 0;
+        while ((this.newarray.__length - 1) >= var1) {
+            this.newarray[var1].cleanupfull();
+            this.newarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.newarray = null;
+        this.anarray = null;
+        this.arrayposition = null;
+        this.resetspike1timer.cleanupfull();
+        this.resetspike1timer = null;
+        this.resetspike2timer.cleanupfull();
+        this.resetspike2timer = null;
+        this.resetspike3timer.cleanupfull();
+        this.resetspike3timer = null;
+        this.resetspike4timer.cleanupfull();
+        this.resetspike4timer = null;
+        this.resetspike5timer.cleanupfull();
+        this.resetspike5timer = null;
+        this.resetspike6timer.cleanupfull();
+        this.resetspike6timer = null;
+        this.tempscale1 = null;
+        this.tempscale2 = null;
+        this.tempscale3 = null;
+        this.tempscale4 = null;
+        this.tempscale5 = null;
+        this.tempscale6 = null;
+        this.changespike1scale = null;
+        this.changespike2scale = null;
+        this.changespike3scale = null;
+        this.changespike4scale = null;
+        this.changespike5scale = null;
+        this.changespike6scale = null;
+        this.firsthit1 = null;
+        this.firsthit2 = null;
+        this.firsthit3 = null;
+        this.firsthit4 = null;
+        this.firsthit5 = null;
+        this.firsthit6 = null;
+        var1 = 0;
+        while ((this.fireballs.__length - 1) >= var1) {
+            this.fireballs[var1].cleanupfull();
+            this.fireballs[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.fireballs = null;
+        this.platformtobreak = null;
+        this.anarrayexists = null;
+        this.startingpos = null;
+        this.puffcanbehit = null;
+        this.attackcase = null;
+        this.dragon_hit_points = null;
+        this.spitfireball2timer.cleanupfull();
+        this.spitfireball2timer = null;
+        this.spitfireball3timer.cleanupfull();
+        this.spitfireball3timer = null;
+        this.candovolcanopower = null;
+        this.tahumustdie = null;
+        this.movebasedontimer = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var var2;
+        if (this.checkplatformyposition) {
+            if (this.platformpiecearray[0].obj.gety() <= (0 - 23.95)) {
+                this.checkplatformyposition = 0;
+                var1 = 0;
+                while ((this.platformpiecearray.__length - 1) >= var1) {
+                    this.platformpiecearray[var1].obj.setmoveableflags(0, 0, 0, 0);
+                    var1 = var1 + 1;
+                }
+                var2 = globalclass.randnum.getrandomnumber(1, 4);
+                if (var2 == 1) {
+                    globalclass.level.cam.interpolate(0 - 3.77, 0 - 6.65, 0 - 86.13, 1.175, 0 - 24.276, 2.477, 3.0);
+                }
+                else if (var2 == 2) {
+                    globalclass.level.cam.interpolate(90.0, 0 - 6.65, 2.19, 1.175, 0 - 24.276, 2.477, 3.0);
+                }
+                else if (var2 == 3) {
+                    globalclass.level.cam.interpolate(5.5, 0 - 6.65, 87.07, 1.175, 0 - 24.276, 2.477, 3.0);
+                }
+                else if (var2 == 4) {
+                    globalclass.level.cam.interpolate(0 - 88.19, 0 - 6.65, 7.51, 1.175, 0 - 24.276, 2.477, 3.0);
+                }
+            }
+        }
+        if (this.letthebattlebegin && (globalclass.player.actor.getpos().y1 <= 35.0)) {
+            this.letthebattlebegin = 0;
+            this.sitidleunderwatertimer.reset(0);
+            this.sitidleunderwatertimer.start();
+        }
+        if (this.canvibrate) {
+            if (!(this.currentspike == null)) {
+                this.vibrate(this.currentspike);
+            }
+        }
+        if (this.changespike1scale) {
+            this.fallingspikes[0].obj.setobjscale(this.tempscale1);
+            this.tempscale1 = this.tempscale1 + 0.05;
+            if (this.tempscale1 > 1.05) {
+                this.changespike1scale = 0;
+                this.tempscale1 = 0.1;
+            }
+        }
+        if (this.changespike2scale) {
+            this.fallingspikes[1].obj.setobjscale(this.tempscale2);
+            this.tempscale2 = this.tempscale2 + 0.05;
+            if (this.tempscale2 > 1.05) {
+                this.changespike2scale = 0;
+                this.tempscale2 = 0.1;
+            }
+        }
+        if (this.changespike3scale) {
+            this.fallingspikes[2].obj.setobjscale(this.tempscale3);
+            this.tempscale3 = this.tempscale3 + 0.05;
+            if (this.tempscale3 > 1.05) {
+                this.changespike3scale = 0;
+                this.tempscale3 = 0.1;
+            }
+        }
+        if (this.changespike4scale) {
+            this.fallingspikes[3].obj.setobjscale(this.tempscale4);
+            this.tempscale4 = this.tempscale4 + 0.05;
+            if (this.tempscale4 > 1.05) {
+                this.changespike4scale = 0;
+                this.tempscale4 = 0.1;
+            }
+        }
+        if (this.changespike5scale) {
+            this.fallingspikes[4].obj.setobjscale(this.tempscale5);
+            this.tempscale5 = this.tempscale5 + 0.05;
+            if (this.tempscale5 > 1.05) {
+                this.changespike5scale = 0;
+                this.tempscale5 = 0.1;
+            }
+        }
+        if (this.changespike6scale) {
+            this.fallingspikes[5].obj.setobjscale(this.tempscale6);
+            this.tempscale6 = this.tempscale6 + 0.05;
+            if (this.tempscale6 > 1.05) {
+                this.changespike6scale = 0;
+                this.tempscale6 = 0.1;
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        if (param1.eventid == 8) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("spt2")) {
+                this.fireballs[1].show();
+                this.fireballs[1].setmoveableflags(1, 1, 0, 1);
+                this.fireballs[1].throwprojectile(100, 0.3, scslosifoundation::stringtoidentifier("puff"), 0.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("spt3")) {
+                this.fireballs[2].show();
+                this.fireballs[2].setmoveableflags(1, 1, 0, 1);
+                this.fireballs[2].throwprojectile(100, 0.3, scslosifoundation::stringtoidentifier("puff"), 0.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cat0")) {
+                this.chunksarray[0].obj.setmoveableflags(1, 1, 0, 1);
+                this.chunksarray[0].obj.setrollangle(0.0, 6.0, 8.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cat1")) {
+                this.chunksarray[1].obj.setmoveableflags(1, 1, 0, 1);
+                this.chunksarray[1].obj.setrollangle(9.0, 4.0, 0.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cat2")) {
+                this.chunksarray[2].obj.setmoveableflags(1, 1, 0, 1);
+                this.chunksarray[2].obj.setrollangle(7.0, 0.0, 7.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cat3")) {
+                this.chunksarray[3].obj.setmoveableflags(1, 1, 0, 1);
+                this.chunksarray[3].obj.setrollangle(0.0, 6.0, 8.0);
+                this.dropplatformstimer.reset(0);
+                this.dropplatformstimer.start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cat4")) {
+                this.chunksarray[4].obj.setmoveableflags(1, 1, 0, 1);
+                this.chunksarray[4].obj.setrollangle(9.0, 4.0, 0.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cat5")) {
+                this.chunksarray[5].obj.setmoveableflags(1, 1, 0, 1);
+                this.chunksarray[5].obj.setrollangle(0.0, 6.0, 8.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cat6")) {
+                this.chunksarray[6].obj.setmoveableflags(1, 1, 0, 1);
+                this.chunksarray[6].obj.setrollangle(7.0, 0.0, 7.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cat7")) {
+                this.chunksarray[7].obj.setmoveableflags(1, 1, 0, 1);
+                this.chunksarray[7].obj.setrollangle(9.0, 4.0, 0.0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("drpt")) {
+                this.parent.level.cam.setaimode(7);
+                globalclass.player.actor.idle();
+                globalclass.player.actor.setinputstate("none");
+                var1 = 0;
+                while ((this.platformpiecearray.__length - 1) >= var1) {
+                    this.platformpiecearray[var1].obj.setmoveableflags(1, 0, 0, 1);
+                    var1 = var1 + 1;
+                }
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("sitt")) {
+                var2 = this.anarray[this.arrayposition].getnumber();
+                this.platformtobreak = var2;
+                if (var2 == 1) {
+                    this.puffthemagicdragon.setpos(this.spike1coords.x, 0 - 43.11758, this.spike1coords.z);
+                }
+                else if (var2 == 2) {
+                    this.puffthemagicdragon.setpos(this.spike2coords.x, 0 - 43.11758, this.spike2coords.z);
+                }
+                else if (var2 == 3) {
+                    this.puffthemagicdragon.setpos(this.spike3coords.x, 0 - 43.11758, this.spike3coords.z);
+                }
+                else if (var2 == 4) {
+                    this.puffthemagicdragon.setpos(this.spike4coords.x, 0 - 43.11758, this.spike4coords.z);
+                }
+                else if (var2 == 5) {
+                    this.puffthemagicdragon.setpos(this.spike5coords.x, 0 - 43.11758, this.spike5coords.z);
+                }
+                else if (var2 == 6) {
+                    this.puffthemagicdragon.setpos(this.spike6coords.x, 0 - 43.11758, this.spike6coords.z);
+                }
+                this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr04"));
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("atkt")) {
+                this.puffcanbehit = 0;
+                if (this.movebasedontimer) {
+                    if (this.attackcase == 1) {
+                        this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr05"));
+                    }
+                    else if (this.attackcase == 2) {
+                        this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr13"));
+                    }
+                }
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("sfs1")) {
+                this.canvibrate = 0;
+                this.currentspike = null;
+                this.fallingspikes[0].obj.setvelocity(0, 0, 0);
+                this.fallingspikes[0].obj.setvelocity(0, -30, 0);
+                this.fallingspikes[0].obj.setmoveableflags(1, 0, 0, 0);
+                this.resetspike1timer.reset(0);
+                this.resetspike1timer.start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("sfs2")) {
+                this.canvibrate = 0;
+                this.currentspike = null;
+                this.fallingspikes[1].obj.setvelocity(0, 0, 0);
+                this.fallingspikes[1].obj.setvelocity(0, -30, 0);
+                this.fallingspikes[1].obj.setmoveableflags(1, 0, 0, 0);
+                this.resetspike2timer.reset(0);
+                this.resetspike2timer.start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("sfs3")) {
+                this.canvibrate = 0;
+                this.currentspike = null;
+                this.fallingspikes[2].obj.setvelocity(0, 0, 0);
+                this.fallingspikes[2].obj.setvelocity(0, -30, 0);
+                this.fallingspikes[2].obj.setmoveableflags(1, 0, 0, 0);
+                this.resetspike3timer.reset(0);
+                this.resetspike3timer.start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("sfs4")) {
+                this.canvibrate = 0;
+                this.currentspike = null;
+                this.fallingspikes[3].obj.setvelocity(0, 0, 0);
+                this.fallingspikes[3].obj.setvelocity(0, -30, 0);
+                this.fallingspikes[3].obj.setmoveableflags(1, 0, 0, 0);
+                this.resetspike4timer.reset(0);
+                this.resetspike4timer.start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("sfs5")) {
+                this.canvibrate = 0;
+                this.currentspike = null;
+                this.fallingspikes[4].obj.setvelocity(0, 0, 0);
+                this.fallingspikes[4].obj.setvelocity(0, -30, 0);
+                this.fallingspikes[4].obj.setmoveableflags(1, 0, 0, 0);
+                this.resetspike5timer.reset(0);
+                this.resetspike5timer.start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("sfs6")) {
+                this.canvibrate = 0;
+                this.currentspike = null;
+                this.fallingspikes[5].obj.setvelocity(0, 0, 0);
+                this.fallingspikes[5].obj.setvelocity(0, -30, 0);
+                this.fallingspikes[5].obj.setmoveableflags(1, 0, 0, 0);
+                this.resetspike6timer.reset(0);
+                this.resetspike6timer.start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("rst1")) {
+                this.fallingspikes[0].obj.setalpha(1.0);
+                this.fallingspikes[0].obj.setobjscale(0.1);
+                this.fallingspikes[0].obj.setposition(this.spike1coords);
+                this.changespike1scale = 1;
+                this.firsthit1 = 1;
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("rst2")) {
+                this.fallingspikes[1].obj.setalpha(1.0);
+                this.fallingspikes[1].obj.setobjscale(0.1);
+                this.fallingspikes[1].obj.setposition(this.spike2coords);
+                this.changespike2scale = 1;
+                this.firsthit2 = 1;
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("rst3")) {
+                this.fallingspikes[2].obj.setalpha(1.0);
+                this.fallingspikes[2].obj.setobjscale(0.1);
+                this.fallingspikes[2].obj.setposition(this.spike3coords);
+                this.changespike3scale = 1;
+                this.firsthit3 = 1;
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("rst4")) {
+                this.fallingspikes[3].obj.setalpha(1.0);
+                this.fallingspikes[3].obj.setobjscale(0.1);
+                this.fallingspikes[3].obj.setposition(this.spike4coords);
+                this.changespike4scale = 1;
+                this.firsthit4 = 1;
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("rst5")) {
+                this.fallingspikes[4].obj.setalpha(1.0);
+                this.fallingspikes[4].obj.setobjscale(0.1);
+                this.fallingspikes[4].obj.setposition(this.spike5coords);
+                this.changespike5scale = 1;
+                this.firsthit5 = 1;
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("rst6")) {
+                this.fallingspikes[5].obj.setalpha(1.0);
+                this.fallingspikes[5].obj.setobjscale(0.1);
+                this.fallingspikes[5].obj.setposition(this.spike6coords);
+                this.changespike6scale = 1;
+                this.firsthit6 = 1;
+            }
+        }
+        else if (param1.eventid == 11) {
+            if (scslosifoundation::identifiertostring(param1.args[1]) == "t036") {
+                if (this.candovolcanopower) {
+                    this.candovolcanopower = 0;
+                    var1 = 0;
+                    while ((this.chunkarraytimers.__length - 1) >= var1) {
+                        this.chunkarraytimers[var1].reset(0);
+                        this.chunkarraytimers[var1].start();
+                        var1 = var1 + 1;
+                    }
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "dr11") {
+                this.movebasedontimer = 0;
+                this.puffcanbehit = 0;
+                if (this.attackcase == 1) {
+                    this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr05"));
+                }
+                else if (this.attackcase == 2) {
+                    this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr13"));
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "dr07") {
+                this.fireballs[0].show();
+                this.fireballs[0].setmoveableflags(1, 1, 0, 1);
+                this.fireballs[0].throwprojectile(100, 0.3, scslosifoundation::stringtoidentifier("puff"), 0.0);
+                this.spitfireball2timer.reset(0);
+                this.spitfireball2timer.start();
+                this.spitfireball3timer.reset(0);
+                this.spitfireball3timer.start();
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "dr09") {
+                var3 = globalclass.randnum.getrandomnumber(1, 7);
+                if (var3 >= 4) {
+                    this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr06"));
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "dr06") {
+                
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "dr13") {
+                globalclass.level.cam.shakecamera(0.5, 0.08);
+                if (this.platformtobreak == 1) {
+                    this.platformpiecearray[4].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[4].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[4].obj.setrollangle(9.0, 4.0, 0.0);
+                    this.platformpiecearray[5].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[5].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[5].obj.setrollangle(0.0, 6.0, 5.0);
+                    this.platformpiecearray[6].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[6].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[6].obj.setrollangle(7.0, 0.0, 7.0);
+                    this.platformpiecearray[7].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[7].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[7].obj.setrollangle(0.0, 6.0, 8.0);
+                }
+                else if (this.platformtobreak == 2) {
+                    this.platformpiecearray[0].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[0].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[0].obj.setrollangle(9.0, 4.0, 0.0);
+                    this.platformpiecearray[1].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[1].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[1].obj.setrollangle(0.0, 6.0, 5.0);
+                    this.platformpiecearray[2].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[2].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[2].obj.setrollangle(7.0, 0.0, 7.0);
+                    this.platformpiecearray[3].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[3].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[3].obj.setrollangle(0.0, 6.0, 8.0);
+                }
+                else if (this.platformtobreak == 3) {
+                    this.platformpiecearray[20].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[20].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[20].obj.setrollangle(9.0, 4.0, 0.0);
+                    this.platformpiecearray[21].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[21].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[21].obj.setrollangle(0.0, 6.0, 5.0);
+                    this.platformpiecearray[22].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[22].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[22].obj.setrollangle(7.0, 0.0, 7.0);
+                    this.platformpiecearray[23].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[23].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[23].obj.setrollangle(0.0, 6.0, 8.0);
+                }
+                else if (this.platformtobreak == 4) {
+                    this.platformpiecearray[16].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[16].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[16].obj.setrollangle(9.0, 4.0, 0.0);
+                    this.platformpiecearray[17].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[17].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[17].obj.setrollangle(0.0, 6.0, 5.0);
+                    this.platformpiecearray[18].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[18].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[18].obj.setrollangle(7.0, 0.0, 7.0);
+                    this.platformpiecearray[19].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[19].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[19].obj.setrollangle(0.0, 6.0, 8.0);
+                }
+                else if (this.platformtobreak == 5) {
+                    this.platformpiecearray[12].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[12].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[12].obj.setrollangle(9.0, 4.0, 0.0);
+                    this.platformpiecearray[13].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[13].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[13].obj.setrollangle(0.0, 6.0, 5.0);
+                    this.platformpiecearray[14].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[14].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[14].obj.setrollangle(7.0, 0.0, 7.0);
+                    this.platformpiecearray[15].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[15].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[15].obj.setrollangle(0.0, 6.0, 8.0);
+                }
+                else if (this.platformtobreak == 6) {
+                    this.platformpiecearray[8].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[8].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[8].obj.setrollangle(9.0, 4.0, 0.0);
+                    this.platformpiecearray[9].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[9].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[9].obj.setrollangle(0.0, 6.0, 5.0);
+                    this.platformpiecearray[10].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[10].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[10].obj.setrollangle(7.0, 0.0, 7.0);
+                    this.platformpiecearray[11].obj.setmoveableflags(1, 1, 0, 1);
+                    this.platformpiecearray[11].obj.setvelocity(0, 5, 0);
+                    this.platformpiecearray[11].obj.setrollangle(0.0, 6.0, 8.0);
+                }
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "dr14") {
+                this.arrayposition = this.arrayposition + 1;
+                if (this.arrayposition > 5) {
+                    this.arrayposition = 0;
+                    var1 = 0;
+                    while ((this.anarray.__length - 1) >= var1) {
+                        this.anarray.__removeat(0);
+                        var1 = var1 + 1;
+                    }
+                    this.cleanuparray();
+                    this.anarray = this.scramble(1, 2, 3, 4, 5, 6, 6);
+                    this.attackcase = 2;
+                }
+                this.sitidleunderwatertimer.reset(0);
+                this.sitidleunderwatertimer.start();
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "dr05") {
+                this.arrayposition = this.arrayposition + 1;
+                if (this.arrayposition > 5) {
+                    this.arrayposition = 0;
+                    var1 = 0;
+                    while ((this.anarray.__length - 1) >= var1) {
+                        this.anarray.__removeat(0);
+                        var1 = var1 + 1;
+                    }
+                    this.cleanuparray();
+                    this.anarray = this.scramble(1, 2, 3, 4, 5, 6, 6);
+                    this.attackcase = 2;
+                }
+                this.sitidleunderwatertimer.reset(0);
+                this.sitidleunderwatertimer.start();
+            }
+            else if (scslosifoundation::identifiertostring(param1.args[1]) == "dr04") {
+                this.movebasedontimer = 1;
+                this.attacktimer.reset(0);
+                this.attacktimer.start();
+                this.animationboundtimer.reset(0);
+                this.animationboundtimer.start();
+                this.puffcanbehit = 1;
+            }
+            scslosifoundation::identifiertostring(param1.args[1]);
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (this.tahumustdie) {
+                    var1 = 0;
+                    while ((this.platformpiecearray.__length - 1) >= var1) {
+                        var4 = this.platformpiecearray[var1].id;
+                        if (param1.args[1] == this.platformpiecearray[var1].id) {
+                            globalclass.player.kill();
+                        }
+                        var1 = var1 + 1;
+                    }
+                }
+            }
+            if (scslosifoundation::identifiertostring(param1.args[0]) == "cnt1") {
+                var1 = 0;
+                while ((this.fireballs.__length - 1) >= var1) {
+                    var2 = this.fireballs[var1].id;
+                    if (param1.args[1] == this.fireballs[var1].id) {
+                        globalclass.player.actor.react(0, 3, this.fireballs[var1].id);
+                    }
+                    var1 = var1 + 1;
+                }
+            }
+            if (scslosifoundation::identifiertostring(param1.args[1]) == "puff") {
+                if (param1.args[0] == scslosifoundation::stringtoidentifier("tip1")) {
+                    if (this.firsthit1) {
+                        this.fallingspikes[0].obj.setalpha(0.0);
+                        if (this.puffcanbehit) {
+                            this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr11"));
+                            this.dragon_hit_points = this.dragon_hit_points - 1;
+                            if (this.dragon_hit_points <= 0) {
+                                debug::print("THE DRAGON IS DEAD!!!!");
+                            }
+                        }
+                        this.firsthit1 = 0;
+                    }
+                }
+                else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip2")) {
+                    if (this.firsthit2) {
+                        if (this.puffcanbehit) {
+                            this.fallingspikes[1].obj.setalpha(0.0);
+                            this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr11"));
+                            this.dragon_hit_points = this.dragon_hit_points - 1;
+                            if (this.dragon_hit_points <= 0) {
+                                debug::print("THE DRAGON IS DEAD!!!!");
+                            }
+                        }
+                        this.firsthit2 = 0;
+                    }
+                }
+                else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip3")) {
+                    if (this.firsthit3) {
+                        if (this.puffcanbehit) {
+                            this.fallingspikes[2].obj.setalpha(0.0);
+                            this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr11"));
+                            this.dragon_hit_points = this.dragon_hit_points - 1;
+                            if (this.dragon_hit_points <= 0) {
+                                debug::print("THE DRAGON IS DEAD!!!!");
+                            }
+                        }
+                        this.firsthit3 = 0;
+                    }
+                }
+                else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip4")) {
+                    if (this.firsthit4) {
+                        if (this.puffcanbehit) {
+                            this.fallingspikes[3].obj.setalpha(0.0);
+                            this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr11"));
+                            this.dragon_hit_points = this.dragon_hit_points - 1;
+                            if (this.dragon_hit_points <= 0) {
+                                debug::print("THE DRAGON IS DEAD!!!!");
+                            }
+                        }
+                        this.firsthit4 = 0;
+                    }
+                }
+                else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip5")) {
+                    if (this.firsthit5) {
+                        if (this.puffcanbehit) {
+                            this.fallingspikes[4].obj.setalpha(0.0);
+                            this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr11"));
+                            this.dragon_hit_points = this.dragon_hit_points - 1;
+                            if (this.dragon_hit_points <= 0) {
+                                debug::print("THE DRAGON IS DEAD!!!!");
+                            }
+                        }
+                        this.firsthit5 = 0;
+                    }
+                }
+                else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip6")) {
+                    if (this.firsthit6) {
+                        if (this.puffcanbehit) {
+                            this.fallingspikes[5].obj.setalpha(0.0);
+                            this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr11"));
+                            this.dragon_hit_points = this.dragon_hit_points - 1;
+                            if (this.dragon_hit_points <= 0) {
+                                debug::print("THE DRAGON IS DEAD!!!!");
+                            }
+                        }
+                        this.firsthit6 = 0;
+                    }
+                }
+            }
+        }
+        else if (param1.eventid == 19) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tip1")) {
+                this.currentspike = this.fallingspikes[0].obj;
+                this.canvibrate = 1;
+                this.shakefallingspiketimerarray[0].reset(0);
+                this.shakefallingspiketimerarray[0].start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip2")) {
+                this.currentspike = this.fallingspikes[1].obj;
+                this.canvibrate = 1;
+                this.shakefallingspiketimerarray[1].reset(0);
+                this.shakefallingspiketimerarray[1].start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip3")) {
+                this.currentspike = this.fallingspikes[2].obj;
+                this.canvibrate = 1;
+                this.shakefallingspiketimerarray[2].reset(0);
+                this.shakefallingspiketimerarray[2].start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip4")) {
+                this.currentspike = this.fallingspikes[3].obj;
+                this.canvibrate = 1;
+                this.shakefallingspiketimerarray[3].reset(0);
+                this.shakefallingspiketimerarray[3].start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip5")) {
+                this.currentspike = this.fallingspikes[4].obj;
+                this.canvibrate = 1;
+                this.shakefallingspiketimerarray[4].reset(0);
+                this.shakefallingspiketimerarray[4].start();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tip6")) {
+                this.currentspike = this.fallingspikes[5].obj;
+                this.canvibrate = 1;
+                this.shakefallingspiketimerarray[5].reset(0);
+                this.shakefallingspiketimerarray[5].start();
+            }
+        }
+        else if (param1.eventid == 14) {
+            if (globalclass.player.actor.getpos().y1 >= 35.0) {
+                this.tahumustdie = 1;
+            }
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            this.letthebattlebegin = 1;
+            gccharacter::aiwatchtarget(this.puffthemagicdragon.handle);
+        }
+        else if (param1.eventid == 42) {
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            this.sitidleunderwatertimer.reset(0);
+            this.attacktimer.reset(0);
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            this.tempcleanup();
+        }
+        return null;
+    }
+    
+    method tempcleanup() {
+        var var1;
+        this.puffthemagicdragon.setsplitanimation(scslosifoundation::stringtoidentifier("dr02"));
+        this.checkplatformyposition = 1;
+        this.letthebattlebegin = 0;
+        this.firsthit1 = 1;
+        this.firsthit2 = 1;
+        this.firsthit3 = 1;
+        this.firsthit4 = 1;
+        this.firsthit5 = 1;
+        this.firsthit6 = 1;
+        this.puffcanbehit = 0;
+        this.dragon_hit_points = 7;
+        this.candovolcanopower = 1;
+        this.tahumustdie = 0;
+        this.movebasedontimer = 1;
+        var1 = 0;
+        while ((this.chunksarray.__length - 1) >= var1) {
+            this.chunksarray[var1].reset();
+            this.chunksarray[var1].reset();
+            this.chunksarray[var1].obj.setvelocity(0.0);
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.platformpiecearray.__length - 1) >= var1) {
+            this.platformpiecearray[var1].reset();
+            this.platformpiecearray[var1].reset();
+            this.platformpiecearray[var1].obj.setvelocity(0.0);
+            this.platformpiecearray[var1].obj.setrollangle(0.0);
+            var1 = var1 + 1;
+        }
+        this.arrayposition = 0;
+        var1 = 0;
+        while ((this.anarray.__length - 1) >= var1) {
+            this.anarray.__removeat(0);
+            var1 = var1 + 1;
+        }
+        this.cleanuparray();
+        this.anarray = this.scramble(1, 2, 3, 4, 5, 6, 6);
+        this.attackcase = 1;
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 232) {
+                if (globalclass.player.whichelementchosen() == 19) {
+                    globalclass.level.cam.shakecamera(5.0, 0.08);
+                }
+            }
+            param1.button;
+        }
+        if (param1.button == 67) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        return null;
+    }
+    
+    method vibrate(param1) {
+        var var1;
+        var var2;
+        if (!(param1 == null)) {
+            var1 = globalclass.randnum.getrandomfloat(0 - 0.3, 0.3);
+            var2 = globalclass.randnum.getrandomfloat(0 - 0.3, 0.3);
+            param1.setposition(param1.getx() + var1, param1.gety(), param1.getz() + var2);
+        }
+        return null;
+    }
+    
+    method scramble(param1, param2, param3, param4, param5, param6, param7) {
+        var var1;
+        var var2;
+        var var3;
+        var1 = [ new sortableint(param1, 1), 
+            new sortableint(param2, 1), 
+            new sortableint(param3, 1), 
+            new sortableint(param4, 1), 
+            new sortableint(param5, 1), 
+            new sortableint(param6, 1) ];
+        var2 = param7;
+        var3 = 0;
+        while (var2 > 0) {
+            if (var1[var3].getevaluate()) {
+                if (globalclass.randnum.getrandomnumber(1, 10) > 8) {
+                    this.newarray.__append(var1[var3]);
+                    var1[var3].setevaluate(0);
+                    var2 = var2 - 1;
+                }
+            }
+            var3 = var3 + 1;
+            if (var3 == param7) {
+                var3 = 0;
+            }
+        }
+        return this.newarray;
+    }
+    
+    method cleanuparray() {
+        var var1;
+        var1 = 0;
+        while ((this.newarray.__length - 1) >= var1) {
+            this.newarray.__removeat(0);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+}

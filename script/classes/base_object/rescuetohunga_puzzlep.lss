@@ -1,0 +1,377 @@
+class rescuetohunga_puzzlep : base_object {
+    property parent;
+    property tohunga;
+    property scorpion;
+    property dirtarray;
+    property shells;
+    property toggle;
+    property curspitball;
+    property webtimers;
+    property spitballs;
+    property bgmusic;
+    property discpickup;
+    property showdisc;
+    property showintro;
+    property desctext;
+    property howtotext;
+    
+    method rescuetohunga_puzzlep(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        var var7;
+        var var8;
+        this.tohunga = new gs_lego_character("tofu", "vlgr", "scrp", 0, 0 - 207.7, 0 - 71.5, 0 - 574.9, "none");
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("a005"));
+        this.scorpion = new gs_lego_character("chia", "bsrp", "scrp", 0, 0 - 170.4, 0 - 71.6, 0 - 543.9, "aiin");
+        this.dirtarray = [  ];
+        var1 = new digclassp(this.parent.name, "ds00", "ds01", "ds02", "ds03", "dp00", "dp01", "dp02", "dp03");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds04", "ds05", "ds06", "ds07", "dp04", "dp05", "dp06", "dp07");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds08", "ds09", "ds10", "ds11", "dp08", "dp09", "dp10", "dp11");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds12", "ds13", "ds14", "ds15", "dp12", "dp13", "dp14", "dp15");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds16", "ds17", "ds18", "ds19", "dp16", "dp17", "dp18", "dp19");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds20", "ds21", "ds22", "ds23", "dp20", "dp21", "dp22", "dp23");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds24", "ds25", "ds26", "ds27", "dp24", "dp25", "dp26", "dp27");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds28", "ds29", "ds30", "ds31", "dp28", "dp29", "dp30", "dp31");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds32", "ds33", "ds34", "ds35", "dp32", "dp33", "dp34", "dp35");
+        this.dirtarray.__append(var1);
+        var1 = new digclassp(this.parent.name, "ds36", "ds37", "ds38", "ds39", "dp36", "dp37", "dp38", "dp39");
+        this.dirtarray.__append(var1);
+        this.shells = [  ];
+        var2 = new lego_moveableobject("cas0", this.parent.name);
+        this.shells.__append(var2);
+        var2 = new lego_moveableobject("cas1", this.parent.name);
+        this.shells.__append(var2);
+        var2 = new lego_moveableobject("cas2", this.parent.name);
+        this.shells.__append(var2);
+        var2 = new lego_moveableobject("cas3", this.parent.name);
+        this.shells.__append(var2);
+        this.webtimers = [ new lego_timer("wbt0", 4.0, 0), 
+            new lego_timer("wbt1", 4.0, 0), 
+            new lego_timer("wbt2", 4.0, 0), 
+            new lego_timer("wbt3", 4.0, 0), 
+            new lego_timer("wbt4", 4.0, 0), 
+            new lego_timer("wbt5", 4.0, 0), 
+            new lego_timer("wbt6", 4.0, 0), 
+            new lego_timer("wbt7", 4.0, 0), 
+            new lego_timer("wbt8", 4.0, 0), 
+            new lego_timer("wbt9", 4.0, 0) ];
+        this.spitballs = [ new lego_bossprojectile("spb0"), 
+            new lego_bossprojectile("spb1"), 
+            new lego_bossprojectile("spb2"), 
+            new lego_bossprojectile("spb3"), 
+            new lego_bossprojectile("spb4"), 
+            new lego_bossprojectile("spb5"), 
+            new lego_bossprojectile("spb6"), 
+            new lego_bossprojectile("spb7"), 
+            new lego_bossprojectile("spb8"), 
+            new lego_bossprojectile("spb9") ];
+        this.curspitball = 0;
+        var3 = 0;
+        while ((this.spitballs.__length - 1) >= var3) {
+            this.spitballs[var3].init("Root/data/art/spriteanims/fireball", "firebll", 60.0, 24, 2.0, 0.75, 30.0);
+            this.webtimers[var3].initfull();
+            var3 = var3 + 1;
+        }
+        var3 = 0;
+        while ((this.dirtarray.__length - 1) >= var3) {
+            this.dirtarray[var3].initfull();
+            var3 = var3 + 1;
+        }
+        this.tohunga.initfull();
+        this.tohunga.add();
+        this.tohunga.settweakable();
+        this.scorpion.initfull();
+        this.scorpion.add();
+        this.toggle = 0;
+        var4 = 0;
+        while ((this.shells.__length - 1) >= var4) {
+            this.shells[var4].initfull();
+            this.shells[var4].setresponse(3, 3, 3);
+            var4 = var4 + 1;
+        }
+        var5 = gcsaver::finditem(scslosifoundation::stringtoidentifier("disc"));
+        if (var5) {
+            this.showdisc = 0;
+        }
+        else {
+            this.showdisc = 1;
+        }
+        if (this.showdisc == 1) {
+            this.discpickup = new lego_pickup("disc", 0, 5, "item", 12, 1);
+            this.discpickup.initfull();
+            this.discpickup.show();
+            this.discpickup.setcondition(32768);
+        }
+        var6 = gcsaver::isconditionset(1073741824);
+        if (var6) {
+            this.showintro = 0;
+        }
+        else {
+            this.showintro = 1;
+            var7 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 1, 0);
+            this.desctext = new gs_legotext("Root/Data/Art/Fonts/BionicleFontHi", var7, screenx * 0.5, screeny - 130, 0, 1, 256, 0, 0);
+            this.desctext.initfull();
+            var8 = (screeny - 100) + 20;
+            var7 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 1, 1);
+            this.howtotext = new gs_legotext("Root/Data/Art/Fonts/BionicleFont", var7, screenx * 0.5, var8, 0, 1, 256, 0, 0);
+            this.howtotext.initfull();
+        }
+        return null;
+    }
+    
+    method playintro() {
+        this.parent.level.cam.makespline("Root/Data/Levels/lev1/scrp/scrp_CAM.slb");
+        this.parent.level.cam.setspline(0, 10.0, 1, 0);
+        this.parent.level.cam.setaimode(2);
+        this.parent.level.cam.settargetpos(0 - 170.4, 0 - 71.6, 0 - 543.9);
+        this.parent.level.cam.scaletocutscene();
+        this.desctext.add();
+        this.desctext.show();
+        this.howtotext.add();
+        this.howtotext.show();
+        globalclass.hud.hide();
+        gcsaver::setcondition(1073741824, 1);
+        this.showintro = 0;
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        if (param1.eventid == 44) {
+            if (this.showintro) {
+                this.playintro();
+            }
+        }
+        else if (param1.eventid == 6) {
+            this.parent.level.cam.setaimode(11);
+            this.parent.level.cam.resetviewport();
+            globalclass.hud.show();
+            this.desctext.hide();
+            this.howtotext.hide();
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (param1.args[1] == scslosifoundation::stringtoidentifier("tofu")) {
+                    debug::print("Making the grappling hook longer");
+                    globalclass.player.setgrapplinghookdistance(70);
+                }
+                param1.args[1];
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 11) {
+            if (param1.args[1] == scslosifoundation::stringtoidentifier("a005")) {
+                this.firespitball();
+            }
+            param1.args[1];
+        }
+        else if (param1.eventid == 8) {
+            var1 = 0;
+            while ((this.webtimers.__length - 1) >= var1) {
+                if (param1.args[0] == this.webtimers[var1].id) {
+                    this.spitballs[var1].kill();
+                }
+                param1.args[0];
+                var1 = var1 + 1;
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+        }
+        else if (param1.eventid == 19) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                var1 = 0;
+                while ((this.spitballs.__length - 1) >= var1) {
+                    if (param1.args[1] == this.spitballs[var1].id) {
+                        this.spitballs[var1].kill();
+                    }
+                    var1 = var1 + 1;
+                }
+            }
+        }
+        var1 = 0;
+        while ((this.dirtarray.__length - 1) >= var1) {
+            this.dirtarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        if (!(this.desctext == null)) {
+            this.desctext.cleanupfull();
+            this.desctext = null;
+        }
+        if (!(this.howtotext == null)) {
+            this.howtotext.cleanupfull();
+            this.howtotext = null;
+        }
+        this.tohunga.cleanupfull();
+        this.tohunga = null;
+        var1 = 0;
+        while ((this.dirtarray.__length - 1) >= var1) {
+            this.dirtarray[var1].cleanupfull();
+            this.dirtarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.scorpion.cleanupfull();
+        this.scorpion = null;
+        if (!(this.discpickup == null)) {
+            this.showdisc = this.discpickup.objshown;
+            this.discpickup.cleanupfull();
+            this.discpickup = null;
+        }
+        var1 = 0;
+        while ((this.spitballs.__length - 1) >= var1) {
+            this.spitballs[var1].cleanupfull();
+            this.spitballs[var1] = null;
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.webtimers.__length - 1) >= var1) {
+            this.webtimers[var1].cleanupfull();
+            this.webtimers[var1] = null;
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.shells.__length - 1) >= var1) {
+            this.shells[var1].cleanupfull();
+            this.shells[var1] = null;
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.cleanupfull();
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 49) {
+            if (param1.event == 2) {
+                this.cheat1();
+            }
+        }
+        if (param1.button == 50) {
+            if (param1.event == 2) {
+                this.cheat2();
+            }
+        }
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        this.tohunga.show();
+        this.tohunga.setsplitanimation(scslosifoundation::stringtoidentifier("d003"));
+        this.scorpion.show();
+        var1 = 0;
+        while ((this.shells.__length - 1) >= var1) {
+            this.shells[var1].show();
+            var1 = var1 + 1;
+        }
+        this.shells[1].hide();
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSIClegoTRANCE");
+        this.bgmusic.play(1);
+        gccharacter::settohunga(this.tohunga.handle, rgba(102, 0, 102, 255), rgba(102, 0, 102, 255), scslosifoundation::stringtoidentifier("mk7a"));
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        this.tohunga.cleanupfull();
+        this.tohunga = null;
+        this.scorpion.cleanupfull();
+        this.scorpion = null;
+        var1 = 0;
+        while ((this.dirtarray.__length - 1) >= var1) {
+            this.dirtarray[var1].cleanupfull();
+            this.dirtarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.shells.__length - 1) >= var1) {
+            this.shells[var1].cleanupfull();
+            this.shells[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.shells = null;
+        this.toggle = null;
+        this.curspitball = null;
+        var1 = 0;
+        while ((this.webtimers.__length - 1) >= var1) {
+            this.webtimers[var1].cleanupfull();
+            this.webtimers[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.webtimers = null;
+        var1 = 0;
+        while ((this.spitballs.__length - 1) >= var1) {
+            this.spitballs[var1].cleanupfull();
+            this.spitballs[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.spitballs = null;
+        this.dirtarray = null;
+        this.bgmusic.stop();
+        this.bgmusic = null;
+        return null;
+    }
+    
+    method cheat1() {
+        this.scorpion.setsplitanimation(scslosifoundation::stringtoidentifier("sr05"));
+        return null;
+    }
+    
+    method cheat2() {
+        this.tohunga.setsplitanimation(scslosifoundation::stringtoidentifier("d003"));
+        return null;
+    }
+    
+    method firespitball() {
+        this.spitballs[this.curspitball].launch(scslosifoundation::stringtoidentifier("chia"), 4.0);
+        this.webtimers[this.curspitball].reset(0);
+        this.webtimers[this.curspitball].start();
+        this.curspitball = this.curspitball + 1;
+        if (this.curspitball > (this.spitballs.__length - 1)) {
+            this.curspitball = 0;
+        }
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

@@ -1,0 +1,46 @@
+class le02_puzzle {
+    property parent;
+    
+    method le02_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        return null;
+    }
+    
+    method cleanupfull() {
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                gccollisionphysicsgroup::spinmask(1.2);
+                gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+            }
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

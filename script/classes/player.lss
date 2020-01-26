@@ -1,0 +1,765 @@
+class player {
+    property life;
+    property maxlife;
+    property energy;
+    property maxenergy;
+    property tokens;
+    property actor;
+    property actorid;
+    property draintimer;
+    property grapplinghooksetup;
+    property spritedamageamount;
+    property maskcontrol;
+    property elementcontrol;
+    
+    method player() {
+        return null;
+    }
+    
+    method initfull() {
+        this.life = 60;
+        this.maxlife = 60;
+        this.energy = 60;
+        this.maxenergy = 60;
+        this.tokens = 0;
+        this.actor = null;
+        this.actorid = null;
+        this.draintimer = 0.0;
+        this.grapplinghooksetup = 0;
+        this.spritedamageamount = 5;
+        this.maskcontrol = new lego_maskcontroller();
+        this.maskcontrol.initfull();
+        this.elementcontrol = new lego_elementcontroller();
+        this.elementcontrol.initfull();
+        return null;
+    }
+    
+    method initshort() {
+        debug::print("[][][]player initShort()");
+        this.life = this.maxlife;
+        this.energy = this.maxenergy;
+        this.tokens = 0;
+        this.draintimer = 0.0;
+        this.grapplinghooksetup = 0;
+        this.maskcontrol.initshort();
+        this.elementcontrol.initshort();
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.actor.cleanupfull();
+        this.actor = null;
+        this.maskcontrol.cleanupshort();
+        this.elementcontrol.cleanupshort();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.life = null;
+        this.maxlife = null;
+        this.energy = null;
+        this.maxenergy = null;
+        this.tokens = null;
+        if (!(this.actor == null)) {
+            this.actor.cleanupfull();
+            this.actor = null;
+        }
+        this.actorid = null;
+        this.draintimer = null;
+        this.grapplinghooksetup = null;
+        this.spritedamageamount = null;
+        if (!(this.maskcontrol == null)) {
+            this.maskcontrol.cleanupfull();
+            this.maskcontrol = null;
+        }
+        if (!(this.elementcontrol == null)) {
+            this.elementcontrol.cleanupfull();
+            this.elementcontrol = null;
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        var var1;
+        if (param1.event == 1) {
+            if (param1.button == 232) {
+                var1 = this.elementcontrol.getcurrentidx();
+                if (var1 == 2) {
+                    this.elementcontrol.deactivate();
+                }
+            }
+        }
+        if (this.actorid == "onua") {
+            if (param1.button == 252) {
+                this.elementcontrol.changeelement(2);
+            }
+            else if (param1.button == 253) {
+                this.elementcontrol.changeelement(3);
+            }
+            else if (param1.button == 254) {
+                this.elementcontrol.changeelement(4);
+            }
+        }
+        else if (this.actorid == "gali") {
+            if (param1.button == 252) {
+                this.elementcontrol.changeelement(5);
+            }
+            else if (param1.button == 253) {
+                this.elementcontrol.changeelement(6);
+            }
+            else if (param1.button == 254) {
+                this.elementcontrol.changeelement(7);
+            }
+        }
+        else if (this.actorid == "poha") {
+            if (param1.button == 252) {
+                this.elementcontrol.changeelement(8);
+            }
+            else if (param1.button == 253) {
+                this.elementcontrol.changeelement(9);
+            }
+            else if (param1.button == 254) {
+                this.elementcontrol.changeelement(10);
+            }
+        }
+        else if (this.actorid == "tahu") {
+            if (param1.button == 252) {
+                this.elementcontrol.changeelement(11);
+            }
+            else if (param1.button == 253) {
+                this.elementcontrol.changeelement(12);
+            }
+            else if (param1.button == 254) {
+                this.elementcontrol.changeelement(13);
+            }
+        }
+        else if (this.actorid == "kopa") {
+            if (param1.button == 252) {
+                this.elementcontrol.changeelement(14);
+            }
+            else if (param1.button == 253) {
+                this.elementcontrol.changeelement(15);
+            }
+            else if (param1.button == 254) {
+                this.elementcontrol.changeelement(16);
+            }
+        }
+        else if (this.actorid == "lewa") {
+            if (param1.button == 252) {
+                this.elementcontrol.changeelement(17);
+            }
+            else if (param1.button == 253) {
+                this.elementcontrol.changeelement(18);
+            }
+            else if (param1.button == 254) {
+                this.elementcontrol.changeelement(19);
+            }
+        }
+        if (param1.event == 2) {
+            if (param1.button == 234) {
+                this.elementcontrol.nextelement(1);
+            }
+            else if (param1.button == 235) {
+                this.elementcontrol.nextelement(0);
+            }
+            else if (param1.button == 232) {
+                var1 = this.elementcontrol.getcurrentidx();
+                if (var1 == 2) {
+                    this.elementcontrol.activate();
+                }
+            }
+            else if (param1.button == 239) {
+                this.maskcontrol.changemask(0);
+            }
+            else if (param1.button == 240) {
+                this.maskcontrol.changemask(1);
+            }
+            else if (param1.button == 241) {
+                this.maskcontrol.changemask(2);
+            }
+            else if (param1.button == 242) {
+                this.maskcontrol.changemask(3);
+            }
+            else if (param1.button == 243) {
+                this.maskcontrol.changemask(4);
+            }
+            else if (param1.button == 244) {
+                this.maskcontrol.changemask(5);
+            }
+            else if (param1.button == 245) {
+                this.maskcontrol.changemask(6);
+            }
+            else if (param1.button == 246) {
+                this.maskcontrol.changemask(7);
+            }
+            else if (param1.button == 247) {
+                this.maskcontrol.changemask(8);
+            }
+            else if (param1.button == 248) {
+                this.maskcontrol.changemask(9);
+            }
+            else if (param1.button == 249) {
+                this.maskcontrol.changemask(10);
+            }
+            else if (param1.button == 250) {
+                this.maskcontrol.changemask(11);
+            }
+            else if (param1.button == 251) {
+                this.maskcontrol.changemask(12);
+            }
+            else if (param1.button == 236) {
+                this.maskcontrol.nextmask(1);
+            }
+            else if (param1.button == 237) {
+                this.maskcontrol.nextmask(0);
+            }
+            else if (param1.button == 238) {
+                if (this.energy > 0) {
+                    this.maskcontrol.toggleactive();
+                }
+            }
+            else if (param1.button == 45) {
+                this.tweaktoggle();
+            }
+        }
+        if (this.whichmaskonface() == 11) {
+            this.maskcontrol.input(param1);
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        if (this.maskcontrol.isactive()) {
+            this.drainpower(param1);
+        }
+        if (this.elementcontrol.isactive(2)) {
+            this.drainpower(param1);
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        if (!(this.actor == null)) {
+            this.actor.onevent(param1);
+            if (param1.eventid == 40) {
+                if (!(param1.args[1] == null)) {
+                    debug::print("ouch! by " + __tostring(param1.args[1]));
+                }
+                else {
+                    debug::print("ARGS 1 = NOTHING");
+                }
+                if (param1.args[0] == 10) {
+                    this.removelife(this.maxlife);
+                }
+                else {
+                    this.removelife(__toint(param1.args[0]) * 10);
+                }
+            }
+            else if (param1.eventid == 2) {
+                var1 = param1.args[0];
+                var2 = scslosifoundation::identifiertostring(var1);
+                var3 = gcareadirector::getcurrentarea();
+                if (scslosistringfuncs::find(var2, "pe")) {
+                    
+                }
+                else {
+                    gcnolightdirector::hide(var1, var3);
+                    gcstaticsoundsptrarray::playtablesound(740);
+                    gccollisionphysicsgroup::togglepickuponoff(var1, 0);
+                    this.addenergy(20);
+                }
+                if (scslosistringfuncs::find(var2, "ph")) {
+                    
+                }
+                else {
+                    gcnolightdirector::hide(var1, var3);
+                    gcstaticsoundsptrarray::playtablesound(745);
+                    gccollisionphysicsgroup::togglepickuponoff(var1, 0);
+                    this.addlife(20);
+                }
+                if (scslosistringfuncs::find(var2, "et")) {
+                    
+                }
+                else {
+                    gcnolightdirector::hide(var1, var3);
+                    gccollisionphysicsgroup::togglepickuponoff(var1, 0);
+                    this.addtoken(1);
+                    gcstaticsoundsptrarray::playtablesound(732);
+                    gcsaver::pickuptoken(var1);
+                }
+                if (scslosistringfuncs::find(var2, "pa")) {
+                    
+                }
+                else {
+                    this.actor.replenishair();
+                }
+            }
+            else if (param1.eventid == 7) {
+                if (param1.args[2] == scslosifoundation::stringtoidentifier("glyp")) {
+                    this.elementcontrol.activate();
+                }
+            }
+            else if (param1.eventid == 46) {
+                if (this.maskcontrol.isactive()) {
+                    this.maskcontrol.toggleactive();
+                }
+            }
+            else if (param1.eventid == 19) {
+                if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                    this.removelife(this.spritedamageamount);
+                }
+            }
+        }
+        return null;
+    }
+    
+    method setactor(param1, param2, param3, param4, param5, param6, param7) {
+        this.actorid = param2;
+        if (this.actorid == "onua") {
+            this.actor = new onuaclass(param2, param3, param4, param5, param6);
+        }
+        else if (this.actorid == "gali") {
+            this.actor = new galiclass(param2, param3, param4, param5, param6);
+        }
+        else if (this.actorid == "poha") {
+            this.actor = new pohatuclass(param2, param3, param4, param5, param6);
+        }
+        else if (this.actorid == "kopa") {
+            this.actor = new kopakaclass(param2, param3, param4, param5, param6);
+        }
+        else if (this.actorid == "lewa") {
+            this.actor = new lewaclass(param2, param3, param4, param5, param6);
+        }
+        else if (this.actorid == "tahu") {
+            this.actor = new tahuclass(param2, param3, param4, param5, param6);
+        }
+        else if (this.actorid == "akam") {
+            this.actor = new onuaclass(param2, param3, param4, param5, param6);
+        }
+        else if (this.actorid == "wair") {
+            this.actor = new onuaclass(param2, param3, param4, param5, param6);
+        }
+        return null;
+    }
+    
+    method actorinitfull() {
+        var var1;
+        if (!(this.actor == null)) {
+            this.actor.initfull();
+            this.actor.show();
+            this.actor.settweakable();
+            this.actor.initmotionsystem();
+            this.actor.disableallraycollisions();
+            this.actor.setupphysics(1.5, 0.8, 1, 0, 0);
+            if (this.actor.id == scslosifoundation::stringtoidentifier("onua")) {
+                
+            }
+            else if (this.actor.id == scslosifoundation::stringtoidentifier("gali")) {
+                this.addmaxenergy();
+                this.addmaxlife();
+            }
+            else if (this.actor.id == scslosifoundation::stringtoidentifier("poha")) {
+                var1 = 0;
+                while (1 >= var1) {
+                    this.addmaxenergy();
+                    this.addmaxlife();
+                    var1 = var1 + 1;
+                }
+            }
+            else if (this.actor.id == scslosifoundation::stringtoidentifier("kopa")) {
+                var1 = 0;
+                while (2 >= var1) {
+                    this.addmaxenergy();
+                    this.addmaxlife();
+                    var1 = var1 + 1;
+                }
+            }
+            else if (this.actor.id == scslosifoundation::stringtoidentifier("lewa")) {
+                var1 = 0;
+                while (3 >= var1) {
+                    this.addmaxenergy();
+                    this.addmaxlife();
+                    var1 = var1 + 1;
+                }
+            }
+            else if (this.actor.id == scslosifoundation::stringtoidentifier("tahu")) {
+                var1 = 0;
+                while (4 >= var1) {
+                    this.addmaxenergy();
+                    this.addmaxlife();
+                    var1 = var1 + 1;
+                }
+            }
+        }
+        return null;
+    }
+    
+    method initfromsaver() {
+        this.life = 0;
+        this.maxlife = 0;
+        this.addmaxlife(gcsaver::gethealth());
+        this.energy = 0;
+        this.maxenergy = 0;
+        this.addmaxenergy(gcsaver::getenergy());
+        this.maskcontrol.changemask(gcsaver::getmask());
+        this.elementcontrol.changeelement(gcsaver::getglyph());
+        return null;
+    }
+    
+    method savetosaver() {
+        gcsaver::sethealth(this.maxlife);
+        gcsaver::setenergy(this.maxenergy);
+        gcsaver::setmask(this.whichmaskonface());
+        return null;
+    }
+    
+    method removeactor() {
+        this.actor.hide();
+        this.actor.cleanupfull();
+        this.maskcontrol.cleanupfull();
+        this.elementcontrol.cleanupfull();
+        this.actor = null;
+        this.actorid = null;
+        return null;
+    }
+    
+    method changetoa(param1) {
+        this.removeactor();
+        this.setactor("cnt1", param1, 0.0, 0.0, 0.0, 0.0, "ninp");
+        this.actorinitfull();
+        this.maskcontrol.initfull();
+        this.elementcontrol.initfull();
+        if (param1 == "onua") {
+            this.addmask("fake", 0);
+            this.addmask("fake", 7);
+            this.addmask("fake", 8);
+        }
+        else if (param1 == "gali") {
+            this.addmask("fake", 0);
+            this.addmask("fake", 1);
+            this.addmask("fake", 7);
+            this.addmask("fake", 8);
+            this.addmask("fake", 9);
+        }
+        else if (param1 == "poha") {
+            this.addmask("fake", 0);
+            this.addmask("fake", 1);
+            this.addmask("fake", 2);
+            this.addmask("fake", 7);
+            this.addmask("fake", 8);
+            this.addmask("fake", 9);
+            this.addmask("fake", 10);
+        }
+        else if (param1 == "kopa") {
+            this.addmask("fake", 0);
+            this.addmask("fake", 1);
+            this.addmask("fake", 2);
+            this.addmask("fake", 3);
+            this.addmask("fake", 7);
+            this.addmask("fake", 8);
+            this.addmask("fake", 9);
+            this.addmask("fake", 10);
+            this.addmask("fake", 11);
+        }
+        else if (param1 == "lewa") {
+            this.addmask("fake", 0);
+            this.addmask("fake", 1);
+            this.addmask("fake", 2);
+            this.addmask("fake", 3);
+            this.addmask("fake", 4);
+            this.addmask("fake", 7);
+            this.addmask("fake", 8);
+            this.addmask("fake", 9);
+            this.addmask("fake", 10);
+            this.addmask("fake", 11);
+            this.addmask("fake", 12);
+        }
+        else if (param1 == "tahu") {
+            this.addmask("fake", 0);
+            this.addmask("fake", 1);
+            this.addmask("fake", 2);
+            this.addmask("fake", 3);
+            this.addmask("fake", 4);
+            this.addmask("fake", 5);
+            this.addmask("fake", 6);
+            this.addmask("fake", 7);
+            this.addmask("fake", 8);
+            this.addmask("fake", 9);
+            this.addmask("fake", 10);
+            this.addmask("fake", 11);
+            this.addmask("fake", 12);
+        }
+        return null;
+    }
+    
+    method tweaktoggle() {
+        globalclass.tweak.toggleon();
+        return null;
+    }
+    
+    method drainpower(param1) {
+        var var1;
+        this.draintimer = this.draintimer + param1.deltatime;
+        if (this.energy <= 0) {
+            if (this.maskcontrol.isactive() == 1) {
+                this.maskcontrol.toggleactive();
+            }
+            var1 = this.elementcontrol.getcurrentidx();
+            if (var1 == 2) {
+                this.elementcontrol.deactivate();
+            }
+        }
+        else if (this.draintimer >= 1.0) {
+            this.draintimer = 0.0;
+            if (this.maskcontrol.isactive() == 1) {
+                this.removeenergy(this.maskcontrol.getdrainrate());
+            }
+            if (this.elementcontrol.isactive(2)) {
+                this.removeenergy(this.elementcontrol.getdrainrate());
+            }
+        }
+        return null;
+    }
+    
+    method addmask(param1, param2) {
+        if (((this.maskcontrol.masks.__length - 1) < 0) || (this.maskcontrol.resetflag == 1)) {
+            this.maskcontrol.addallmasks();
+            this.maskcontrol.setselectable(param2);
+            this.maskcontrol.changemask(param2);
+        }
+        else {
+            this.maskcontrol.setselectable(param2);
+        }
+        return null;
+    }
+    
+    method addelement(param1, param2) {
+        if (this.elementcontrol.elements == null) {
+            this.elementcontrol.addallelements();
+            this.elementcontrol.setselectable(param1);
+        }
+        else {
+            this.elementcontrol.setselectable(param1);
+        }
+        return null;
+    }
+    
+    method whichmaskonface() {
+        return this.maskcontrol.getmask();
+    }
+    
+    method whichelementchosen() {
+        return this.elementcontrol.getelement();
+    }
+    
+    method ismaskpoweron() {
+        return this.maskcontrol.isactive();
+    }
+    
+    method iselementpoweron() {
+        return this.elementcontrol.isactive();
+    }
+    
+    method kill() {
+        var var1;
+        debug::print("you have died. Ha!");
+        this.actor.toamustdie();
+        var1 = new scriptevent(46);
+        var1.send();
+        return null;
+    }
+    
+    method unkill() {
+        this.actor.toaisalive();
+        this.addlife(this.maxlife);
+        this.addenergy(this.maxenergy);
+        this.actor.setunderwater(0);
+        return null;
+    }
+    
+    method addlife(param1) {
+        var var1;
+        var var2;
+        this.life = this.life + param1;
+        if (this.life > this.maxlife) {
+            this.life = this.maxlife;
+        }
+        var1 = __toint(this.life / 20);
+        var2 = this.life % 20;
+        if (var2 > 0) {
+            var1 = var1 + 1;
+        }
+        gcstaticsoundsptrarray::playtablesound(745);
+        globalclass.hud.thingy.setlife(var1);
+        debug::print((("add " + __tostring(param1)) + " to Life. Life now = ") + __tostring(this.life));
+        return null;
+    }
+    
+    method removelife(param1) {
+        var var1;
+        var var2;
+        if (param1 == null) {
+            param1 = 0;
+        }
+        this.life = this.life - param1;
+        if (this.life <= 0) {
+            this.life = 0;
+            globalclass.hud.thingy.setlife(0);
+            this.kill();
+        }
+        else {
+            var1 = __toint(this.life / 20);
+            var2 = this.life % 20;
+            if (var2 > 0) {
+                var1 = var1 + 1;
+            }
+            if (this.life <= 0) {
+                var1 = 0;
+            }
+            globalclass.hud.thingy.setlife(var1);
+        }
+        debug::print((("remove " + __tostring(param1)) + " from Life. Life now = ") + __tostring(this.life));
+        return null;
+    }
+    
+    method addmaxlife(param1) {
+        this.maxlife = this.maxlife + param1;
+        debug::print("set maxlife = " + __tostring(this.maxlife));
+        globalclass.hud.thingy.addmaxlife();
+        this.addlife(this.maxlife);
+        return null;
+    }
+    
+    method removemaxlife(param1) {
+        this.maxlife = this.maxlife - param1;
+        globalclass.hud.thingy.removemaxlife();
+        return null;
+    }
+    
+    method addenergy(param1) {
+        var var1;
+        var var2;
+        this.energy = this.energy + param1;
+        if (this.energy > this.maxenergy) {
+            this.energy = this.maxenergy;
+        }
+        var1 = __toint(this.energy / 20);
+        var2 = __toint(this.energy) % 20;
+        if (var2 > 0) {
+            var1 = var1 + 1;
+        }
+        gcstaticsoundsptrarray::playtablesound(740);
+        globalclass.hud.thingy.setenergy(var1);
+        return null;
+    }
+    
+    method removeenergy(param1) {
+        var var1;
+        var var2;
+        var var3;
+        this.energy = this.energy - param1;
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
+        var1 = __toint(this.energy / 20);
+        var2 = 20;
+        var3 = __toint(this.energy) % var2;
+        if (var3 < 0) {
+            var1 = 0;
+        }
+        else {
+            var1 = var1 + 1;
+        }
+        if (this.energy <= 0) {
+            var1 = 0;
+        }
+        globalclass.hud.thingy.setenergy(var1);
+        return null;
+    }
+    
+    method addmaxenergy(param1) {
+        debug::print("set maxenergy = " + __tostring(this.maxenergy));
+        this.maxenergy = this.maxenergy + param1;
+        globalclass.hud.thingy.addmaxenergy();
+        this.addenergy(this.maxenergy);
+        return null;
+    }
+    
+    method removemaxenergy(param1) {
+        this.maxenergy = this.maxenergy - param1;
+        globalclass.hud.thingy.removemaxenergy();
+        return null;
+    }
+    
+    method addtoken(param1) {
+        this.tokens = this.tokens + param1;
+        globalclass.hud.tokens.addtoken(param1);
+        return null;
+    }
+    
+    method removetoken(param1) {
+        this.tokens = this.tokens - param1;
+        globalclass.hud.tokens.removetoken(param1);
+        return null;
+    }
+    
+    method settokens(param1) {
+        this.tokens = param1;
+        globalclass.hud.tokens.settokens(param1);
+        return null;
+    }
+    
+    method setclimbable(param1) {
+        if (param1 == null) {
+            param1 = 1;
+        }
+        this.actor.setclimbable(param1);
+        return null;
+    }
+    
+    method getactorid() {
+        return scslosifoundation::stringtoidentifier(this.actorid);
+    }
+    
+    method getactorstringid() {
+        return this.actorid;
+    }
+    
+    method specalelementpowerbooltotrue() {
+        var var1;
+        var1 = 1;
+        return null;
+    }
+    
+    method specalelementpowerbooltofalse() {
+        var var1;
+        var1 = 0;
+        return null;
+    }
+    
+    method addair(param1) {
+        globalclass.hud.watermeter.addair(param1);
+        return null;
+    }
+    
+    method removeair() {
+        globalclass.hud.watermeter.start();
+        return null;
+    }
+    
+    method setupgrapplinghook(param1, param2, param3) {
+        if ((this.actorid == "onua") || (this.actorid == "gali")) {
+            this.grapplinghooksetup = 1;
+            this.actor.setupgrapplinghook(25, 30, 30);
+        }
+        return null;
+    }
+    
+    method setgrapplinghookdistance(param1) {
+        this.actor.setgrapplinghookdistance(param1);
+        return null;
+    }
+}

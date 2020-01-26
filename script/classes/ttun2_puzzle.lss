@@ -1,0 +1,49 @@
+class ttun2_puzzle {
+    property parent;
+    property bgmusic;
+    
+    method ttun2_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICGALIambience");
+        this.bgmusic.play(1);
+        gcareadirector::setnearestmax(50);
+        globalclass.player.actor.setunderwater(1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.setunderwater(1);
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.bgmusic.stop();
+        this.bgmusic = null;
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method cheat() {
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

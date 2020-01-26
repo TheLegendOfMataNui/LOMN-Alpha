@@ -1,0 +1,127 @@
+class ta046_puzzle {
+    property parent;
+    property fireballarray;
+    property timer;
+    property music;
+    
+    method ta046_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        this.music = new legomp3player();
+        this.music.setupforplay("Root/Data/sounds/MUSICPart2LegoUNDERGROUND");
+        this.music.play(1);
+        this.timer = 0;
+        this.fireballarray = [ new ta04_fireball("fb00", 1), 
+            new ta04_fireball("fb01", 1), 
+            new ta04_fireball("fb02", 1), 
+            new ta04_fireball("fb03", 1), 
+            new ta04_fireball("fb04", 2), 
+            new ta04_fireball("fb05", 2), 
+            new ta04_fireball("fb06", 2), 
+            new ta04_fireball("fb07", 2), 
+            new ta04_fireball("fb08", 3), 
+            new ta04_fireball("fb09", 2), 
+            new ta04_fireball("fb10", 2), 
+            new ta04_fireball("fb11", 2), 
+            new ta04_fireball("fb12", 3), 
+            new ta04_fireball("fb13", 3), 
+            new ta04_fireball("fb14", 3), 
+            new ta04_fireball("fb15", 3), 
+            new ta04_fireball("fb16", 3), 
+            new ta04_fireball("fb17", 3), 
+            new ta04_fireball("fb18", 3), 
+            new ta04_fireball("fb19", 3), 
+            new ta04_fireball("fb20", 3), 
+            new ta04_fireball("fb21", 3), 
+            new ta04_fireball("fb22", 3), 
+            new ta04_fireball("fb23", 3), 
+            new ta04_fireball("fb24", 3), 
+            new ta04_fireball("fb25", 3), 
+            new ta04_fireball("fb26", 3), 
+            new ta04_fireball("fb27", 3), 
+            new ta04_fireball("fb28", 4), 
+            new ta04_fireball("fb29", 4), 
+            new ta04_fireball("fb30", 4), 
+            new ta04_fireball("fb31", 4), 
+            new ta04_fireball("fb32", 4), 
+            new ta04_fireball("fb33", 4), 
+            new ta04_fireball("fb34", 4), 
+            new ta04_fireball("fb35", 4), 
+            new ta04_fireball("fb36", 4), 
+            new ta04_fireball("fb37", 5), 
+            new ta04_fireball("fb38", 5), 
+            new ta04_fireball("fb39", 5), 
+            new ta04_fireball("fb40", 5), 
+            new ta04_fireball("fb41", 5), 
+            new ta04_fireball("fb42", 5), 
+            new ta04_fireball("fb43", 5), 
+            new ta04_fireball("fb44", 5), 
+            new ta04_fireball("fb45", 5), 
+            new ta04_fireball("fb99", 5) ];
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.fireballarray.__length - 1) >= var1) {
+            this.fireballarray[var1].cleanupfull();
+            var1 = var1 + 1;
+        }
+        this.fireballarray = null;
+        this.music.stop();
+        this.music.cleanupfordestroy();
+        this.music = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.fireballarray.__length - 1) >= var1) {
+            this.fireballarray[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        this.timer = this.timer + param1.deltatime;
+        if (this.timer > 4) {
+            this.timer = 0;
+            var1 = 0;
+            while ((this.fireballarray.__length - 1) >= var1) {
+                this.fireballarray[var1].drop();
+                var1 = var1 + 1;
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.fireballarray.__length - 1) >= var1) {
+            this.fireballarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+            this.music.stop();
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            this.music.play(1);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

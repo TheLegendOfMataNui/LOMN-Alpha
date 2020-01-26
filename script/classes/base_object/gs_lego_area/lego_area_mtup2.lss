@@ -1,0 +1,42 @@
+class lego_area_mtup2 : gs_lego_area {
+    property cinema;
+    
+    method lego_area_mtup2(param1) {
+        this.gs_lego_area("mtup", param1, 0, 0);
+        return null;
+    }
+    
+    method initfull() {
+        gclightdirector::setcavelighting(0);
+        this.cinema = gccinemaengine::create();
+        gccinemaengine::load(this.cinema, "cin1");
+        gccinemaengine::setnextarea(this.cinema, scslosifoundation::stringtoidentifier("bech"));
+        globalclass.hud.hide();
+        gccinemaengine::play(this.cinema);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.cinema = null;
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 255) {
+                if (!(this.cinema == null)) {
+                    gccinemaengine::stop(this.cinema);
+                }
+            }
+            param1.button;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 30) {
+            globalclass.player.maskcontrol.changemask(0);
+        }
+        return null;
+    }
+}

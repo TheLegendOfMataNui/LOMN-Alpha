@@ -1,0 +1,152 @@
+class lego_demoover {
+    property screens;
+    property strings;
+    property curidx;
+    property inputhandle;
+    property bgmusic;
+    
+    method lego_demoover() {
+        this.screens = null;
+        this.curidx = null;
+        this.inputhandle = null;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        globalclass.hud.hide();
+        var1 = gcareadirector::getlanguage();
+        if (var1 == 0) {
+            this.screens = [ new ss_basesprite("Root/Data/Art/MenuArt/tokenbckgrnd", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/tokenbckgrnd", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/PC_Splash_Screen_US", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/GBA_Splash_Screen_US", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/Play_Materials_Splash_Screen", 0, 0, 3, screenx, screeny) ];
+        }
+        else if (var1 == 1) {
+            this.screens = [ new ss_basesprite("Root/Data/Art/MenuArt/tokenbckgrnd", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/tokenbckgrnd", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/PC_Splash_Screen_FR", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/GBA_Splash_Screen_FR", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/Play_Materials_Splash_Screen", 0, 0, 3, screenx, screeny) ];
+        }
+        else if (var1 == 2) {
+            this.screens = [ new ss_basesprite("Root/Data/Art/MenuArt/tokenbckgrnd", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/tokenbckgrnd", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/PC_Splash_Screen_GER", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/GBA_Splash_Screen_GER", 0, 0, 3, screenx, screeny), 
+                new ss_basesprite("Root/Data/Art/MenuArt/Play_Materials_Splash_Screen", 0, 0, 3, screenx, screeny) ];
+        }
+        var2 = 0;
+        while ((this.screens.__length - 1) >= var2) {
+            this.screens[var2].initfull();
+            this.screens[var2].add();
+            var2 = var2 + 1;
+        }
+        this.strings = [ new gs_legotext("Root/Data/Art/Fonts/BionicleFont", "...", screenx * 0.5, screeny * 0.5, 0, 1.2, 256, 4, 0), 
+            new gs_legotext("Root/Data/Art/Fonts/BionicleFont", "...", screenx * 0.5, (screeny * 0.5) + 45, 0, 1.2, 256, 4, 0), 
+            new gs_legotext("Root/Data/Art/Fonts/BionicleFont", "...", screenx * 0.5, screeny * 0.5, 0, 1.2, 256, 4, 0), 
+            new gs_legotext("Root/Data/Art/Fonts/BionicleFontHi", "...", screenx * 0.5, screeny - 80, 0, 1.2, 256, 4, 0) ];
+        var2 = 0;
+        while ((this.strings.__length - 1) >= var2) {
+            this.strings[var2].initfull();
+            this.strings[var2].add();
+            this.strings[var2].setstring(gcareadirector::getscriptfluffstring(scslosifoundation::stringtoidentifier("demo"), 1, var2));
+            this.strings[var2].breakup(70);
+            var2 = var2 + 1;
+        }
+        this.inputhandle = globalclass.addtoinputlist(this);
+        globalclass.pause.toggleinput(0);
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MusicOnuaThemeMusic.mp3");
+        this.bgmusic.play(1);
+        this.curidx = 0;
+        this.screens[this.curidx].show();
+        this.strings[0].show();
+        this.strings[1].show();
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var var2;
+        if (!(this.screens == null)) {
+            var1 = this.screens.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.screens[var1 - var2].remove();
+                this.screens[var1 - var2].cleanupfull();
+                this.screens[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.screens = null;
+        }
+        if (!(this.strings == null)) {
+            var1 = this.strings.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.strings[var1 - var2].remove();
+                this.strings[var1 - var2].cleanupfull();
+                this.strings[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.strings = null;
+        }
+        this.curidx = null;
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        globalclass.pause.toggleinput(1);
+        globalclass.removefrominputlist(this.inputhandle);
+        return null;
+    }
+    
+    method exit() {
+        globalclass.setbackflag();
+        this.cleanupfull();
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 255) {
+            if (param1.event == 2) {
+                this.nextpic();
+            }
+        }
+        if (param1.button == 32) {
+            if (param1.event == 2) {
+                this.nextpic();
+            }
+        }
+        if (param1.button == 13) {
+            if (param1.event == 2) {
+                this.nextpic();
+            }
+        }
+        return null;
+    }
+    
+    method nextpic() {
+        this.screens[this.curidx].hide();
+        this.curidx = this.curidx + 1;
+        if (this.curidx > (this.screens.__length - 1)) {
+            this.exit();
+        }
+        else {
+            this.screens[this.curidx].show();
+            if (this.curidx == 1) {
+                this.strings[0].hide();
+                this.strings[1].hide();
+                this.strings[2].show();
+                this.strings[3].show();
+            }
+            else if (this.curidx == 2) {
+                this.strings[2].hide();
+                this.strings[3].hide();
+            }
+        }
+        return null;
+    }
+}

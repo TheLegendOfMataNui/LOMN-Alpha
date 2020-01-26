@@ -1,0 +1,51 @@
+class tura1_puzzle {
+    property parent;
+    
+    method tura1_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("when"), 0);
+        gccharacter::setinputstate(var1, scslosifoundation::stringtoidentifier("none"));
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 66) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        return null;
+    }
+}

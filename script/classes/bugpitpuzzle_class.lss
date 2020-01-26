@@ -1,0 +1,269 @@
+class bugpitpuzzle_class {
+    property trapdoortimer;
+    property parent;
+    property bugarray;
+    property numofdeadbugs;
+    property music;
+    property door_trap;
+    property door_goal_a;
+    property door_goal_b;
+    property trapdoorshut;
+    property door_trap_original;
+    property door_goal_a_original;
+    property door_goal_b_original;
+    
+    method bugpitpuzzle_class(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        this.music = new legomp3player();
+        this.music.setupforplay("Root/Data/sounds/MUSIConuaTHEMEMUSIC");
+        this.trapdoortimer = new lego_timer("trap", 2.0, 0);
+        this.numofdeadbugs = 0;
+        this.trapdoorshut = 0;
+        debug::print("	// ***** Make lots of Bugs ***** // ");
+        this.bugarray = [  ];
+        this.bugarray.__append(new simplebug(this, "bg10", "bugz", 10, 0, 897, 6, 58));
+        this.bugarray.__append(new simplebug(this, "bg11", "bugz", 11, 150, 973, 6, 99));
+        this.bugarray.__append(new simplebug(this, "bg12", "bugz", 12, 20, 943, 6, 59));
+        this.bugarray.__append(new simplebug(this, "bg13", "bugz", 13, 110, 975, 6, 24));
+        this.bugarray.__append(new simplebug(this, "bg14", "bugz", 14, 45, 936, 6, 85));
+        this.bugarray.__append(new simplebug(this, "bg15", "bugz", 15, 82, 924, 6, 64));
+        this.bugarray.__append(new simplebug(this, "bg16", "bugz", 16, 12, 960, 6, 56));
+        this.bugarray.__append(new simplebug(this, "bg17", "bugz", 17, 170, 967, 6, 67));
+        this.bugarray.__append(new simplebug(this, "bg18", "bugz", 18, 63, 939, 6, 44));
+        this.bugarray.__append(new simplebug(this, "bg19", "bugz", 19, 5, 907, 6, 41));
+        debug::print("	// ***** Moveable Objects ***** // ");
+        this.door_trap = new lego_moveableobject("dor3", this.parent.name);
+        this.door_goal_a = new lego_moveableobject("dor7", this.parent.name);
+        this.door_goal_b = new lego_moveableobject("dor8", this.parent.name);
+        this.trapdoortimer.initfull();
+        debug::print(" // ***** initFull ***** // ");
+        this.door_trap.initfull();
+        this.door_goal_a.initfull();
+        this.door_goal_b.initfull();
+        this.door_trap_original = new basicpoint(this.door_trap.getx(), this.door_trap.gety(), this.door_trap.getz());
+        this.door_goal_a_original = new basicpoint(this.door_goal_a.getx(), this.door_goal_a.gety(), this.door_goal_a.getz());
+        this.door_goal_b_original = new basicpoint(this.door_goal_b.getx(), this.door_goal_b.gety(), this.door_goal_b.getz());
+        debug::print("	// ***** initFull each bug ***** // ");
+        var1 = 0;
+        while ((this.bugarray.__length - 1) >= var1) {
+            this.bugarray[var1].initfull();
+            var1 = var1 + 1;
+        }
+        debug::print("	// ***** Turn Off Collisions ***** // ");
+        this.door_goal_a.ignorecollisionswith(this.door_goal_b.id);
+        this.door_goal_b.ignorecollisionswith(this.door_goal_a.id);
+        debug::print("	// ***** SetResponse ***** // ");
+        this.door_trap.setresponse(3, 3, 3);
+        this.door_goal_a.setresponse(3, 3, 3);
+        this.door_goal_b.setresponse(3, 3, 3);
+        gcstaticsoundsptrarray::playtablesound(731);
+        debug::print("	// ***** show each bug ***** // ");
+        var1 = 0;
+        while ((this.bugarray.__length - 1) >= var1) {
+            this.bugarray[var1].show();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method initshort() {
+        this.initfull();
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.music.stop();
+        this.music = null;
+        var1 = 0;
+        while ((this.bugarray.__length - 1) >= var1) {
+            this.bugarray[var1].cleanupfull();
+            this.bugarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.bugarray = null;
+        this.door_trap.cleanupfull();
+        this.door_trap = null;
+        this.door_goal_a.cleanupfull();
+        this.door_goal_a = null;
+        this.door_goal_b.cleanupfull();
+        this.door_goal_b = null;
+        this.trapdoortimer.cleanupfull();
+        this.trapdoortimer = null;
+        this.numofdeadbugs = null;
+        this.trapdoorshut = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method cleanupshort() {
+        var var1;
+        this.music.stop();
+        var1 = 0;
+        while ((this.bugarray.__length - 1) >= var1) {
+            this.bugarray[var1].cleanupshort();
+            var1 = var1 + 1;
+        }
+        this.door_trap.setpos(this.door_trap_original);
+        this.door_goal_a.setpos(this.door_goal_a_original);
+        this.door_goal_b.setpos(this.door_goal_b_original);
+        this.trapdoortimer.reset();
+        this.numofdeadbugs = 0;
+        this.trapdoorshut = 0;
+        return null;
+    }
+    
+    method hide() {
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.bugarray.__length - 1) >= var1) {
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var1 = 0;
+        while ((this.bugarray.__length - 1) >= var1) {
+            this.bugarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        if (param1.eventid == 1) {
+            var2 = param1.args[0];
+            var3 = param1.args[1];
+            return 0;
+        }
+        if (param1.eventid == 4) {
+            var4 = param1.args[0];
+            if (var4 == scslosifoundation::stringtoidentifier("tp00")) {
+                if (this.trapdoorshut == 0) {
+                    this.trapdooraction();
+                }
+                return 0;
+            }
+            return 0;
+        }
+        if (param1.eventid == 8) {
+            var5 = param1.args[0];
+            if (var5 == scslosifoundation::stringtoidentifier("trap")) {
+                this.parent.parent.cam.setaimode(11);
+                globalclass.player.actor.setinputstate("ninp");
+                globalclass.player.actor.idle();
+            }
+            return 0;
+        }
+        if (param1.eventid == 46) {
+            this.reseta();
+        }
+        if (param1.eventid == 27) {
+            this.resetb();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        var var1;
+        if (param1.event == 2) {
+            var1 = 0;
+            while ((this.bugarray.__length - 1) >= var1) {
+                var1 = var1 + 1;
+            }
+        }
+        return null;
+    }
+    
+    method killbug(param1) {
+        if ((this.bugarray.__length - 1) >= param1) {
+            if (this.bugarray[param1].alive) {
+                this.bugarray[param1].hit(101, null);
+            }
+            else {
+                this.killbug(param1 + 1);
+            }
+        }
+        return null;
+    }
+    
+    method trapdooraction() {
+        this.music.play(1);
+        this.trapdoortimer.start();
+        this.door_trap.changeposition(0.0, 0 - 15.0, 0.0, 0.5);
+        this.trapdoorshut = 1;
+        this.parent.parent.cam.setaimode(0);
+        this.parent.parent.cam.settargetpos(888.3, 9.4, 126.5);
+        this.parent.parent.cam.setpos(886.6, 5.0, 117.8);
+        this.parent.parent.cam.shakecamera(1.5, 0.15);
+        globalclass.player.actor.setinputstate("none");
+        globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
+        return null;
+    }
+    
+    method bugdied(param1) {
+        var var1;
+        var var2;
+        if ((this.bugarray.__length - 1) < 1) {
+            var1 = 5.5;
+        }
+        else {
+            var1 = 5.5 / (this.bugarray.__length - 1);
+        }
+        var2 = 1;
+        while (param1 >= var2) {
+            this.numofdeadbugs = this.numofdeadbugs + 1;
+            this.door_goal_a.changeposition(0 - var1, 0.0, var1, 0.0);
+            this.door_goal_b.changeposition(var1, 0.0, 0 - var1, 0.0);
+            var2 = var2 + 1;
+        }
+        return null;
+    }
+    
+    method bugresurrects(param1) {
+        var var1;
+        var var2;
+        if ((this.bugarray.__length - 1) < 1) {
+            var1 = 5.5;
+        }
+        else {
+            var1 = 5.5 / (this.bugarray.__length - 1);
+        }
+        var2 = 1;
+        while (param1 >= var2) {
+            this.numofdeadbugs = this.numofdeadbugs - 1;
+            this.door_goal_a.changeposition(var1, 0.0, 0 - var1, 0.0);
+            this.door_goal_b.changeposition(0 - var1, 0.0, var1, 0.0);
+            var2 = var2 + 1;
+        }
+        return null;
+    }
+    
+    method reseta() {
+        gccollisionphysicsgroup::spinmask(1.2);
+        return null;
+    }
+    
+    method resetb() {
+        this.cleanupshort();
+        globalclass.player.actor.setpos(876.5, 5.1, 155);
+        globalclass.player.actor.setorientation(143.5);
+        globalclass.player.unkill();
+        return null;
+    }
+}

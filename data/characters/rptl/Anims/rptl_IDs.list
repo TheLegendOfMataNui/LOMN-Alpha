@@ -1,0 +1,10 @@
+ANIMLIST for rptl
+rp01.bkd        rp_walk
+rp03.bkd        rp_idle_roar
+rp02.bkd        rp_idle_box
+rp00.bkd        rp_idle
+rp06.bkd        rp_attack_right
+rp04.bkd        rp_attack_left
+rp05.bkd        rp_attack_1_2_punch
+rp07.bkd        rp_hop
+rp08.bkd        rp_sideways

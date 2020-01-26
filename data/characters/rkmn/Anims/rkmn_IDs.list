@@ -1,0 +1,13 @@
+ANIMLIST for rkmn
+rk07.bkd        rk_turn_rt
+rk06.bkd        rk_turn_lft
+rk05.bkd        rk_throw
+rk04.bkd        rk_take_damage
+rk02.bkd        rk_stomp
+rk00.bkd        rk_idle
+rk03.bkd        rk_flex
+rk08.bkd        rk_throw_1
+rk09.bkd        rk_throw_2
+rk10.bkd        rk_stomp_1
+rk11.bkd        rk_stomp_2
+rk12.bkd        rk_stomp_3

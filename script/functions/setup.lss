@@ -1,0 +1,18 @@
+function setup() {
+    var var1;
+    screenx = gcgame::getresolutionwidth();
+    screeny = gcgame::getresolutionheight();
+    var1 = screenx / 640;
+    globalclass = new global_class();
+    globalclass.initfull();
+    screenlist = new base_screenlist();
+    setupinterface();
+    if (0) {
+        screenlist.setactive(21);
+    }
+    else {
+        screenlist.setactive(1);
+    }
+    screenlist.initfull();
+    return null;
+}

@@ -1,0 +1,73 @@
+class l1a2_puzzlep : base_object {
+    property parent;
+    property bgmusic;
+    
+    method l1a2_puzzlep(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                globalclass.player.kill();
+                gcstaticsoundsptrarray::playtablesound(737);
+                this.parent.level.cam.setaimode(7);
+                gccollisionphysicsgroup::spinmask(1.2);
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method cleanupfull() {
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.cleanupfull();
+        return null;
+    }
+    
+    method show() {
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICLegoUnderground");
+        this.bgmusic.play(1);
+        return null;
+    }
+    
+    method hide() {
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

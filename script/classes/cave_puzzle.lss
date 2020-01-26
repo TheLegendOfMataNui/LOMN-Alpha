@@ -1,0 +1,57 @@
+class cave_puzzle {
+    property parent;
+    property showmask;
+    property maskx;
+    
+    method cave_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        this.showmask = 1;
+        var1 = gcsaver::findmask(scslosifoundation::stringtoidentifier("mask"));
+        if (var1) {
+            this.showmask = 0;
+        }
+        if (this.showmask) {
+            this.maskx = new lego_pickup("mask", 12, 1, "item", 2, 1);
+            this.maskx.initfull();
+            this.maskx.show();
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        if (!(this.maskx == null)) {
+            this.maskx.cleanupfull();
+            this.maskx = null;
+        }
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

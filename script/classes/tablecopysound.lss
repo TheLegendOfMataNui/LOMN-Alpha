@@ -1,0 +1,112 @@
+class tablecopysound {
+    property handle;
+    
+    method tablecopysound(param1) {
+        this.handle = gcstaticsoundsptrarray::gettablesoundcopy(param1);
+        return null;
+    }
+    
+    method synctocharacter(param1) {
+        gc3dsound::synctocharacter(this.handle, param1);
+        return null;
+    }
+    
+    method synctoobject(param1) {
+        gc3dsound::synctoobject(this.handle, param1);
+        return null;
+    }
+    
+    method synctoprojectile(param1) {
+        gc3dsound::synctoprojectile(this.handle, param1);
+        return null;
+    }
+    
+    method play(param1) {
+        if (param1 == null) {
+            param1 = 0;
+        }
+        gc3dsound::play(this.handle, param1);
+        return null;
+    }
+    
+    method stop(param1) {
+        gc3dsound::stop(this.handle);
+        return null;
+    }
+    
+    method stopreset(param1) {
+        gc3dsound::stopreset(this.handle);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.stop();
+        gcstaticsoundsptrarray::checkintablesoundcopy(this.handle);
+        this.handle = null;
+        return null;
+    }
+    
+    method setplayoffset(param1) {
+        gc3dsound::setplayoffset(this.handle, param1);
+        return null;
+    }
+    
+    method setvolume(param1) {
+        gc3dsound::setvolume(this.handle, param1);
+        return null;
+    }
+    
+    method setpan(param1) {
+        gc3dsound::setpan(this.handle, param1);
+        return null;
+    }
+    
+    method setfrequency(param1) {
+        gc3dsound::setfrequency(this.handle, param1);
+        return null;
+    }
+    
+    method getfrequency() {
+        return gc3dsound::getfrequency(this.handle);
+    }
+    
+    method setposition(param1, param2, param3) {
+        gc3dsound::setposition(this.handle, param1, param2, param3);
+        return null;
+    }
+    
+    method setmindistance(param1) {
+        gc3dsound::setmindistance(this.handle, param1);
+        return null;
+    }
+    
+    method setmaxdistance(param1) {
+        gc3dsound::setmaxdistance(this.handle, param1);
+        return null;
+    }
+    
+    method setconeorientation(param1, param2, param3) {
+        gc3dsound::setconeorientation(this.handle, param1, param2, param3);
+        return null;
+    }
+    
+    method setconeangles(param1, param2) {
+        gc3dsound::setconeangles(this.handle, param1, param2);
+        return null;
+    }
+    
+    method setconeoutsidevolume(param1) {
+        gc3dsound::setconeoutsidevolume(this.handle, param1);
+        return null;
+    }
+    
+    method setlistenerrollofffactor(param1) {
+        gc3dsound::setlistenerrollofffactor(param1);
+        return null;
+    }
+    
+    method drifttovolume(param1, param2) {
+        gc3dsound::drifttovolume(this.handle, param1, param2);
+        return null;
+    }
+}

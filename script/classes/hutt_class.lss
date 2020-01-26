@@ -1,0 +1,37 @@
+class hutt_class {
+    property parent;
+    
+    method hutt_class(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

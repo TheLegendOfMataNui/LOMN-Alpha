@@ -1,0 +1,21 @@
+class ta14_door {
+    property object;
+    property id;
+    
+    method ta14_door(param1) {
+        this.object = new lego_moveableobject(param1);
+        this.id = scslosifoundation::stringtoidentifier(param1);
+        return null;
+    }
+    
+    method hide() {
+        this.object.hide();
+        return null;
+    }
+    
+    method exit() {
+        this.object = null;
+        this.id = null;
+        return null;
+    }
+}

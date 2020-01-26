@@ -1,0 +1,60 @@
+class l4_gly1_chomperdoor {
+    property mtop;
+    property mbottom;
+    property mtopheight;
+    property mbottomheight;
+    property misopen;
+    
+    method l4_gly1_chomperdoor(param1, param2, param3, param4) {
+        this.mtop = new lego_moveableobject(param1);
+        this.mbottom = new lego_moveableobject(param2);
+        this.mtopheight = param3;
+        this.mbottomheight = param4;
+        this.misopen = 0;
+        return null;
+    }
+    
+    method initfull() {
+        this.mtop.initfull();
+        this.mbottom.initfull();
+        this.mtop.settweakable();
+        this.mbottom.settweakable();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.mtop.cleanupfull();
+        this.mbottom.cleanupfull();
+        this.mtop = null;
+        this.mbottom = null;
+        return null;
+    }
+    
+    method open() {
+        if (this.misopen == 0) {
+            this.mtop.interpolate(this.mtop.getx(), this.mtop.gety() + this.mtopheight, this.mtop.getz(), 5.0);
+            this.mbottom.interpolate(this.mbottom.getx(), this.mbottom.gety() - this.mbottomheight, this.mbottom.getz(), 5.0);
+            this.misopen = 1;
+        }
+        return null;
+    }
+    
+    method close() {
+        if (this.misopen == 1) {
+            this.mtop.interpolate(this.mtop.getx(), this.mtop.gety() - this.mtopheight, this.mtop.getz(), 5.0);
+            this.mbottom.interpolate(this.mbottom.getx(), this.mbottom.gety() + this.mbottomheight, this.mbottom.getz(), 5.0);
+            this.misopen = 0;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 12) {
+            if ((param1.args[0] == this.mtop.id) || (param1.args[0] == this.mbottom.id)) {
+                globalclass.level.cam.shakecamera(0.1, 0.08);
+            }
+        }
+        param1.eventid;
+        return null;
+    }
+}

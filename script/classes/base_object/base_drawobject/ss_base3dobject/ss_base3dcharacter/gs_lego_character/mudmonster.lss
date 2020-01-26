@@ -1,0 +1,301 @@
+class mudmonster : gs_lego_character {
+    property ppuzzle;
+    property mudstate;
+    property mudballs;
+    property curmudball;
+    property miniboulders;
+    property resetmboulders;
+    property shakeonce;
+    property boulderuse;
+    
+    method mudmonster(param1) {
+        this.ppuzzle = param1;
+        this.mudballs = [ new lego_projectileobject("mbb0", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb1", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb2", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb3", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb4", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb5", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb6", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb7", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb8", this.ppuzzle.parea.name), 
+            new lego_projectileobject("mbb9", this.ppuzzle.parea.name) ];
+        this.gs_lego_character("cnyy", "mudm", this.ppuzzle.parea.name, -90, 995, 0, 212, "aiin");
+        this.miniboulders = [ new lego_projectileobject("smb1", this.ppuzzle.parea.name), 
+            new lego_projectileobject("smb2", this.ppuzzle.parea.name), 
+            new lego_projectileobject("smb3", this.ppuzzle.parea.name), 
+            new lego_projectileobject("smb4", this.ppuzzle.parea.name), 
+            new lego_projectileobject("smb5", this.ppuzzle.parea.name), 
+            new lego_projectileobject("smb6", this.ppuzzle.parea.name), 
+            new lego_projectileobject("smb7", this.ppuzzle.parea.name), 
+            new lego_projectileobject("smb8", this.ppuzzle.parea.name) ];
+        this.resetmboulders = new lego_timer("mbt9", 5.1, 0);
+        this.shakeonce = 1;
+        return null;
+    }
+    
+    method init() {
+        var var1;
+        this.initfull();
+        this.add();
+        this.hide();
+        this.disableai();
+        this.aiidle();
+        this.settweakable();
+        var1 = 0;
+        while ((this.mudballs.__length - 1) >= var1) {
+            this.mudballs[var1].init(0.7, 0, 0, 0, 0, 1.0, "bld0", "Root/data/levels/lev1/mud0");
+            this.mudballs[var1].setresponse(2, 4, 2);
+            this.mudballs[var1].ignorecollisionswith(scslosifoundation::stringtoidentifier("cnyy"));
+            this.mudballs[var1].setprojectileoffset(11, 12, 10);
+            this.mudballs[var1].setbounceeventrepoert(1);
+            this.mudballs[var1].settargettoa(1);
+            var1 = var1 + 1;
+        }
+        this.resetmboulders.initfull();
+        var1 = 0;
+        while ((this.miniboulders.__length - 1) >= var1) {
+            this.miniboulders[var1].init(0.1, 0, 0, 0, 0, 0.8, "bld0", "Root/data/levels/lev1/mud0", 60);
+            this.miniboulders[var1].setresponse(4, 4, 4);
+            this.miniboulders[var1].setposition(0.0, 0.0, 0.0);
+            this.miniboulders[var1].ignorecollisionswith(scslosifoundation::stringtoidentifier("cnyy"));
+            this.miniboulders[var1].show();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method initshort() {
+        var var1;
+        this.mudstate = 6;
+        var1 = 0;
+        while ((this.mudballs.__length - 1) >= var1) {
+            this.mudballs[var1].hide();
+            var1 = var1 + 1;
+        }
+        this.curmudball = 0;
+        this.resetmboulders.reset();
+        this.setpos(995, 0, 212);
+        var1 = 0;
+        while ((this.miniboulders.__length - 1) >= var1) {
+            this.miniboulders[var1].setposition(0.0, 0.0, 0.0);
+            var1 = var1 + 1;
+        }
+        gccharacter::setdisplaymorphmodel(this.handle, 1);
+        this.idle();
+        this.boulderuse = 1;
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.miniboulders.__length - 1) >= var1) {
+            this.miniboulders.remove();
+            this.miniboulders[var1] = null;
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.cleanupfull();
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        if (param1.eventid == 17) {
+            var1 = 0;
+            if (param1.args[0] == 1835164208) {
+                var1 = 0;
+            }
+            else if (param1.args[0] == 1835164209) {
+                var1 = 1;
+            }
+            else if (param1.args[0] == 1835164210) {
+                var1 = 2;
+            }
+            else if (param1.args[0] == 1835164211) {
+                var1 = 3;
+            }
+            else if (param1.args[0] == 1835164212) {
+                var1 = 4;
+            }
+            else if (param1.args[0] == 1835164213) {
+                var1 = 5;
+            }
+            else if (param1.args[0] == 1835164214) {
+                var1 = 6;
+            }
+            else if (param1.args[0] == 1835164215) {
+                var1 = 7;
+            }
+            else if (param1.args[0] == 1835164216) {
+                var1 = 8;
+            }
+            this.explode(this.mudballs[var1]);
+            if (var1 == this.curmudball) {
+                this.boulderuse = 1;
+            }
+        }
+        else if (param1.eventid == 8) {
+            if (param1.args[0] == this.resetmboulders.id) {
+                var2 = 0;
+                while ((this.miniboulders.__length - 1) >= var2) {
+                    this.miniboulders[var2].fadeout(1.0);
+                    var2 = var2 + 1;
+                }
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 1) {
+            var2 = 0;
+            while ((this.mudballs.__length - 1) >= var2) {
+                if (param1.args[0] == this.mudballs[var2].id) {
+                    if (param1.args[1] == scslosifoundation::stringtoidentifier("cnt1")) {
+                        globalclass.player.actor.react(0, 1, this.mudballs[var2].id);
+                        this.explode(this.mudballs[var2]);
+                    }
+                }
+                var2 = var2 + 1;
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method morph(param1, param2) {
+        var var1;
+        var1 = 1.5;
+        if (param1 == null) {
+            if (this.mudstate == 0) {
+                param1 = 1;
+            }
+            else {
+                param1 = 0;
+            }
+        }
+        if (param2 == 4) {
+            var1 = 1.0;
+        }
+        if (param1 == 0) {
+            this.morphmidcharacter(1, 2, 3, var1, 1);
+        }
+        else if (param1 == 1) {
+            this.morphmidcharacter(3, 2, 1, var1, 1);
+        }
+        else if (param1 == 3) {
+            this.morphmidcharacter(3, 4, 5, var1, 1);
+        }
+        return null;
+    }
+    
+    method throw() {
+        this.setsplitanimation(1831874615);
+        this.boulderuse = 0;
+        return null;
+    }
+    
+    method releasemudball(param1) {
+        var var1;
+        var var2;
+        var var3;
+        this.mudballs[this.curmudball].show();
+        this.mudballs[this.curmudball].setmoveableflags(1, 1, 0, 1);
+        var1 = globalclass.player.actor.getposx();
+        var2 = this.getposx();
+        var3 = var1 - var2;
+        if (param1 == 4) {
+            var3 = var3 * 4;
+        }
+        else {
+            var3 = var3 * 2;
+        }
+        this.mudballs[this.curmudball].throwprojectile(var3, 1.0, this.contid, 0.0);
+        this.curmudball = this.curmudball + 1;
+        if (this.curmudball > (this.mudballs.__length - 1)) {
+            this.curmudball = 0;
+        }
+        return null;
+    }
+    
+    method dropmudballs() {
+        var var1;
+        var var2;
+        var var3;
+        var1 = globalclass.player.actor.getposx();
+        var2 = globalclass.player.actor.getposz();
+        this.mudballs[0].setposition(var1, 50, var2);
+        this.mudballs[1].setposition(var1 + 8, 50, var2);
+        this.mudballs[2].setposition(var1 - 8, 50, var2);
+        this.mudballs[3].setposition(var1, 50, var2 + 8);
+        this.mudballs[4].setposition(var1, 50, var2 - 8);
+        this.mudballs[5].setposition(var1 + 4, 50, var2 + 4);
+        this.mudballs[6].setposition(var1 + 4, 50, var2 - 4);
+        this.mudballs[7].setposition(var1 - 4, 50, var2 + 4);
+        this.mudballs[8].setposition(var1 - 4, 50, var2 - 4);
+        var3 = 0;
+        while ((this.mudballs.__length - 1) >= var3) {
+            this.mudballs[var3].setmoveableflags(1, 0, 0, 1);
+            this.mudballs[var3].show();
+            var3 = var3 + 1;
+        }
+        return null;
+    }
+    
+    method die() {
+        this.mudstate = 4;
+        this.hide();
+        return null;
+    }
+    
+    method explode(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        var var7;
+        var var8;
+        var var9;
+        var var10;
+        var var11;
+        var var12;
+        var var13;
+        var1 = param1.getx();
+        var2 = param1.gety();
+        var3 = param1.getz();
+        var4 = 0;
+        while ((this.miniboulders.__length - 1) >= var4) {
+            var5 = globalclass.randnum.getrandomfloat(0.05, 0.3);
+            var6 = globalclass.randnum.getrandomfloat(0 - 5.0, 5.0);
+            var7 = globalclass.randnum.getrandomfloat(0.0, 5.0);
+            var8 = globalclass.randnum.getrandomfloat(0 - 5.0, 5.0);
+            var9 = globalclass.randnum.getrandomfloat(var1, var1 + 1.0);
+            var10 = globalclass.randnum.getrandomfloat(var2, var2 + 1.0);
+            this.z = globalclass.randnum.getrandomfloat(var3, var3 + 1.0);
+            this.miniboulders[var4].setobjscale(var5);
+            this.miniboulders[var4].setposition(var9, var10, this.z);
+            this.miniboulders[var4].setalpha(0.9);
+            this.miniboulders[var4].setmoveableflags(1, 0, 0, 0);
+            this.miniboulders[var4].setvelocity(var6, var7, var8);
+            var4 = var4 + 1;
+        }
+        param1.setmoveableflags(0, 0, 0, 0);
+        param1.hide();
+        this.resetmboulders.reset(0);
+        this.resetmboulders.start();
+        this.shakeonce = 1;
+        var11 = this.getposx();
+        var12 = this.getposy();
+        var13 = this.getposz();
+        param1.setpos(var11, var12, var13);
+        return null;
+    }
+}

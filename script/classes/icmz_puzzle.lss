@@ -1,0 +1,178 @@
+class icmz_puzzle {
+    property parent;
+    property doors;
+    property lastdoorid;
+    property doorcollisionson;
+    property glyph;
+    property skatespickup;
+    property discpickup;
+    
+    method icmz_puzzle(param1) {
+        this.parent = param1;
+        this.lastdoorid = null;
+        this.doorcollisionson = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        this.doors = [ new lego_moveableobject("id00", this.parent.name), 
+            new lego_moveableobject("id01", this.parent.name), 
+            new lego_moveableobject("id02", this.parent.name), 
+            new lego_moveableobject("id03", this.parent.name), 
+            new lego_moveableobject("id04", this.parent.name), 
+            new lego_moveableobject("id05", this.parent.name), 
+            new lego_moveableobject("id06", this.parent.name), 
+            new lego_moveableobject("id07", this.parent.name), 
+            new lego_moveableobject("id08", this.parent.name), 
+            new lego_moveableobject("id09", this.parent.name), 
+            new lego_moveableobject("id10", this.parent.name), 
+            new lego_moveableobject("id11", this.parent.name), 
+            new lego_moveableobject("id12", this.parent.name), 
+            new lego_moveableobject("id13", this.parent.name), 
+            new lego_moveableobject("id14", this.parent.name), 
+            new lego_moveableobject("id15", this.parent.name), 
+            new lego_moveableobject("id16", this.parent.name), 
+            new lego_moveableobject("id17", this.parent.name), 
+            new lego_moveableobject("id18", this.parent.name), 
+            new lego_moveableobject("id19", this.parent.name), 
+            new lego_moveableobject("id20", this.parent.name), 
+            new lego_moveableobject("id21", this.parent.name) ];
+        var1 = 0;
+        while ((this.doors.__length - 1) >= var1) {
+            this.doors[var1].initfull();
+            this.doors[var1].setresponse(3, 3, 3);
+            var1 = var1 + 1;
+        }
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("k038"));
+        var2 = gcsaver::findglyph(scslosifoundation::stringtoidentifier("glya"));
+        if (var2 == 0) {
+            this.glyph = new lego_pickup("glya", 12, 2, "item", 5, 1);
+            this.glyph.initfull();
+            this.glyph.show();
+        }
+        var2 = gcsaver::finditem(scslosifoundation::stringtoidentifier("skts"));
+        if (var2 == 0) {
+            this.skatespickup = new lego_pickup("skts", 0, 5, "item", 8, 1);
+            this.skatespickup.initfull();
+            this.skatespickup.show();
+            this.skatespickup.setcondition(32768);
+        }
+        var2 = gcsaver::finditem(scslosifoundation::stringtoidentifier("dsc4"));
+        if (var2 == 0) {
+            this.discpickup = new lego_pickup("dsc4", 0, 5, "item", 10, 1);
+            this.discpickup.initfull();
+            this.discpickup.show();
+            this.discpickup.setcondition(131072);
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        if (!(this.discpickup == null)) {
+            this.discpickup.cleanupfull();
+            this.discpickup = null;
+        }
+        if (!(this.skatespickup == null)) {
+            this.skatespickup.cleanupfull();
+            this.skatespickup = null;
+        }
+        if (!(this.glyph == null)) {
+            this.glyph.cleanupfull();
+            this.glyph = null;
+        }
+        var1 = 0;
+        while ((this.doors.__length - 1) >= var1) {
+            this.doors[var1].cleanupfull();
+            this.doors[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.doors = null;
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        var1 = 0;
+        while ((this.doors.__length - 1) >= var1) {
+            this.doors[var1].show();
+            var1 = var1 + 1;
+        }
+        this.doorcollisionson = 1;
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        var1 = 0;
+        while ((this.doors.__length - 1) >= var1) {
+            this.doors[var1].hide();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                var1 = new slosi_string(scslosifoundation::identifiertostring(param1.args[1]));
+                var1.truncateleft(2);
+                if ((var1.string == "id") && (this.doorcollisionson == 1)) {
+                    this.doorcollisionson = 0;
+                    this.lastdoorid = param1.args[1];
+                    globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("k038"), 0.1);
+                }
+            }
+        }
+        else if (param1.eventid == 7) {
+            if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
+                gcstaticsoundsptrarray::playtablesound(144);
+            }
+        }
+        else if (param1.eventid == 11) {
+            if (param1.args[1] == scslosifoundation::stringtoidentifier("k038")) {
+                var2 = 0;
+                while ((this.doors.__length - 1) >= var2) {
+                    if (this.lastdoorid == this.doors[var2].id) {
+                        this.doors[var2].fadeout(1.0);
+                    }
+                    var2 = var2 + 1;
+                }
+            }
+        }
+        else if (param1.eventid == 35) {
+            if (param1.args[1] == 0) {
+                var2 = 0;
+                while ((this.doors.__length - 1) >= var2) {
+                    if (param1.args[0] == this.doors[var2].id) {
+                        this.doors[var2].hide();
+                        this.doorcollisionson = 1;
+                    }
+                    var2 = var2 + 1;
+                }
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(0.5);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

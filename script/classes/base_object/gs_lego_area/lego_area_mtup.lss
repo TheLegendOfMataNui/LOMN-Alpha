@@ -1,0 +1,82 @@
+class lego_area_mtup : gs_lego_area {
+    property cinema;
+    property cinema_shown;
+    property bgmusic;
+    
+    method lego_area_mtup(param1) {
+        this.cinema_shown = 0;
+        this.gs_lego_area("mtup", param1, 0, 0);
+        this.lego_area_initfull();
+        return null;
+    }
+    
+    method initfull() {
+        if (this.cinema_shown == 0) {
+            this.cinema = gccinemaengine::create();
+            gccinemaengine::load(this.cinema, "cin1");
+            this.bgmusic = new legomp3player();
+            this.bgmusic.setupforplay("Root/Data/sounds/MUSICLEGOCinematicambience");
+            this.bgmusic.play(1);
+            globalclass.hud.hide();
+            gccinemaengine::play(this.cinema);
+            debug::print("playing cinema 1");
+            this.cinema_shown = 1;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 30) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cin1")) {
+                globalclass.hud.show();
+                this.bgmusic.stop();
+                this.bgmusic.setupforplay("Root/Data/sounds/MUSICpohatutheme");
+                this.bgmusic.play(1);
+                globalclass.player.maskcontrol.changemask(1);
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.enterstartid, this.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.setinputstate("ninp");
+            this.level.cam.setaimode(11);
+        }
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 255) {
+                if (!(this.cinema == null)) {
+                    gccinemaengine::stop(this.cinema);
+                    this.bgmusic.stop();
+                    this.bgmusic.setupforplay("Root/Data/sounds/MUSICpohatutheme");
+                    this.bgmusic.play(1);
+                }
+            }
+            param1.button;
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.cinema = null;
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+}

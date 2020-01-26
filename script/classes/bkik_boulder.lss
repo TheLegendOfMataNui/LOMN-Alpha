@@ -1,0 +1,85 @@
+class bkik_boulder {
+    property stringid;
+    property areaid;
+    property id;
+    property parent;
+    property boulder;
+    
+    method bkik_boulder(param1, param2, param3, param4) {
+        this.parent = param3;
+        this.stringid = param1;
+        this.areaid = param2;
+        this.id = scslosifoundation::stringtoidentifier(this.stringid);
+        this.boulder = new lego_moveableobject(this.stringid, this.areaid);
+        return null;
+    }
+    
+    method initfull() {
+        this.boulder.initfull();
+        this.boulder.setresponse(3, 3, 3);
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        this.parent = null;
+        this.stringid = null;
+        this.areaid = null;
+        this.id = null;
+        this.boulder.cleanupfull();
+        this.boulder = null;
+        this.parent = null;
+        return null;
+    }
+    
+    method explode() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        var var7;
+        var var8;
+        var var9;
+        var var10;
+        var var11;
+        var1 = this.boulder.getx();
+        var2 = this.boulder.gety();
+        var3 = this.boulder.getz();
+        var4 = 0;
+        while ((this.parent.miniboulders.__length - 1) >= var4) {
+            var5 = globalclass.randnum.getrandomfloat(0.04, 0.15);
+            var6 = globalclass.randnum.getrandomfloat(0 - 15.0, 15.0);
+            var7 = globalclass.randnum.getrandomfloat(1.0, 10.0);
+            var8 = globalclass.randnum.getrandomfloat(0 - 15.0, 15.0);
+            var9 = globalclass.randnum.getrandomfloat(var1, var1 + 10.0);
+            var10 = globalclass.randnum.getrandomfloat(var2, var2 + 10.0);
+            var11 = globalclass.randnum.getrandomfloat(var3, var3 + 10.0);
+            this.parent.miniboulders[var4].show();
+            this.parent.miniboulders[var4].fadein(0.0);
+            this.parent.miniboulders[var4].setposition(var9, var10, var11);
+            this.parent.miniboulders[var4].setobjscale(var5);
+            this.parent.miniboulders[var4].setmoveableflags(1, 1, 0, 1);
+            this.parent.miniboulders[var4].setvelocity(var6, var7, var8);
+            var4 = var4 + 1;
+        }
+        this.boulder.hide();
+        return null;
+    }
+}

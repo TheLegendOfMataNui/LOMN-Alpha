@@ -1,0 +1,43 @@
+class lego_area_well4 : gs_lego_area {
+    property puzzle;
+    
+    method lego_area_well4(param1) {
+        this.gs_lego_area("well", param1, 0, 0);
+        this.puzzle = new well4_puzzle(this);
+        this.lego_area_initfull();
+        return null;
+    }
+    
+    method initfull() {
+        this.lego_area_show();
+        this.puzzle.initfull();
+        this.puzzle.show();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.lego_area_hide();
+        this.puzzle.hide();
+        this.puzzle = null;
+        return null;
+    }
+    
+    method process(param1) {
+        this.puzzle.process(param1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        this.puzzle.onevent(param1);
+        return null;
+    }
+    
+    method input(param1) {
+        this.puzzle.input(param1);
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+}

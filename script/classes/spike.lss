@@ -1,0 +1,59 @@
+class spike {
+    property id;
+    property name;
+    property obj;
+    property objid;
+    property objname;
+    property area;
+    property hitcounter;
+    
+    method spike(param1, param2) {
+        this.obj = new lego_moveableobject(param1, param2);
+        this.objid = this.obj.id;
+        this.id = this.obj.id;
+        this.objname = scslosifoundation::identifiertostring(this.obj.id);
+        this.name = scslosifoundation::identifiertostring(this.obj.id);
+        if (param2 == null) {
+            this.area = "fake";
+        }
+        else {
+            this.area = param2;
+        }
+        this.hitcounter = 0;
+        return null;
+    }
+    
+    method initfull() {
+        this.obj.initfull();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.id = null;
+        this.name = null;
+        this.obj.cleanupfull();
+        this.obj = null;
+        this.objid = null;
+        this.objname = null;
+        this.area = null;
+        this.hitcounter = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        return null;
+    }
+    
+    method gethitcountervalue() {
+        return this.hitcounter;
+    }
+    
+    method sethitcountervalue(param1) {
+        this.hitcounter = param1;
+        return null;
+    }
+}

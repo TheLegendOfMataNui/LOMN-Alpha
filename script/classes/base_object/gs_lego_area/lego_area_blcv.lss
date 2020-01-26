@@ -1,0 +1,46 @@
+class lego_area_blcv : gs_lego_area {
+    property mask_puzzle;
+    
+    method lego_area_blcv(param1) {
+        this.gs_lego_area("blcv", param1, 0, 0);
+        this.mask_puzzle = new acmaskpuzzle(this);
+        this.lego_area_initfull();
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        this.lego_area_show();
+        this.mask_puzzle.initfull();
+        this.mask_puzzle.show();
+        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vlgr"), 0);
+        gccharacter::settohunga(var1, rgba(255, 247, 0, 255), rgba(255, 0, 13, 255), scslosifoundation::stringtoidentifier("mk2a"));
+        return null;
+    }
+    
+    method process(param1) {
+        this.mask_puzzle.process(param1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        this.mask_puzzle.onevent(param1);
+        return null;
+    }
+    
+    method input(param1) {
+        this.mask_puzzle.input(param1);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.lego_area_hide();
+        this.mask_puzzle.cleanupfull();
+        return null;
+    }
+    
+    method exit() {
+        this.mask_puzzle.exit();
+        return null;
+    }
+}

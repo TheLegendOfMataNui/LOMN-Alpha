@@ -1,0 +1,218 @@
+class ta136_puzzle {
+    property parent;
+    property pillars;
+    property pillartimer;
+    property incrementor;
+    property stoptheincrementor;
+    property bats;
+    
+    method ta136_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(15);
+        this.pillartimer = new lego_timer("pltm", 0.5, 0);
+        this.pillartimer.initfull();
+        this.incrementor = 0;
+        this.stoptheincrementor = 0;
+        this.bats = [ new gs_lego_character("bt00", "btfr", "ta13", 0, 0 - 203.3, 22.8, 78.9, "aiin"), 
+            new gs_lego_character("bt01", "btfr", "ta13", 0, 0 - 80.0, 16.0, 144.3, "aiin"), 
+            new gs_lego_character("bt02", "btfr", "ta13", 0, 0 - 29.9, 34.8, 247.6, "aiin"), 
+            new gs_lego_character("bt03", "btfr", "ta13", 0, 31.3, 29.7, 341.1, "aiin"), 
+            new gs_lego_character("bt04", "btfr", "ta13", 0, 6.9, 26.3, 477.9, "aiin"), 
+            new gs_lego_character("bt05", "btfr", "ta13", 0, 0 - 177.8, 32.9, 520.2, "aiin"), 
+            new gs_lego_character("bt06", "btfr", "ta13", 0, 0 - 251.2, 25.3, 635.2, "aiin"), 
+            new gs_lego_character("bt07", "btfr", "ta13", 0, 0 - 302.9, 17.8, 689.3, "aiin") ];
+        var1 = 0;
+        while ((this.bats.__length - 1) >= var1) {
+            this.bats[var1].initfull();
+            this.bats[var1].add();
+            var1 = var1 + 1;
+        }
+        this.pillars = [ new lego_moveableobject("pl00"), 
+            new lego_moveableobject("pl01"), 
+            new lego_moveableobject("pl02"), 
+            new lego_moveableobject("pl03"), 
+            new lego_moveableobject("pl04"), 
+            new lego_moveableobject("pl05"), 
+            new lego_moveableobject("pl06"), 
+            new lego_moveableobject("pl07"), 
+            new lego_moveableobject("pl08"), 
+            new lego_moveableobject("pl09"), 
+            new lego_moveableobject("pl10"), 
+            new lego_moveableobject("pl11"), 
+            new lego_moveableobject("pl12"), 
+            new lego_moveableobject("pl13"), 
+            new lego_moveableobject("pl14"), 
+            new lego_moveableobject("pl15"), 
+            new lego_moveableobject("pl16"), 
+            new lego_moveableobject("pl17"), 
+            new lego_moveableobject("pl18"), 
+            new lego_moveableobject("pl19"), 
+            new lego_moveableobject("pl20"), 
+            new lego_moveableobject("pl21"), 
+            new lego_moveableobject("pl22"), 
+            new lego_moveableobject("pl23"), 
+            new lego_moveableobject("pl24"), 
+            new lego_moveableobject("pl25"), 
+            new lego_moveableobject("pl26"), 
+            new lego_moveableobject("pl27"), 
+            new lego_moveableobject("pl28"), 
+            new lego_moveableobject("pl29"), 
+            new lego_moveableobject("pl30"), 
+            new lego_moveableobject("pl31"), 
+            new lego_moveableobject("pl32"), 
+            new lego_moveableobject("pl33"), 
+            new lego_moveableobject("pl34"), 
+            new lego_moveableobject("pl35"), 
+            new lego_moveableobject("pl36"), 
+            new lego_moveableobject("pl37"), 
+            new lego_moveableobject("pl38"), 
+            new lego_moveableobject("pl39"), 
+            new lego_moveableobject("pl40"), 
+            new lego_moveableobject("pl41"), 
+            new lego_moveableobject("pl42"), 
+            new lego_moveableobject("pl43"), 
+            new lego_moveableobject("pl44"), 
+            new lego_moveableobject("pl45"), 
+            new lego_moveableobject("pl46"), 
+            new lego_moveableobject("pl47") ];
+        var1 = 0;
+        while ((this.pillars.__length - 1) >= var1) {
+            this.pillars[var1].initfull();
+            this.pillars[var1].setresponse(3, 0, 3);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        var1 = 0;
+        while ((this.bats.__length - 1) >= var1) {
+            this.bats[var1].show();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.pillars.__length - 1) >= var1) {
+            this.pillars[var1].show();
+            var1 = var1 + 1;
+        }
+        this.pillars[this.incrementor].setslidetimer(0, 13.4, 0, 1.0, -1, 0.3);
+        this.incrementor = this.incrementor + 1;
+        this.pillartimer.reset(0);
+        this.pillartimer.start();
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        var1 = 0;
+        while ((this.bats.__length - 1) >= var1) {
+            this.bats[var1].cleanupfull();
+            this.bats[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.bats = null;
+        var1 = 0;
+        while ((this.pillars.__length - 1) >= var1) {
+            this.pillars[var1].cleanupfull();
+            this.pillars[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.pillars = null;
+        this.pillartimer.cleanupfull();
+        this.pillartimer = null;
+        this.incrementor = null;
+        this.stoptheincrementor = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+        }
+        else if (param1.eventid == 4) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tp02")) {
+                screenlist.screens[9].screen.areas[13].puzzle.switchit(0);
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 8) {
+            if (param1.args[0] == this.pillartimer.id) {
+                if (this.stoptheincrementor == 0) {
+                    if (this.incrementor == 16) {
+                        this.pillars[this.incrementor].setslidetimer(0, 32.4, 0, 1.0, -1, 0.3);
+                    }
+                    else if (this.incrementor == 34) {
+                        this.pillars[this.incrementor].setslidetimer(0, 32.4, 0, 1.0, -1, 0.3);
+                    }
+                    else if (this.incrementor == 37) {
+                        this.pillars[this.incrementor].setslidetimer(0, 32.4, 0, 1.0, -1, 0.3);
+                    }
+                    else if (this.incrementor == 47) {
+                        this.pillars[this.incrementor].setslidetimer(0, 32.4, 0, 1.0, -1, 0.3);
+                    }
+                    else {
+                        this.pillars[this.incrementor].setslidetimer(0, 13.4, 0, 1.0, -1, 0.3);
+                    }
+                    this.incrementor;
+                    this.incrementor = this.incrementor + 1;
+                    if (this.incrementor > (this.pillars.__length - 1)) {
+                        this.incrementor = 0;
+                        this.stoptheincrementor = 1;
+                    }
+                    this.pillartimer.reset(0);
+                    this.pillartimer.start();
+                }
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                var1 = 0;
+                while ((this.pillars.__length - 1) >= var1) {
+                    if (param1.args[1] == this.pillars[var1].id) {
+                        
+                    }
+                    param1.args[1];
+                    var1 = var1 + 1;
+                }
+            }
+            param1.args[0];
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 89) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        debug::print("*****SWITCHING NEXT DOOR IN SHRN TO OPEN");
+        screenlist.screens[9].screen.areas[12].puzzle.switchit(0);
+        return null;
+    }
+}

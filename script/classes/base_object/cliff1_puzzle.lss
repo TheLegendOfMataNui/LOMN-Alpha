@@ -1,0 +1,342 @@
+class cliff1_puzzle : base_object {
+    property button;
+    property buttonpos;
+    property ledge1;
+    property ledge1pos;
+    property ledge2;
+    property ledge2pos;
+    property digarray;
+    property digplanes;
+    property objectarray;
+    property parent;
+    property savecam;
+    property buttonpressed;
+    property digging;
+    property sounddirector;
+    property slidesound;
+    property cutscenetimer;
+    property splineon;
+    property puzzledone;
+    
+    method cliff1_puzzle(param1) {
+        this.parent = param1;
+        this.buttonpressed = 0;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        var var3;
+        this.button = new lego_moveableobject("lbtn", this.parent.name, [  ]);
+        this.ledge1 = new lego_moveableobject("led1", this.parent.name, [  ]);
+        this.ledge2 = new lego_moveableobject("led2", this.parent.name, [  ]);
+        this.digarray = [  ];
+        var1 = new lego_moveableobject("dig1", this.parent.name);
+        this.digarray.__append(var1);
+        var1 = new lego_moveableobject("dig2", this.parent.name);
+        this.digarray.__append(var1);
+        var1 = new lego_moveableobject("dig3", this.parent.name);
+        this.digarray.__append(var1);
+        var1 = new lego_moveableobject("dig4", this.parent.name);
+        this.digarray.__append(var1);
+        this.digplanes = [  ];
+        var2 = new lego_triggerobject("tpc1", this.parent.name, 0);
+        this.digplanes.__append(var2);
+        var2 = new lego_triggerobject("tpc2", this.parent.name, 0);
+        this.digplanes.__append(var2);
+        var2 = new lego_triggerobject("tpc3", this.parent.name, 0);
+        this.digplanes.__append(var2);
+        var2 = new lego_triggerobject("tpc4", this.parent.name, 0);
+        this.digplanes.__append(var2);
+        this.cutscenetimer = new lego_timer("tim0", 1.5, 0);
+        this.splineon = 0;
+        this.objectarray = [  ];
+        this.button.initfull();
+        this.button.setresponse(0, 0, 3);
+        this.buttonpos = [ this.button.getx(), 
+            this.button.gety(), 
+            this.button.getz() ];
+        this.ledge1.initfull();
+        this.ledge1.setresponse(4, 4, 4);
+        this.ledge1pos = [ this.ledge1.getx(), 
+            this.ledge1.gety(), 
+            this.ledge1.getz() ];
+        this.ledge2.initfull();
+        this.ledge2.setresponse(4, 4, 4);
+        this.ledge2pos = [ this.ledge2.getx(), 
+            this.ledge2.gety(), 
+            this.ledge2.getz() ];
+        var3 = 0;
+        while ((this.digarray.__length - 1) >= var3) {
+            this.digarray[var3].initfull();
+            this.digarray[var3].setresponse(4, 4, 4);
+            this.digarray[var3].disablecollisions();
+            var3 = var3 + 1;
+        }
+        var3 = 0;
+        while ((this.digplanes.__length - 1) >= var3) {
+            this.digplanes[var3].initfull();
+            this.digplanes[var3].setresponse(3, 4);
+            var3 = var3 + 1;
+        }
+        this.digging = 0;
+        this.cutscenetimer.initfull();
+        var3 = 0;
+        while ((this.digarray.__length - 1) >= var3) {
+            this.objectarray.__append(this.digarray[var3]);
+            var3 = var3 + 1;
+        }
+        var3 = 0;
+        while ((this.digplanes.__length - 1) >= var3) {
+            this.objectarray.__append(this.digplanes[var3]);
+            var3 = var3 + 1;
+        }
+        this.parent.level.cam.makespline("Root/Data/Levels/lev1/clf1/clf1_CAM.slb");
+        this.parent.level.cam.setspline(0, 4.0, 1, 0);
+        this.parent.level.cam.settargetspline(3, 1, 0);
+        this.puzzledone = gcsaver::isconditionset(8388608);
+        if (this.puzzledone) {
+            this.skipcinematic();
+        }
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        var var2;
+        debug::print("Hide called. Removing all objects");
+        var1 = this.objectarray.__length - 1;
+        var2 = 0;
+        while (var1 >= var2) {
+            this.objectarray[var1 - var2] = null;
+            var2 = var2 + 1;
+        }
+        debug::print("Removed object array");
+        this.objectarray = null;
+        var1 = this.digplanes.__length - 1;
+        var2 = 0;
+        while (var1 >= var2) {
+            this.digplanes[var1 - var2] = null;
+            var2 = var2 + 1;
+        }
+        debug::print("Removed digplane array");
+        this.digplanes = null;
+        var1 = this.digarray.__length - 1;
+        var2 = 0;
+        while (var1 >= var2) {
+            this.digarray[var1 - var2].cleanupfull();
+            this.digarray[var1 - var2] = null;
+            var2 = var2 + 1;
+        }
+        debug::print("Removed dig array");
+        this.digarray = null;
+        this.cutscenetimer = null;
+        this.button = null;
+        this.buttonpos = null;
+        this.ledge1 = null;
+        this.ledge1pos = null;
+        this.ledge2 = null;
+        this.ledge2pos = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        var var7;
+        var var8;
+        var var9;
+        var var10;
+        var var11;
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+        }
+        else if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                globalclass.player.kill();
+                gcstaticsoundsptrarray::playtablesound(303);
+                this.parent.level.cam.setaimode(7);
+                globalclass.player.actor.setinputstate("none");
+                gccollisionphysicsgroup::spinmask(1.2);
+            }
+        }
+        else if (param1.eventid == 1) {
+            var1 = param1.args[0];
+            var2 = param1.args[1];
+            if (this.buttonpressed == 0) {
+                if (var2 == this.button.id) {
+                    this.runcinematic();
+                }
+            }
+        }
+        else if (param1.eventid == 12) {
+            var2 = param1.args[0];
+            if (var2 == this.button.id) {
+                var3 = this.parent.level.cam;
+                this.savecam = [ var3.x1, 
+                    var3.y1, 
+                    var3.z, 
+                    var3.tx, 
+                    var3.ty, 
+                    var3.tz ];
+                var3.scaletocutscene();
+                var3.settargetpos(-133, -61, -223);
+                var3.setaimode(3);
+                this.splineon = 1;
+                this.ledge1.setresponse(0, 0, 3);
+                this.ledge2.setresponse(0, 0, 3);
+                this.ledge1.interpolate(0 - 171.9185, this.ledge1pos[1], 0 - 259.285, 3.0);
+                this.ledge2.interpolate(0 - 81.96168, this.ledge2pos[1], 0 - 191.5045, 3.0);
+            }
+        }
+        else if (param1.eventid == 6) {
+            this.parent.level.cam.setaimode(0);
+            this.splineon = 0;
+            this.cutscenetimer.start();
+        }
+        else if (param1.eventid == 4) {
+            var2 = param1.args[0];
+            var4 = param1.args[1];
+            var5 = 0;
+            while ((this.digplanes.__length - 1) >= var5) {
+                if (var2 == this.digplanes[var5].id) {
+                    var6 = this.digplanes[var5];
+                    var6.setcollide();
+                }
+                var5 = var5 + 1;
+            }
+        }
+        else if (param1.eventid == 8) {
+            var7 = param1.args[0];
+            if (var7 == scslosifoundation::stringtoidentifier("tim0")) {
+                var3 = this.parent.level.cam;
+                var3.setaimode(11);
+                var3.setpos(this.savecam[0], this.savecam[1], this.savecam[2]);
+                var3.settargetpos(this.savecam[3], this.savecam[4], this.savecam[5]);
+                var3.resetviewport();
+                var8 = globalclass.hud;
+                var8.show();
+                globalclass.player.actor.setinputstate("ninp");
+                this.cutscenetimer.reset();
+            }
+        }
+        else if (param1.eventid == 7) {
+            var9 = param1.args[0];
+            var10 = param1.args[1];
+            var11 = param1.args[2];
+            if (var9 == scslosifoundation::stringtoidentifier("cnt1")) {
+                if ((var10 == scslosifoundation::stringtoidentifier("o013")) || (var10 == scslosifoundation::stringtoidentifier("o014"))) {
+                    if (var11 == scslosifoundation::stringtoidentifier("Edga")) {
+                        this.digging = 1;
+                    }
+                    if (var11 == scslosifoundation::stringtoidentifier("Edgd")) {
+                        this.digging = 0;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var1 = 0;
+        while ((this.digplanes.__length - 1) >= var1) {
+            var2 = this.digplanes[var1];
+            if (var2.collide > 0) {
+                var3 = this.digarray[var1];
+                if (this.digging == 1) {
+                    var3.hide();
+                    var2.hide();
+                }
+            }
+            var2.process(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        var var1;
+        if (param1.event == 2) {
+            if (param1.button == 80) {
+                this.resetcinematic();
+                var1 = 0;
+                while ((this.digplanes.__length - 1) >= var1) {
+                    this.digplanes[var1].show();
+                    var1 = var1 + 1;
+                }
+                var1 = 0;
+                while (((this.digarray.__length - 1) - 1) >= var1) {
+                    this.digarray[var1].show();
+                    var1 = var1 + 1;
+                }
+            }
+            if (param1.button == 79) {
+                this.runcinematic();
+            }
+        }
+        if (param1.event == 1) {
+            if (param1.button == 231) {
+                this.digging = 0;
+            }
+        }
+        return null;
+    }
+    
+    method runcinematic() {
+        var var1;
+        var var2;
+        var1 = globalclass.hud;
+        var1.hide();
+        this.buttonpressed = 1;
+        this.button.interpolate(this.buttonpos[0], 0 - 63.269, this.buttonpos[2], 1.0);
+        var2 = this.parent.level.cam;
+        var2.shakecamera(1.0, 0.08);
+        globalclass.player.actor.setinputstate("none");
+        globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
+        gcsaver::setcondition(8388608, 1);
+        return null;
+    }
+    
+    method skipcinematic() {
+        this.buttonpressed = 1;
+        this.button.setposition(this.buttonpos[0], 0 - 63.269, this.buttonpos[2]);
+        this.ledge1.setresponse(0, 0, 3);
+        this.ledge2.setresponse(0, 0, 3);
+        this.ledge1.setposition(0 - 171.9185, this.ledge1pos[1], 0 - 259.285);
+        this.ledge2.setposition(0 - 81.96168, this.ledge2pos[1], 0 - 191.5045);
+        return null;
+    }
+    
+    method resetcinematic() {
+        var var1;
+        this.buttonpressed = 0;
+        this.button.setposition(this.buttonpos[0], this.buttonpos[1], this.buttonpos[2]);
+        this.ledge1.setposition(this.ledge1pos[0], this.ledge1pos[1], this.ledge1pos[2]);
+        this.ledge2.setposition(this.ledge2pos[0], this.ledge2pos[1], this.ledge2pos[2]);
+        this.splineon = 0;
+        var1 = 0.0;
+        return null;
+    }
+}

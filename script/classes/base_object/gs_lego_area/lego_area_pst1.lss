@@ -1,0 +1,54 @@
+class lego_area_pst1 : gs_lego_area {
+    property puzzle;
+    
+    method lego_area_pst1(param1) {
+        this.gs_lego_area("pst1", param1, 0, 0);
+        return null;
+    }
+    
+    method initfull() {
+        gcmodeldirector::setnearestmax(5);
+        gcareadirector::setnearestmax(15);
+        if (globalclass.player.actorid == "akam") {
+            globalclass.player.addelement(1);
+        }
+        this.puzzle = new puzzle_pst1();
+        this.puzzle.initfull(this.name);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.puzzle.cleanupfull();
+        this.puzzle = null;
+        if (!(globalclass == null)) {
+            if (!(globalclass.player.actor == null)) {
+                globalclass.player.actor.setcrushfromtop(0);
+            }
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 44) {
+            if (!(globalclass.player.actorid == "akam")) {
+                globalclass.player.changetoa("akam");
+                gccollisionphysicsgroup::settoaposition(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+                globalclass.player.addelement(1);
+            }
+        }
+        this.puzzle.onevent(param1);
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+}

@@ -1,0 +1,182 @@
+class hudtokens : base_objectarray {
+    property tcount;
+    property tidx;
+    property cidx;
+    property onscreen;
+    property timeonscreen;
+    property movement;
+    property offx;
+    property tokensx1;
+    
+    method hudtokens() {
+        return null;
+    }
+    
+    method initfull() {
+        this.tcount = 0;
+        this.tidx = 0;
+        this.cidx = 2;
+        this.tokensx1 = screenx - 184;
+        this.base_objectarray([ new gs_lego_animatesprite("Root/data/art/pickups/onuatoken/onua_token", 0, 29, 1, this.tokensx1, 20, 0, this.tokensx1 + 64, 84), 
+            new gs_legotext("Root/Data/Art/Fonts/BionicleFont", "X", (this.tokensx1 + 64) + 5, 52, 0, 1.2, 0, 4, 0), 
+            new gs_legotext("Root/Data/Art/Fonts/BionicleFont", "0", ((this.tokensx1 + 64) + 5) + 32, 52, 0, 1.7, 0, 4, 0) ]);
+        this.items[0].initfull();
+        this.items[1].initfull();
+        this.items[2].initfull();
+        this.offx = screenx + 20;
+        this.movement = 0;
+        this.onscreen = 1;
+        this.timeonscreen = 0.0;
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var var2;
+        debug::print("[][][]cleanup hud tokens");
+        if (!(this.items == null)) {
+            var1 = this.items.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.items[var1 - var2].hide();
+                this.items[var1 - var2].remove();
+                this.items[var1 - var2].cleanupfull();
+                this.items[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.items = null;
+        }
+        return null;
+    }
+    
+    method initshort() {
+        this.tcount = 0;
+        this.timeonscreen = 0.0;
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.hide();
+        return null;
+    }
+    
+    method add() {
+        this.items[0].add();
+        this.items[1].add();
+        this.items[2].add();
+        return null;
+    }
+    
+    method show() {
+        this.items[0].show();
+        this.items[1].show();
+        this.items[2].show();
+        this.items[this.tidx].enablealphachannel(1);
+        this.items[this.tidx].startanimate();
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        this.setxpos(this.offx);
+        this.onscreen = 0;
+        debug::print("[][tokens][] hide: onscreen set to " + __tostring(this.onscreen));
+        var1 = 0;
+        while (2 >= var1) {
+            this.items[var1].hide();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method changepos(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.items.__length - 1) >= var1) {
+            this.items[var1].changepos(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method setxpos(param1) {
+        var var1;
+        var1 = param1 - this.items[0].x1;
+        this.changepos(var1);
+        return null;
+    }
+    
+    method addtoken(param1) {
+        this.timeonscreen = 0.0;
+        this.tcount = this.tcount + param1;
+        if (this.onscreen == 0) {
+            this.slide(1);
+        }
+        return null;
+    }
+    
+    method removetoken(param1) {
+        this.timeonscreen = 0.0;
+        this.tcount = this.tcount - param1;
+        if (this.onscreen == 0) {
+            this.slide(1);
+        }
+        return null;
+    }
+    
+    method settokens(param1) {
+        this.timeonscreen = 0.0;
+        this.tcount = param1;
+        if (this.onscreen == 0) {
+            this.slide(1);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method process(param1) {
+        if (this.onscreen == 1) {
+            this.timeonscreen = this.timeonscreen + param1.deltatime;
+            if (this.timeonscreen > 10) {
+                this.slide(0);
+                this.timeonscreen = 0.0;
+            }
+            this.items[this.cidx].setstring(__tostring(this.tcount));
+            this.items[this.tidx].process(param1);
+            if (this.movement < 0) {
+                this.changepos(-10);
+                if (this.items[0].x1 <= this.tokensx1) {
+                    this.movement = 0;
+                }
+            }
+            if (this.movement > 0) {
+                this.changepos(10);
+                if (this.items[0].x1 >= this.offx) {
+                    this.movement = 0;
+                    this.onscreen = 0;
+                    debug::print("[][tokens][] process: onscreen set to " + __tostring(this.onscreen));
+                }
+            }
+        }
+        return null;
+    }
+    
+    method slide(param1) {
+        if ((param1 == 1) && (this.onscreen == 0)) {
+            this.movement = -1;
+            this.timeonscreen = 0.0;
+            this.onscreen = 1;
+            debug::print("[][tokens][] Slide On: onscreen set to " + __tostring(this.onscreen));
+        }
+        else {
+            debug::print("[][tokens][] Slide Off: onscreen set to " + __tostring(this.onscreen));
+            if (this.onscreen == 1) {
+                this.movement = 1;
+            }
+        }
+        return null;
+    }
+}

@@ -1,0 +1,402 @@
+class pathpuzzle {
+    property parent;
+    property timer;
+    property tiggerboxid;
+    property cumpus;
+    property showcumpus;
+    property bldarray;
+    property platformarray;
+    property blockarray;
+    property blockmoving;
+    property meltpickup;
+    
+    method pathpuzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        gcareadirector::setnearestmax(10);
+        this.blockarray = [ new lego_moveableobject("blk1"), 
+            new lego_moveableobject("blk2"), 
+            new lego_moveableobject("blk3") ];
+        this.blockmoving = [ 0, 
+            0, 
+            0 ];
+        var1 = 0;
+        while ((this.blockarray.__length - 1) >= var1) {
+            this.blockarray[var1].initfull("iblk", "Root/data/levels/lev4/strt", -5, -6, -3, 5, 6, 3);
+            this.blockarray[var1].setresponse(2, 2, 2);
+            var1 = var1 + 1;
+        }
+        this.blockarray[0].setorientation(0, 30, 0);
+        this.blockarray[1].setorientation(0, -30, 0);
+        this.blockarray[2].setorientation(0, 45, 0);
+        this.blockarray[0].setpos(0 - 51.6, 0 - 199.2, 1168.6);
+        this.blockarray[1].setpos(0 - 77.7, -182, 981.4);
+        this.blockarray[2].setpos(236, -415, 1929);
+        this.bldarray = [  ];
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].initfull();
+            this.bldarray[var1].setlowestpointbeforredrop(-400);
+            this.bldarray[var1].setstartingvelocity(new basicpoint(1, 150, 1), new basicpoint(0, 110, 0));
+            var1 = var1 + 1;
+        }
+        this.timer = new lego_timer("timr", 1, 0);
+        this.timer.initfull();
+        this.tiggerboxid = 0;
+        this.showcumpus = 0;
+        this.cumpus = new lego_moveableobject("cmps");
+        this.cumpus.initfull("iblk", "Root/data/levels/lev4/maz1");
+        this.cumpus.setobjscale(0.2);
+        this.cumpus.hide();
+        this.platformarray = [ new platform("plt0"), 
+            new platform("plt1"), 
+            new platform("plt2"), 
+            new platform("plt3"), 
+            new platform("plt4"), 
+            new platform("plt5"), 
+            new platform("plt6"), 
+            new platform("plt7"), 
+            new platform("plt8"), 
+            new platform("plt9"), 
+            new platform("pl10"), 
+            new platform("pl11"), 
+            new platform("pl12"), 
+            new platform("pl13"), 
+            new platform("pl14"), 
+            new platform("pl15"), 
+            new platform("pl16"), 
+            new platform("pl17"), 
+            new platform("pl18") ];
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            if (!(var1 == 6)) {
+                this.platformarray[var1].initfull("pl00", "Root/data/levels/lev4/crss", -4, -1, -4, 4, 1, 4);
+                this.platformarray[var1].obj.setobjscale(0.4);
+            }
+            var1 = var1 + 1;
+        }
+        this.platformarray[0].setuppath([ new basicpoint(-30, -170, 805), 
+            new basicpoint(-30, -170, 755) ], [ 15, 
+            15 ]);
+        this.platformarray[1].setuppath([ new basicpoint(-20, -170, 755), 
+            new basicpoint(-20, -170, 805) ], [ 15, 
+            10 ]);
+        this.platformarray[2].setuppath([ new basicpoint(53, -205, 733), 
+            new basicpoint(53, -240, 733) ], [ 20, 
+            20 ]);
+        this.platformarray[3].setuppath([ new basicpoint(53, -240, 810), 
+            new basicpoint(53, -205, 810) ], [ 20, 
+            20 ]);
+        this.platformarray[4].setuppath([ new basicpoint(53, -240, 883), 
+            new basicpoint(53, -205, 883) ], [ 20, 
+            20 ]);
+        this.platformarray[5].setuppath([ new basicpoint(63, -240, 885), 
+            new basicpoint(63, -205, 730) ], [ 20, 
+            20 ]);
+        this.platformarray[6].initfull("pl00", "Root/data/levels/lev4/crss", -7, -2, -7, 7, 2, 7);
+        this.platformarray[6].obj.setalpha(0.09);
+        this.platformarray[6].setuppath([ new basicpoint(29, -270, 1082), 
+            new basicpoint(29, -270, 1082), 
+            new basicpoint(20, -270, 1082), 
+            new basicpoint(20, -180, 1200), 
+            new basicpoint(5, -180, 1200), 
+            new basicpoint(5, -207, 1138), 
+            new basicpoint(-5, -207, 1138), 
+            new basicpoint(-5, -207, 1138), 
+            new basicpoint(5, -207, 1138), 
+            new basicpoint(5, -320, 990), 
+            new basicpoint(20, -320, 990), 
+            new basicpoint(20, -270, 1082) ], [ 5, 
+            2, 
+            7, 
+            2, 
+            7, 
+            2, 
+            5, 
+            2, 
+            7, 
+            2, 
+            7, 
+            2 ]);
+        this.platformarray[7].setuppath([ new basicpoint(43, -240, 733), 
+            new basicpoint(43, -190, 733) ], [ 40, 
+            40 ]);
+        this.platformarray[8].setuppath([ new basicpoint(43, -240, 810), 
+            new basicpoint(43, -170, 810) ], [ 25, 
+            25 ]);
+        this.platformarray[9].setuppath([ new basicpoint(43, -190, 883), 
+            new basicpoint(43, -240, 883) ], [ 30, 
+            25 ]);
+        this.platformarray[10].setuppath([ new basicpoint(33, -180, 733), 
+            new basicpoint(33, -240, 733) ], [ 30, 
+            25 ]);
+        this.platformarray[11].setuppath([ new basicpoint(33, -240, 883), 
+            new basicpoint(33, -180, 883) ], [ 37, 
+            30 ]);
+        this.platformarray[12].setuppath([ new basicpoint(23, -240, 733), 
+            new basicpoint(23, -170, 733) ], [ 45, 
+            40 ]);
+        this.platformarray[13].setuppath([ new basicpoint(23, -170, 883), 
+            new basicpoint(23, -240, 883) ], [ 42, 
+            30 ]);
+        this.platformarray[14].setuppath([ new basicpoint(13, -178, 750), 
+            new basicpoint(13, -178, 730) ], [ 10, 
+            10 ]);
+        this.platformarray[15].setuppath([ new basicpoint(13, -178, 885), 
+            new basicpoint(13, -178, 865) ], [ 10, 
+            10 ]);
+        this.platformarray[16].setuppath([ new basicpoint(3, -176, 885), 
+            new basicpoint(3, -176, 730) ], [ 20, 
+            20 ]);
+        this.platformarray[17].setuppath([ new basicpoint(-7, -174, 885), 
+            new basicpoint(-7, -174, 730) ], [ 20, 
+            25 ]);
+        this.platformarray[18].setuppath([ new basicpoint(-17, -172, 885), 
+            new basicpoint(-17, -172, 730) ], [ 30, 
+            30 ]);
+        var2 = gcsaver::finditem(scslosifoundation::stringtoidentifier("crst"));
+        if (var2 == 0) {
+            this.meltpickup = new lego_pickup("crst", 0, 5, "item", 9, 1);
+            this.meltpickup.initfull();
+            this.meltpickup.show();
+            this.meltpickup.setcondition(8192);
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.blockarray.__length - 1) >= var1) {
+            this.blockarray[var1].cleanupfull();
+            this.blockarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.blockarray = null;
+        this.blockmoving = null;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].cleanupfull();
+            this.bldarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.bldarray = null;
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            this.platformarray[var1].remove();
+            this.platformarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.platformarray = null;
+        this.timer = null;
+        this.cumpus = null;
+        if (!(this.meltpickup == null)) {
+            this.meltpickup.cleanupfull();
+            this.meltpickup = null;
+        }
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].show();
+            this.bldarray[var1].startdropping();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            this.platformarray[var1].show();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.blockarray.__length - 1) >= var1) {
+            this.blockarray[var1].show();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].hide();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            this.platformarray[var1].hide();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.blockarray.__length - 1) >= var1) {
+            this.blockarray[var1].hide();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            this.platformarray[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        if (this.showcumpus) {
+            this.cumpus.setpos(5 + this.parent.level.cam.getpositionx(), -10 + this.parent.level.cam.getpositiony(), this.parent.level.cam.getpositionz());
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.platformarray.__length - 1) >= var1) {
+            this.platformarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        if (param1.eventid == 3) {
+            var2 = param1.args[0];
+            if (var2 == scslosifoundation::stringtoidentifier("tb00")) {
+                this.reseta();
+                this.tiggerboxid = scslosifoundation::stringtoidentifier("tb00");
+                debug::print("hit 1st trigerBox");
+            }
+            if (var2 == scslosifoundation::stringtoidentifier("tb01")) {
+                this.reseta();
+                this.tiggerboxid = scslosifoundation::stringtoidentifier("tb01");
+                debug::print("hit 2nd trigerBox");
+            }
+        }
+        else if (param1.eventid == 4) {
+            var2 = param1.args[0];
+            if (var2 == scslosifoundation::stringtoidentifier("tp02")) {
+                if (this.blockmoving[1] == 0) {
+                    this.blockmoving[1] = 1;
+                    this.blockarray[1].setslidetimer(20, 0, 0, 0.5, 4, 1);
+                }
+            }
+            if (var2 == scslosifoundation::stringtoidentifier("tp03")) {
+                if (this.blockmoving[0] == 0) {
+                    this.blockmoving[0] = 1;
+                    this.blockarray[0].setslidetimer(20, 0, 0, 0.5, 4, 1);
+                }
+            }
+            if (var2 == scslosifoundation::stringtoidentifier("tp04")) {
+                if (this.blockmoving[2] == 0) {
+                    this.blockmoving[2] = 1;
+                    this.blockarray[2].setslidetimer(20, 0, 0, 0.5, 4, 1);
+                }
+            }
+        }
+        else if (param1.eventid == 34) {
+            var3 = param1.args[0];
+            if (var3 == scslosifoundation::stringtoidentifier("blk1")) {
+                this.blockmoving[0] = 0;
+            }
+            if (var3 == scslosifoundation::stringtoidentifier("blk2")) {
+                this.blockmoving[1] = 0;
+            }
+            if (var3 == scslosifoundation::stringtoidentifier("blk3")) {
+                this.blockmoving[2] = 0;
+            }
+        }
+        else if (param1.eventid == 8) {
+            var4 = param1.args[0];
+            if (var4 == scslosifoundation::stringtoidentifier("timr")) {
+                this.resetb();
+            }
+        }
+        else if (param1.eventid == 27) {
+            debug::print("Screen Black Event");
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            globalclass.player.unkill();
+            this.resetc();
+        }
+        else if (param1.eventid == 1002) {
+            if (param1.args[0]) {
+                this.platformarray[6].obj.setalpha(1);
+            }
+            else {
+                this.platformarray[6].obj.setalpha(0.1);
+            }
+        }
+        else if (param1.eventid == 7) {
+            if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
+                gcstaticsoundsptrarray::playtablesound(144);
+            }
+        }
+        return null;
+    }
+    
+    method reseta() {
+        this.parent.level.cam.setaimode(7);
+        this.timer.start();
+        return null;
+    }
+    
+    method resetb() {
+        gccollisionphysicsgroup::spinmask(1.2);
+        return null;
+    }
+    
+    method resetc() {
+        if (this.tiggerboxid == scslosifoundation::stringtoidentifier("tb00")) {
+            globalclass.player.actor.setpos(43, -196, 1206);
+            globalclass.player.actor.setorientation(200);
+        }
+        else if (this.tiggerboxid == scslosifoundation::stringtoidentifier("tb01")) {
+            globalclass.player.actor.setpos(390.1, 0 - 259.2, 1451);
+            globalclass.player.actor.setorientation(155);
+        }
+        gccollisionphysicsgroup::toggletriggerboxentered(this.tiggerboxid, 0);
+        this.parent.level.cam.setaimode(11);
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 89) {
+            if (param1.event == 2) {
+                this.showcump();
+            }
+        }
+        return null;
+    }
+    
+    method showcump() {
+        if (this.showcumpus) {
+            this.showcumpus = 0;
+            this.cumpus.hide();
+            debug::print("Hide cumpas");
+        }
+        else {
+            this.showcumpus = 1;
+            this.cumpus.show();
+            debug::print("Show cumpas");
+        }
+        return null;
+    }
+}

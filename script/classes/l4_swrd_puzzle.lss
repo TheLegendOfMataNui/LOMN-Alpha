@@ -1,0 +1,308 @@
+class l4_swrd_puzzle {
+    property parent;
+    property platforms;
+    property temporient0;
+    property temporient1;
+    property temporient2;
+    property temporient3;
+    property move1;
+    
+    method l4_swrd_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(50);
+        this.platforms = [ new platform("pf00"), 
+            new platform("pf01"), 
+            new platform("pf02"), 
+            new platform("pf03"), 
+            new platform("pf04"), 
+            new platform("pf05"), 
+            new platform("pf06"), 
+            new platform("pf07"), 
+            new platform("pf08"), 
+            new platform("pf09"), 
+            new platform("pf10"), 
+            new platform("pf11"), 
+            new platform("pf12"), 
+            new platform("pf13"), 
+            new platform("pf14"), 
+            new platform("pf15") ];
+        this.move1 = 1;
+        this.temporient0 = 0;
+        this.temporient1 = 0;
+        this.temporient2 = 0;
+        this.temporient3 = 0;
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].initfull("pl00", "Root/data/levels/lev4/crss");
+            this.platforms[var1].setresponse(0, 0, 3);
+            this.platforms[var1].obj.setobjscale(0.3);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].show();
+            if (var1 == 0) {
+                this.platforms[var1].obj.setposition(429.8, 0 - 21.0, 0 - 1076.1);
+                this.platforms[var1].obj.setorientation(0.0, 39.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(429.8, 0 - 21.0, 0 - 1076.1), 
+                    new basicpoint(429.8, 0 - 2.3, -1076) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 1) {
+                this.platforms[var1].obj.setposition(433.5, 0 - 2.3, 0 - 1093.3);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(433.5, 0 - 2.3, 0 - 1093.3), 
+                    new basicpoint(397.5, 0 - 2.3, 0 - 1093.3) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 2) {
+                this.platforms[var1].obj.setposition(402.8, 1.8, 0 - 1115.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(402.8, 1.8, 0 - 1115.7), 
+                    new basicpoint(402.8, 1.8, 0 - 1115.7) ], [ 0.0, 
+                    0.0 ]);
+            }
+            else if (var1 == 3) {
+                this.platforms[var1].obj.setposition(386.9, 2.7, 0 - 1123.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(386.9, 2.7, 0 - 1123.7), 
+                    new basicpoint(386.9, 16.7, 0 - 1123.7) ], [ 1.3, 
+                    1.3 ]);
+            }
+            else if (var1 == 4) {
+                this.platforms[var1].obj.setposition(406.9, 16.7, 0 - 1128.3);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(406.9, 16.7, 0 - 1128.3), 
+                    new basicpoint(384.0, 16.7, 0 - 1149.0) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 5) {
+                this.platforms[var1].obj.setposition(372.9, 12.3, 0 - 1151.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(372.9, 12.3, 0 - 1151.7), 
+                    new basicpoint(422.9, 12.3, 0 - 1151.7) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 6) {
+                this.platforms[var1].obj.setposition(423.9, 11.7, 0 - 1167.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(423.9, 11.7, 0 - 1167.7), 
+                    new basicpoint(394.9, 11.7, 0 - 1189.7) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 7) {
+                this.platforms[var1].obj.setposition(386.9, 14.7, 0 - 1195.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(386.9, 14.7, 0 - 1195.7), 
+                    new basicpoint(386.9, 14.7, 0 - 1195.7) ], [ 0.0, 
+                    0.0 ]);
+            }
+            else if (var1 == 8) {
+                this.platforms[var1].obj.setposition(376.3, 24.8, 0 - 1204.1);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(376.3, 24.8, 0 - 1204.1), 
+                    new basicpoint(350.3, 24.8, 0 - 1204.1) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 9) {
+                this.platforms[var1].obj.setposition(340.9, 25.5, 0 - 1199.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(340.9, 25.5, 0 - 1199.7), 
+                    new basicpoint(340.9, 25.5, 0 - 1226.7) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 10) {
+                this.platforms[var1].obj.setposition(336.5, 26.5, 0 - 1232.2);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(336.5, 26.5, 0 - 1232.2), 
+                    new basicpoint(336.5, 42.2, 0 - 1232.2) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 11) {
+                this.platforms[var1].obj.setposition(325.0, 42.2, 0 - 1241.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(325.0, 42.2, 0 - 1241.7), 
+                    new basicpoint(319.0, 42.2, 0 - 1231.7) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 12) {
+                this.platforms[var1].obj.setposition(317.9, 36.7, 0 - 1248.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(317.9, 36.7, 0 - 1248.7), 
+                    new basicpoint(317.9, 36.7, 0 - 1253.7) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 13) {
+                this.platforms[var1].obj.setposition(305.9, 28.7, 0 - 1252.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(305.9, 28.7, 0 - 1252.7), 
+                    new basicpoint(300.9, 28.7, 0 - 1236.7) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 14) {
+                this.platforms[var1].obj.setposition(278.9, 18.7, 0 - 1239.7);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(278.9, 18.7, 0 - 1239.7), 
+                    new basicpoint(288.9, 18.7, 0 - 1239.7) ], [ 2.0, 
+                    2.0 ]);
+            }
+            else if (var1 == 15) {
+                this.platforms[var1].obj.setposition(270.8, 15.8, 0 - 1231.8);
+                this.platforms[var1].obj.setorientation(0.0, 0.0, 0.0);
+                this.platforms[var1].setuppath([ new basicpoint(270.8, 15.8, 0 - 1231.8), 
+                    new basicpoint(270.8, 15.8, 0 - 1231.8) ], [ 2.0, 
+                    2.0 ]);
+            }
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].cleanupfull();
+            this.platforms[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.platforms = null;
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                this.parent.level.cam.setaimode(7);
+                gccollisionphysicsgroup::spinmask(0.5);
+                globalclass.player.actor.setinputstate("none");
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("k000"));
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+        }
+        else if (param1.eventid == 7) {
+            if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
+                gcstaticsoundsptrarray::playtablesound(144);
+            }
+        }
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 49) {
+            if (param1.event == 4) {
+                this.rotate1();
+            }
+        }
+        if (param1.button == 50) {
+            if (param1.event == 4) {
+                this.rotate2();
+            }
+        }
+        if (param1.button == 51) {
+            if (param1.event == 4) {
+                this.rotate3();
+            }
+        }
+        if (param1.button == 52) {
+            if (param1.event == 4) {
+                this.rotate4();
+            }
+        }
+        if (param1.button == 80) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method cheat() {
+        globalclass.player.addmask(11);
+        return null;
+    }
+    
+    method rotate1() {
+        if (this.temporient0 >= 360) {
+            this.temporient0 = 0;
+        }
+        else {
+            this.temporient0 = this.temporient0 + 1;
+        }
+        this.platforms[12].setorientation(0.0, this.temporient0, 0.0);
+        debug::print("Orientation = " + __tostring(this.temporient0));
+        return null;
+    }
+    
+    method rotate2() {
+        if (this.temporient1 >= 360) {
+            this.temporient1 = 0;
+        }
+        else {
+            this.temporient1 = this.temporient1 + 1;
+        }
+        this.platforms[13].setorientation(0.0, this.temporient1, 0.0);
+        debug::print("Orientation = " + __tostring(this.temporient1));
+        return null;
+    }
+    
+    method rotate3() {
+        if (this.temporient2 >= 360) {
+            this.temporient2 = 0;
+        }
+        else {
+            this.temporient2 = this.temporient2 + 1;
+        }
+        this.platforms[14].setorientation(0.0, this.temporient2, 0.0);
+        debug::print("Orientation = " + __tostring(this.temporient2));
+        return null;
+    }
+    
+    method rotate4() {
+        if (this.temporient3 >= 360) {
+            this.temporient3 = 0;
+        }
+        else {
+            this.temporient3 = this.temporient3 + 1;
+        }
+        this.platforms[15].setorientation(0.0, this.temporient3, 0.0);
+        debug::print("Orientation = " + __tostring(this.temporient3));
+        return null;
+    }
+}

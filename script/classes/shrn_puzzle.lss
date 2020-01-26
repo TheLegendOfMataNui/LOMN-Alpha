@@ -1,0 +1,137 @@
+class shrn_puzzle {
+    property parent;
+    property doorarray;
+    property cinema;
+    property bgmusic;
+    
+    method shrn_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        var var3;
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MusicShrine");
+        this.bgmusic.play(1);
+        this.doorarray = [ new lego_moveableobject("dor1"), 
+            new lego_moveableobject("dor2"), 
+            new lego_moveableobject("dor3") ];
+        var1 = 0;
+        while ((this.doorarray.__length - 1) >= var1) {
+            this.doorarray[var1].initfull();
+            var1 = var1 + 1;
+        }
+        this.doorarray[1].hide();
+        this.doorarray[2].hide();
+        if (this.checkall3glyphs()) {
+            this.openbossdoor();
+        }
+        var2 = gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin2"));
+        if (var2) {
+            var3 = gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin3"));
+            if (var3 == 0) {
+                this.cinema = gccinemaengine::create();
+                gccinemaengine::load(this.cinema, "cin3");
+                globalclass.hud.hide();
+                gccinemaengine::play(this.cinema);
+            }
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.bgmusic.stop();
+        this.bgmusic = null;
+        var1 = 0;
+        while ((this.doorarray.__length - 1) >= var1) {
+            this.doorarray[var1].cleanupfull();
+            this.doorarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.doorarray = null;
+        this.cinema = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("gly1"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            }
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
+                this.reseta();
+            }
+        }
+        else if (param1.eventid == 46) {
+            this.resetb();
+        }
+        else if (param1.eventid == 30) {
+            globalclass.hud.show();
+        }
+        else if (param1.eventid == 27) {
+            this.resetc();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 255) {
+                if (!(this.cinema == null)) {
+                    gccinemaengine::stop(this.cinema);
+                }
+            }
+            param1.button;
+        }
+        return null;
+    }
+    
+    method checkall3glyphs() {
+        if ((globalclass.player.elementcontrol.isselectable(14) && globalclass.player.elementcontrol.isselectable(15)) && globalclass.player.elementcontrol.isselectable(16)) {
+            debug::print("you have EP_WINDBALL, EP_AIRSHIELD and EP_HURRICANE");
+            return 1;
+        }
+        else {
+            debug::print("you are missing one or more of the folowing: EP_WINDBALL, EP_AIRSHIELD and EP_HURRICANE");
+            return 0;
+        }
+        return null;
+    }
+    
+    method openbossdoor() {
+        this.doorarray[0].hide();
+        return null;
+    }
+    
+    method reseta(param1) {
+        globalclass.level.cam.setaimode(7);
+        gccollisionphysicsgroup::spinmask(1.5);
+        gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb01"), 0);
+        return null;
+    }
+    
+    method resetb() {
+        gccollisionphysicsgroup::spinmask(1.2);
+        return null;
+    }
+    
+    method resetc() {
+        globalclass.player.unkill();
+        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        globalclass.level.cam.setaimode(11);
+        return null;
+    }
+}

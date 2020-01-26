@@ -1,0 +1,194 @@
+class fireballclass {
+    property obj;
+    property name;
+    property id;
+    property parent;
+    property curentscale;
+    property ball_1;
+    property ball_2;
+    property ball_1_name;
+    property ball_2_name;
+    property numofsnowballs_alive;
+    property maxstartingpoint;
+    property minstartingpoint;
+    property lowestpointbeforredrop;
+    property startingvelocity;
+    property chaseing;
+    property bigsound;
+    property medsound;
+    property smlsound;
+    
+    method fireballclass(param1, param2, param3, param4, param5, param6) {
+        this.parent = param4;
+        this.name = param1;
+        this.obj = new lego_projectileobject(this.name, this.parent.parent.name);
+        this.id = scslosifoundation::stringtoidentifier(this.name);
+        this.ball_1_name = param2;
+        this.ball_2_name = param3;
+        this.curentscale = 1.0;
+        this.numofsnowballs_alive = 0;
+        this.maxstartingpoint = param5;
+        this.minstartingpoint = param6;
+        this.lowestpointbeforredrop = -390;
+        this.startingvelocity = [ new basicpoint(), 
+            new basicpoint() ];
+        return null;
+    }
+    
+    method initfull() {
+        this.obj.init(0.7, 0, 0, 0, 0, 2.3, "snbl", "Root/data/levels/lev4/maz1", 60, -4, -4, -4, 4, 4, 4);
+        this.obj.setbouncefactor(0.75);
+        this.obj.setbounceeventrepoert(1);
+        this.obj.show();
+        this.obj.setresponse(2, 2, 2);
+        this.obj.setobjgravity(40);
+        this.chaseing = 0;
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.obj.cleanupfull();
+        this.obj = null;
+        var1 = 0;
+        while ((this.startingvelocity.__length - 1) >= var1) {
+            this.startingvelocity[var1].cleanupfull();
+            this.startingvelocity[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.startingvelocity = null;
+        return null;
+    }
+    
+    method settweakable() {
+        this.obj.settweakable();
+        return null;
+    }
+    
+    method process(param1) {
+        if (this.obj.gety() < this.lowestpointbeforredrop) {
+            this.startdropping();
+        }
+        if (this.obj.gety() > -240) {
+            this.chasetoa(10);
+        }
+        return null;
+    }
+    
+    method show() {
+        this.obj.show();
+        return null;
+    }
+    
+    method hide() {
+        this.obj.hide();
+        return null;
+    }
+    
+    method startdropping() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        var var7;
+        this.obj.show();
+        this.chasetoa(0);
+        var1 = globalclass.randnum.getrandomnumber(this.minstartingpoint.x, this.maxstartingpoint.x);
+        var2 = globalclass.randnum.getrandomnumber(this.minstartingpoint.y, this.maxstartingpoint.y);
+        var3 = globalclass.randnum.getrandomnumber(this.minstartingpoint.z, this.maxstartingpoint.z);
+        var4 = globalclass.randnum.getrandomnumber(250, 400);
+        this.curentscale = var4 * 0.01;
+        this.obj.setobjscale(this.curentscale);
+        this.obj.setposition(var1, var2, var3);
+        this.obj.setmoveableflags(1, 1, 0, 1);
+        var5 = globalclass.randnum.getrandomfloat(this.startingvelocity[1].x, this.startingvelocity[0].x);
+        var6 = globalclass.randnum.getrandomfloat(this.startingvelocity[1].y, this.startingvelocity[0].y);
+        var7 = globalclass.randnum.getrandomfloat(this.startingvelocity[1].z, this.startingvelocity[0].z);
+        this.obj.setvelocity(var5, var6, var7);
+        this.obj.setrollangle(globalclass.randnum.getrandomfloat(0, 10), globalclass.randnum.getrandomfloat(0, 10), globalclass.randnum.getrandomfloat(0, 10));
+        this.obj.fadeout(0);
+        this.obj.fadein(0.5);
+        return null;
+    }
+    
+    method stopdropping() {
+        this.obj.setvelocity(0, 0, 0);
+        this.obj.setmoveableflags(0, 0, 0, 0);
+        this.obj.setposition(1000, 0, 0);
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 19) {
+            if (param1.args[0] == this.obj.id) {
+                this.hit();
+            }
+        }
+        else if (param1.eventid == 17) {
+            if (param1.args[0] == this.id) {
+                this.hit();
+            }
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == this.id) {
+                this.hit();
+            }
+        }
+        return null;
+    }
+    
+    method hit() {
+        this.curentscale = this.obj.getscale();
+        if (this.curentscale < 3) {
+            this.explode();
+        }
+        else {
+            this.explode();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 79) {
+                this.hit();
+            }
+        }
+        if (param1.event == 2) {
+            if (param1.button == 84) {
+                this.dropsmallball_1();
+            }
+        }
+        return null;
+    }
+    
+    method explode() {
+        this.startdropping();
+        return null;
+    }
+    
+    method setlowestpointbeforredrop(param1) {
+        this.lowestpointbeforredrop = param1;
+        return null;
+    }
+    
+    method setstartingvelocity(param1, param2) {
+        this.startingvelocity[0] = param1;
+        this.startingvelocity[1] = param2;
+        return null;
+    }
+    
+    method chasetoa(param1) {
+        if ((param1 > 0) & (this.chaseing == 0)) {
+            this.chaseing = 1;
+            this.obj.chasetoa(param1);
+        }
+        if ((param1 == 0) & (this.chaseing == 1)) {
+            this.chaseing = 0;
+            this.obj.chasetoa(0);
+        }
+        return null;
+    }
+}

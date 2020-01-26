@@ -1,0 +1,338 @@
+class astroypuzzle {
+    property boulderarray;
+    property brgpartarray;
+    property parent;
+    property areaid;
+    property entrancedoora;
+    property entrancedoorb;
+    property exitdoora;
+    property exitdoorb;
+    property thering;
+    property swtch;
+    property started;
+    property numofplatformshit;
+    property bgmusic;
+    property switchx;
+    property switchy;
+    property switchz;
+    property ringy;
+    property ringx;
+    property ringz;
+    property switchinterptimer;
+    
+    method astroypuzzle(param1) {
+        this.parent = param1;
+        this.areaid = scslosifoundation::stringtoidentifier(param1.name);
+        this.started = 0;
+        this.numofplatformshit = 0;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(50);
+        this.brgpartarray = [ new brgpart("ch01", this.parent.name, "tmr1", this), 
+            new brgpart("ch02", this.parent.name, "tmr2", this), 
+            new brgpart("ch03", this.parent.name, "tmr3", this), 
+            new brgpart("ch04", this.parent.name, "tmr4", this), 
+            new brgpart("ch05", this.parent.name, "tmr5", this), 
+            new brgpart("ch06", this.parent.name, "tmr6", this), 
+            new brgpart("ch07", this.parent.name, "tmr7", this), 
+            new brgpart("ch08", this.parent.name, "tmr8", this), 
+            new brgpart("ch09", this.parent.name, "tmr9", this), 
+            new brgpart("ch10", this.parent.name, "tm10", this) ];
+        this.entrancedoora = new lego_moveableobject("drt2", this.parent.name);
+        this.entrancedoorb = new lego_moveableobject("drb2", this.parent.name);
+        this.exitdoora = new lego_moveableobject("drt1", this.parent.name);
+        this.exitdoorb = new lego_moveableobject("drb1", this.parent.name);
+        this.swtch = new lego_moveableobject("swch", this.parent.name);
+        this.thering = new lego_moveableobject("ring", this.parent.name);
+        this.entrancedoora.initfull();
+        this.entrancedoorb.initfull();
+        this.exitdoora.initfull();
+        this.exitdoorb.initfull();
+        this.swtch.initfull();
+        this.swtch.setignoreallcollisions(0);
+        this.thering.initfull();
+        this.thering.settweakable();
+        this.entrancedoorb.setresponse(0, 0, 0);
+        this.swtch.setresponse(0, 0, 0);
+        this.thering.setresponse(0, 0, 0);
+        var1 = 0;
+        while ((this.brgpartarray.__length - 1) >= var1) {
+            this.brgpartarray[var1].initfull();
+            this.brgpartarray[var1].obj.obj.setignoreallcollisions(0);
+            var1 = var1 + 1;
+        }
+        this.boulderarray = [ new boulderclass("blle", this.parent), 
+            new boulderclass("bllf", this.parent), 
+            new boulderclass("bllg", this.parent) ];
+        var1 = 0;
+        while ((this.boulderarray.__length - 1) >= var1) {
+            this.boulderarray[var1].initfull();
+            this.boulderarray[var1].obj.setignoreallcollisions(0);
+            var1 = var1 + 1;
+        }
+        this.parent.parent.cam.makespline("Root/Data/Levels/lev3/rkfl/rkfl_CAM.slb");
+        this.parent.parent.cam.setspline(0, 4.0, 1);
+        this.parent.parent.cam.settargetspline(3, 1);
+        this.switchx = this.swtch.getx();
+        this.switchy = this.swtch.gety();
+        this.switchz = this.swtch.getz();
+        this.ringx = this.thering.getx();
+        this.ringy = this.thering.gety();
+        this.ringz = this.thering.getz();
+        this.switchinterptimer = new lego_timer("sint", 2.0, 0);
+        this.switchinterptimer.initfull();
+        return null;
+    }
+    
+    method show() {
+        debug::print("Calling empty show function");
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.switchx = null;
+        this.switchy = null;
+        this.switchz = null;
+        this.ringy = null;
+        this.ringx = null;
+        this.ringz = null;
+        this.switchinterptimer.cleanupfull();
+        this.switchinterptimer = null;
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        var1 = 0;
+        while ((this.boulderarray.__length - 1) >= var1) {
+            this.boulderarray[var1].cleanupfull();
+            this.boulderarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.boulderarray = null;
+        var1 = 0;
+        while ((this.brgpartarray.__length - 1) >= var1) {
+            this.brgpartarray[var1].cleanupfull();
+            this.brgpartarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.brgpartarray = null;
+        this.areaid = null;
+        this.entrancedoora.cleanupfull();
+        this.entrancedoora = null;
+        this.entrancedoorb.cleanupfull();
+        this.entrancedoorb = null;
+        this.exitdoora.cleanupfull();
+        this.exitdoora = null;
+        this.exitdoorb.cleanupfull();
+        this.exitdoorb = null;
+        this.thering.cleanupfull();
+        this.thering = null;
+        this.swtch.cleanupfull();
+        this.swtch = null;
+        this.started = null;
+        this.numofplatformshit = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        if (this.started) {
+            var1 = 0;
+            while ((this.boulderarray.__length - 1) >= var1) {
+                this.boulderarray[var1].process(param1);
+                var1 = var1 + 1;
+            }
+            var1 = 0;
+            while ((this.brgpartarray.__length - 1) >= var1) {
+                this.brgpartarray[var1].process(param1);
+                var1 = var1 + 1;
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        var var1;
+        if (this.started) {
+            var1 = 0;
+            while ((this.boulderarray.__length - 1) >= var1) {
+                this.boulderarray[var1].input(param1);
+                var1 = var1 + 1;
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        if (this.started) {
+            var1 = 0;
+            while ((this.boulderarray.__length - 1) >= var1) {
+                this.boulderarray[var1].onevent(param1);
+                var1 = var1 + 1;
+            }
+        }
+        var1 = 0;
+        while ((this.brgpartarray.__length - 1) >= var1) {
+            this.brgpartarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        if (param1.eventid == 8) {
+            if (scslosifoundation::identifiertostring(param1.args[0]) == "sint") {
+                this.parent.parent.cam.setaimode(3);
+            }
+            scslosifoundation::identifiertostring(param1.args[0]);
+        }
+        else if (param1.eventid == 1) {
+            var2 = param1.args[0];
+            var3 = param1.args[1];
+            if (var2 == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (var3 == scslosifoundation::stringtoidentifier("swch")) {
+                    this.hitswitch();
+                    return 0;
+                }
+            }
+        }
+        else if (param1.eventid == 3) {
+            var4 = param1.args[0];
+            if (var4 == scslosifoundation::stringtoidentifier("tb00")) {
+                this.reseta();
+            }
+        }
+        else if (param1.eventid == 46) {
+            this.bgmusic.stop();
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            debug::print("Screen Black Event");
+            this.resetb();
+        }
+        else if (param1.eventid == 6) {
+            globalclass.player.actor.setorientation(90);
+            this.parent.parent.cam.setaimode(11);
+            globalclass.hud.hide();
+            var1 = 0;
+            while ((this.boulderarray.__length - 1) >= var1) {
+                this.boulderarray[var1].startdropping();
+                var1 = var1 + 1;
+            }
+        }
+        else if (param1.eventid == 14) {
+            
+        }
+        return null;
+    }
+    
+    method reseta() {
+        this.parent.parent.cam.setspline(0, 4.0, 1);
+        this.parent.parent.cam.settargetspline(3, 1);
+        debug::print("RESET A");
+        this.parent.parent.cam.setaimode(7);
+        globalclass.player.kill();
+        return null;
+    }
+    
+    method resetb() {
+        this.parent.parent.cam.setspline(0, 4.0, 1);
+        this.parent.parent.cam.settargetspline(3, 1);
+        debug::print("RESET B");
+        globalclass.player.actor.setpos(0 - 139.6, 0.9, -81);
+        globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("p000"));
+        globalclass.player.unkill();
+        globalclass.player.actor.setorientation(180);
+        gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+        this.parent.parent.cam.setaimode(11);
+        this.reset();
+        return null;
+    }
+    
+    method hitswitch() {
+        if (this.started == 0) {
+            this.switchinterptimer.reset(0);
+            this.switchinterptimer.start();
+            this.started = 1;
+            this.swtch.interpolate(this.swtch.getx(), this.swtch.gety() - 0.5, this.swtch.getz(), 2);
+            this.entrancedoora.changeposition(0, 0 - 10.75, 0, 3);
+            this.entrancedoorb.changeposition(0, 8.25, 0, 3);
+            this.entrancedoora.setresponse(1, 0, 1);
+            this.entrancedoorb.setresponse(1, 0, 1);
+            this.exitdoora.changeposition(0, 10.75, 0, 240);
+            this.exitdoorb.changeposition(0, 0 - 8.25, 0, 240);
+            this.bgmusic = new legomp3player();
+            this.bgmusic.setupforplay("Root/Data/sounds/musicpohatutheme");
+            this.bgmusic.play(1);
+        }
+        return null;
+    }
+    
+    method platformhit() {
+        var var1;
+        this.numofplatformshit = this.numofplatformshit + 1;
+        if (this.numofplatformshit > 2) {
+            this.swtch.hide();
+            this.swtch.setposition(0 - 337.0, 3.0, 0 - 185.0);
+            this.thering.hide();
+            this.thering.setposition(0 - 337.0, 3.0, 0 - 185.0);
+            var1 = 0;
+            while ((this.brgpartarray.__length - 1) >= var1) {
+                this.brgpartarray[var1].drop();
+                debug::print("Dropping brg..." + __tostring(var1));
+                var1 = var1 + 1;
+            }
+        }
+        return null;
+    }
+    
+    method reset() {
+        var var1;
+        this.swtch.show();
+        this.thering.show();
+        this.swtch.setposition(this.switchx, this.switchy, this.switchz);
+        this.thering.setposition(this.ringx, this.ringy, this.ringz);
+        if (this.started == 1) {
+            this.started = 0;
+            this.entrancedoora.stopinterpolate();
+            this.entrancedoora.stopinterpolate();
+            this.entrancedoorb.stopinterpolate();
+            this.exitdoora.stopinterpolate();
+            this.exitdoorb.stopinterpolate();
+            this.entrancedoora.changeposition(0, 10.75, 0, 0);
+            this.entrancedoorb.changeposition(0, 0 - 8.25, 0, 0);
+            this.exitdoora.setposition(0 - 141.84, 6.7, -225);
+            this.exitdoorb.setposition(0 - 141.85, 5, 0 - 225.2);
+        }
+        this.numofplatformshit = 0;
+        var1 = 0;
+        while ((this.brgpartarray.__length - 1) >= var1) {
+            this.brgpartarray[var1].reset();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.boulderarray.__length - 1) >= var1) {
+            this.boulderarray[var1].stopdropping();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method startcam() {
+        globalclass.hud.hide();
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

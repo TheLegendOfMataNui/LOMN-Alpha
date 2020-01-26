@@ -1,0 +1,104 @@
+class lego_level_frontend : gs_lego_level {
+    property curspline;
+    property cameramode;
+    property rotateval;
+    property rotatedir;
+    property bgmusic;
+    
+    method lego_level_frontend(param1) {
+        var var1;
+        if (1) {
+            this.gs_lego_level("fren", "onua", "frnt");
+        }
+        else {
+            this.gs_lego_level("lev1", "onua", "bech");
+        }
+        var1 = new lego_area_front(this);
+        this.areas.__append(var1);
+        return null;
+    }
+    
+    method initfull() {
+        gchuddirector::playcinematic("Root/Data/cinematics/New_LOGO8015.bik", 1);
+        gchuddirector::playcinematic("Root/Data/cinematics/New_Saffirelogo.bik", 1);
+        gchuddirector::playcinematic("Root/Data/cinematics/BIONICLEFMV3.bik", 1);
+        this.lego_level_initfull();
+        globalclass.player.addmask("fake", 0);
+        this.cam.makespline("Root/Data/Levels/fren/frnt/frnt_CAM.slb");
+        this.curspline = 0;
+        this.adjustcamera(0, 0, 1, 5.0);
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICGaliAmbience");
+        this.bgmusic.play(1);
+        return null;
+    }
+    
+    method cleanupfull() {
+        debug::print("[][0][] cleanup Lego_Level_FrontEnd");
+        this.lego_level_cleanupfull();
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic.cleanupfordestroy();
+            this.bgmusic = null;
+        }
+        this.cameramode = null;
+        debug::print("[][1][] cleanup Lego_Level_FrontEnd");
+        return null;
+    }
+    
+    method adjustcamera(param1, param2, param3, param4) {
+        this.curspline = param1 * 3;
+        this.cam.setspline(this.curspline, param4, param2, param3);
+        if ((this.curspline == 0) || (this.curspline == 15)) {
+            this.cam.settargetspline(this.curspline + 3, param2, param3);
+            this.cam.setaimode(3);
+            this.cameramode = 1;
+        }
+        else {
+            this.cam.setaimode(2);
+            this.cameramode = 1;
+        }
+        return null;
+    }
+    
+    method setcameraback() {
+        if ((this.curspline < 5) && (this.curspline > 13)) {
+            this.cam.setpos(0 - 5.0, 10.0, 85.0);
+        }
+        this.cam.settargetpos(0.0, 0.0, 0.0);
+        this.cam.setaimode(0);
+        this.rotateval = 0;
+        this.cameramode = 0;
+        return null;
+    }
+    
+    method addyaw() {
+        var var1;
+        if (this.rotatedir == 1) {
+            var1 = scslosimath::abs(this.rotateval);
+            this.cam.addyaw(0.5 * ((75 - var1) / 75));
+            this.rotateval = this.rotateval + 0.5;
+        }
+        else {
+            var1 = scslosimath::abs(this.rotateval);
+            this.cam.addyaw(0 - (0.5 * ((75 - var1) / 75)));
+            this.rotateval = this.rotateval - 0.5;
+        }
+        if (this.rotateval > 75) {
+            this.rotatedir = 0;
+        }
+        if (this.rotateval < -75) {
+            this.rotatedir = 1;
+        }
+        return null;
+    }
+    
+    method getcameramode() {
+        return this.cameramode;
+    }
+    
+    method setgamecamera() {
+        this.cam.setaimode(11);
+        return null;
+    }
+}

@@ -1,0 +1,141 @@
+class bullrun6 {
+    property parea;
+    property bully;
+    property pillarray;
+    property bgmusic;
+    
+    method bullrun6(param1) {
+        this.parea = param1;
+        this.bully = null;
+        this.pillarray = null;
+        return null;
+    }
+    
+    method init() {
+        var var1;
+        this.bully = this.parea.level.getbull();
+        if (!(this.bully == null)) {
+            this.bully.changearea(scslosifoundation::stringtoidentifier(this.parea.name));
+            this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            globalclass.player.actor.ride(scslosifoundation::stringtoidentifier(this.bully.contstring), scslosifoundation::stringtoidentifier(this.bully.area), 2063160497);
+        }
+        this.pillarray = [ new lego_moveableobject("pi02", this.parea.name), 
+            new lego_moveableobject("pi03", this.parea.name), 
+            new lego_moveableobject("pi04", this.parea.name), 
+            new lego_moveableobject("pi07", this.parea.name), 
+            new lego_moveableobject("pi08", this.parea.name), 
+            new lego_moveableobject("pi09", this.parea.name), 
+            new lego_moveableobject("pi10", this.parea.name), 
+            new lego_moveableobject("pi11", this.parea.name), 
+            new lego_moveableobject("pi12", this.parea.name), 
+            new lego_moveableobject("pi13", this.parea.name), 
+            new lego_moveableobject("pi14", this.parea.name), 
+            new lego_moveableobject("pi15", this.parea.name), 
+            new lego_moveableobject("pi16", this.parea.name), 
+            new lego_moveableobject("pi17", this.parea.name), 
+            new lego_moveableobject("pi18", this.parea.name), 
+            new lego_moveableobject("pi19", this.parea.name), 
+            new lego_moveableobject("pi20", this.parea.name), 
+            new lego_moveableobject("pi21", this.parea.name), 
+            new lego_moveableobject("pi22", this.parea.name), 
+            new lego_moveableobject("pi23", this.parea.name), 
+            new lego_moveableobject("pi24", this.parea.name), 
+            new lego_moveableobject("pi25", this.parea.name), 
+            new lego_moveableobject("pi26", this.parea.name), 
+            new lego_moveableobject("pi27", this.parea.name), 
+            new lego_moveableobject("pi28", this.parea.name), 
+            new lego_moveableobject("pi29", this.parea.name), 
+            new lego_moveableobject("pi30", this.parea.name), 
+            new lego_moveableobject("pi31", this.parea.name), 
+            new lego_moveableobject("pi32", this.parea.name), 
+            new lego_moveableobject("pi33", this.parea.name) ];
+        var1 = 0;
+        while ((this.pillarray.__length - 1) >= var1) {
+            this.pillarray[var1].initfull();
+            this.pillarray[var1].setresponse(4, 4, 4);
+            var1 = var1 + 1;
+        }
+        globalclass.player.actor.ride(scslosifoundation::stringtoidentifier(this.bully.contstring), scslosifoundation::stringtoidentifier(this.bully.area), 2063160497);
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("bl09"));
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICPart2LegoUNDERGROUND");
+        this.bgmusic.play(1);
+        return null;
+    }
+    
+    method cleanup() {
+        var var1;
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        var1 = 0;
+        while ((this.pillarray.__length - 1) >= var1) {
+            this.pillarray[var1].cleanupfull();
+            this.pillarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.pillarray = null;
+        if (!(this.bully == null)) {
+            this.parea.level.destroybull();
+            this.bully = null;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        if (!(this.bully.getcurrentanimationid() == scslosifoundation::stringtoidentifier("bl07"))) {
+            this.bully.run(0);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 79) {
+                this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            }
+            else if (param1.button == 80) {
+                this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str1"), scslosifoundation::stringtoidentifier("lok1"));
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                gccollisionphysicsgroup::spinmask(1.2);
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 11) {
+            if (scslosifoundation::identifiertostring(param1.args[1]) == "bl09") {
+                this.bully.setsplitanimation(scslosifoundation::stringtoidentifier("bl02"));
+                this.bully.setbullrunmode(30.0);
+                debug::print("*************RUN BULL**************");
+            }
+            scslosifoundation::identifiertostring(param1.args[1]);
+        }
+        else if (param1.eventid == 27) {
+            this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            this.bully.setsplitanimation(scslosifoundation::stringtoidentifier("bl00"));
+            this.bully.setbullrunmode(0.0);
+            globalclass.player.unkill();
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+            globalclass.player.actor.setinputstate("ninp");
+            this.parea.level.cam.setaimode(11);
+        }
+        else if (param1.eventid == 29) {
+            this.bully.setsplitanimation(scslosifoundation::stringtoidentifier("bl09"));
+        }
+        return null;
+    }
+    
+    method exit() {
+        this.parea = null;
+        return null;
+    }
+}

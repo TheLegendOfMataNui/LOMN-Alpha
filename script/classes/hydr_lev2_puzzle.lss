@@ -1,0 +1,560 @@
+class hydr_lev2_puzzle {
+    property parent;
+    property locky;
+    property stage;
+    property flytimer;
+    property randnum;
+    property zone;
+    property atacknum;
+    property atackdelay;
+    property splasharray;
+    property curentsplash;
+    property bldrarray;
+    property physicsbool;
+    property physicsneedswitch;
+    property numberofhits;
+    property dizzytimer;
+    property waterfalls;
+    property stunned;
+    property showintro;
+    property bgmusic;
+    property killedboulders;
+    property desctext;
+    property howtotext;
+    
+    method hydr_lev2_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICGALITHEME");
+        this.bgmusic.play(1);
+        this.killedboulders = 0;
+        this.showintro = 1;
+        this.numberofhits = 2;
+        this.stunned = 0;
+        this.dizzytimer = new lego_timer("dztm", 6, 0);
+        this.dizzytimer.initfull();
+        this.locky = new gs_lego_character("hyd1", "hydr", "fake", -80, 77, 0, 10, "none");
+        this.locky.initfull();
+        this.locky.add();
+        this.locky.show();
+        this.locky.settweakable();
+        this.locky.activateattackcollisions();
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy02"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy03"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy04"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy06"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy17"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy21"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy25"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy26"));
+        gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("hy27"));
+        this.waterfalls = [ new lego_moveableobject("fal1"), 
+            new lego_moveableobject("fal2"), 
+            new lego_moveableobject("fal3"), 
+            new lego_moveableobject("fal4") ];
+        var1 = 0;
+        while ((this.waterfalls.__length - 1) >= var1) {
+            this.waterfalls[var1].initfull();
+            this.waterfalls[var1].hide();
+            var1 = var1 + 1;
+        }
+        this.splasharray = [ new lego_bossprojectile("wt01"), 
+            new lego_bossprojectile("wt11"), 
+            new lego_bossprojectile("wt21"), 
+            new lego_bossprojectile("wt31"), 
+            new lego_bossprojectile("wt41"), 
+            new lego_bossprojectile("wt51"), 
+            new lego_bossprojectile("wt61"), 
+            new lego_bossprojectile("wt71"), 
+            new lego_bossprojectile("wt81"), 
+            new lego_bossprojectile("wt91") ];
+        var1 = 0;
+        while ((this.splasharray.__length - 1) >= var1) {
+            this.splasharray[var1].init("Root/Data/art/SpriteAnims/waterball", "waterball_2_", 100, 17, 2.0, 0.65, 30.0);
+            var1 = var1 + 1;
+        }
+        this.bldrarray = [ [ new lego_moveableobject("bld1"), 
+                this.numberofhits ], 
+            [ new lego_moveableobject("bld2"), 
+                this.numberofhits ], 
+            [ new lego_moveableobject("bld3"), 
+                this.numberofhits ], 
+            [ new lego_moveableobject("bld4"), 
+                this.numberofhits ] ];
+        var1 = 0;
+        while ((this.bldrarray.__length - 1) >= var1) {
+            var2 = this.bldrarray[var1];
+            var2[0].initfull();
+            var1 = var1 + 1;
+        }
+        this.stage = 5;
+        this.flytimer = new lego_timer("flyt", 4, 0);
+        this.flytimer.initfull();
+        this.randnum = new slosi_random(0);
+        this.zone = 0;
+        this.atacknum = 0;
+        this.atackdelay = 1;
+        this.curentsplash = 0;
+        this.physicsbool = 1;
+        this.physicsneedswitch = 0;
+        var3 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 1, 0);
+        this.desctext = new gs_legotext("Root/Data/Art/Fonts/BionicleFontHi", var3, screenx * 0.5, screeny - 130, 0, 1, 256, 0, 0);
+        this.desctext.initfull();
+        var4 = (screeny - 100) + 20;
+        var3 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 1, 1);
+        this.howtotext = new gs_legotext("Root/Data/Art/Fonts/BionicleFont", var3, screenx * 0.5, var4, 0, 1, 256, 0, 0);
+        this.howtotext.initfull();
+        return null;
+    }
+    
+    method playintro() {
+        this.parent.level.cam.makespline("Root/Data/Levels/lev2/hydr/hydr_CAM.slb");
+        this.parent.level.cam.setspline(0, 10.0, 1, 0);
+        this.parent.level.cam.setaimode(2);
+        this.parent.level.cam.settargetpos(77, 10, 10);
+        this.parent.level.cam.scaletocutscene();
+        this.desctext.add();
+        this.desctext.show();
+        this.howtotext.add();
+        this.howtotext.show();
+        gccharacter::setwatertimerlength(globalclass.player.actor.handle, 0);
+        globalclass.hud.hide();
+        return null;
+    }
+    
+    method playextro() {
+        globalclass.setnextlevel();
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var var2;
+        if (!(this.desctext == null)) {
+            this.desctext.cleanupfull();
+            this.desctext = null;
+        }
+        if (!(this.howtotext == null)) {
+            this.howtotext.cleanupfull();
+            this.howtotext = null;
+        }
+        this.bgmusic.stop();
+        this.bgmusic = null;
+        this.locky.cleanupfull();
+        this.locky = null;
+        this.stage = null;
+        this.flytimer = null;
+        this.randnum = null;
+        this.zone = null;
+        this.atacknum = null;
+        this.atackdelay = null;
+        var1 = 0;
+        while ((this.splasharray.__length - 1) >= var1) {
+            this.splasharray[var1].cleanupfull();
+            var1 = var1 + 1;
+        }
+        this.splasharray = null;
+        this.curentsplash = null;
+        var1 = 0;
+        while ((this.bldrarray.__length - 1) >= var1) {
+            var2 = this.bldrarray[var1];
+            var2[0].cleanupfull();
+            var1 = var1 + 1;
+        }
+        this.bldrarray = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var1 = globalclass.player.actor.getpos().x1;
+        var2 = globalclass.player.actor.getpos().y1;
+        var3 = globalclass.player.actor.getpos().z;
+        if (var2 >= 10) {
+            this.zone = 5;
+        }
+        else if (var1 < 8) {
+            this.zone = 0;
+        }
+        else if (var1 < 77) {
+            if (var3 < 10) {
+                this.zone = 1;
+            }
+            else {
+                this.zone = 2;
+            }
+        }
+        else if (var3 < 10) {
+            this.zone = 4;
+        }
+        else {
+            this.zone = 3;
+        }
+        if (this.physicsneedswitch == 1) {
+            this.physicsneedswitch = 0;
+            if (this.physicsbool) {
+                debug::print("Physics ON");
+                globalclass.player.actor.physicson(1);
+            }
+            else {
+                debug::print("Physics OFF");
+                globalclass.player.actor.physicson(0);
+            }
+        }
+        else if (this.physicsneedswitch > 1) {
+            this.physicsneedswitch = this.physicsneedswitch - 1;
+        }
+        return null;
+    }
+    
+    method initshort() {
+        var var1;
+        var var2;
+        globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("g000"));
+        this.stage = 0;
+        this.zone = 0;
+        var1 = 0;
+        while ((this.bldrarray.__length - 1) >= var1) {
+            var2 = this.bldrarray[var1];
+            var2[0].show();
+            var2[1] = this.numberofhits;
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            this.initshort();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+        }
+        else if (param1.eventid == 44) {
+            if (this.showintro) {
+                this.interpcam();
+            }
+        }
+        else if (param1.eventid == 6) {
+            this.parent.level.cam.setaimode(11);
+            gccharacter::setwatertimerlength(globalclass.player.actor.handle, 10);
+            this.stage = 0;
+            this.parent.level.cam.resetviewport();
+            globalclass.hud.show();
+            this.desctext.hide();
+            this.howtotext.hide();
+        }
+        else if (param1.eventid == 0) {
+            if (param1.args[1] == scslosifoundation::stringtoidentifier("cnt1")) {
+                debug::print((("*** EV_COMBAT_HIT " + __tostring(scslosifoundation::identifiertostring(param1.args[0]))) + " ") + __tostring(scslosifoundation::identifiertostring(param1.args[1])));
+                if (param1.args[0] == scslosifoundation::stringtoidentifier("hyd1")) {
+                    this.getinmybelly();
+                }
+                param1.args[0];
+            }
+        }
+        else if (param1.eventid == 8) {
+            if (param1.args[0] == this.flytimer.id) {
+                this.startfight();
+            }
+            else if (param1.args[0] == this.dizzytimer.id) {
+                this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy02"));
+                this.stunned = 0;
+            }
+            if (param1.args[0] == this.flytimer.id) {
+                this.startfight();
+            }
+        }
+        else if (param1.eventid == 14) {
+            if (this.stage == 5) {
+                this.playintro();
+            }
+            if (this.stage == 2) {
+                this.shootgaly_a();
+            }
+        }
+        else if (param1.eventid == 19) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("bld1")) {
+                this.hitbldr(0);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("bld2")) {
+                this.hitbldr(1);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("bld3")) {
+                this.hitbldr(2);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("bld4")) {
+                this.hitbldr(3);
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("hyd1")) {
+                debug::print("********** SETTING THE HYDRAS ANIMATION TO STUN");
+                if (this.stage == 0) {
+                    this.stunned = 1;
+                    this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy20"));
+                    this.dizzytimer.reset(0);
+                    this.dizzytimer.start();
+                }
+            }
+        }
+        else if (param1.eventid == 11) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("hyd1")) {
+                debug::print("animation finished " + scslosifoundation::identifiertostring(param1.args[1]));
+                if (scslosifoundation::identifiertostring(param1.args[1]) == "hy21") {
+                    if (this.stage == 3) {
+                        this.shootgaly_b();
+                    }
+                }
+                else if (scslosifoundation::identifiertostring(param1.args[1]) == "hy02") {
+                    if (this.stage == 0) {
+                        this.atack();
+                    }
+                }
+                else if (scslosifoundation::identifiertostring(param1.args[1]) == "hy25") {
+                    this.spit(new basicpoint(50, 27, 20));
+                }
+                else if (scslosifoundation::identifiertostring(param1.args[1]) == "hy27") {
+                    this.spit(new basicpoint(50, 27, 10));
+                }
+                else if (scslosifoundation::identifiertostring(param1.args[1]) == "hy26") {
+                    this.spit(new basicpoint(50, 27, 0));
+                }
+                else if (scslosifoundation::identifiertostring(param1.args[1]) == "hy03") {
+                    this.suck();
+                }
+                else if (scslosifoundation::identifiertostring(param1.args[1]) == "hy17") {
+                    this.suck();
+                }
+                else if (scslosifoundation::identifiertostring(param1.args[1]) == "hy06") {
+                    this.suck();
+                }
+                else if (scslosifoundation::identifiertostring(param1.args[1]) == "hy04") {
+                    this.suck();
+                }
+                scslosifoundation::identifiertostring(param1.args[1]);
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 89) {
+            if (param1.event == 2) {
+                this.cheaton();
+            }
+        }
+        if (param1.button == 85) {
+            if (param1.event == 2) {
+                this.cheatoff();
+            }
+        }
+        if (param1.button == 90) {
+            if (param1.event == 2) {
+                this.playintro();
+            }
+        }
+        return null;
+    }
+    
+    method cheatoff() {
+        debug::print("** cheat off");
+        return null;
+    }
+    
+    method cheaton() {
+        debug::print("** cheat on");
+        this.suck();
+        return null;
+    }
+    
+    method hitbldr(param1) {
+        var var1;
+        var var2;
+        var1 = this.bldrarray[param1];
+        var2 = this.waterfalls[param1];
+        debug::print("Boulders hitpoints = " + __tostring(var1[1]));
+        if (var1[1] <= 0) {
+            debug::print("****** HIDING THE BOULDER ");
+            var1[0].hide();
+            var2.show();
+            var2.fadeout(0.0);
+            var2.fadein(1.5);
+            this.killedboulders = this.killedboulders + 1;
+            if (this.killedboulders == 4) {
+                this.playextro();
+            }
+        }
+        else {
+            var1[1] = var1[1] - 1;
+        }
+        return null;
+    }
+    
+    method suck() {
+        debug::print("*** sucking");
+        if (this.stunned == 0) {
+            this.stage = 1;
+            if (this.zone == 1) {
+                globalclass.player.actor.setnudgetarget(51, -8, 10);
+                this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy11"));
+            }
+            else if (this.zone == 2) {
+                globalclass.player.actor.setnudgetarget(63.9, 38.4, 10);
+                this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy18"));
+            }
+            else if (this.zone == 3) {
+                globalclass.player.actor.setnudgetarget(106, 25.6, 10);
+                this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy07"));
+            }
+            else if (this.zone == 4) {
+                globalclass.player.actor.setnudgetarget(93, -17, 10);
+                this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy12"));
+            }
+            gcstaticsoundsptrarray::playtablesound(749);
+        }
+        return null;
+    }
+    
+    method getinmybelly() {
+        var var1;
+        if (this.stunned == 0) {
+            if ((this.stage == 0) || (this.stage == 1)) {
+                this.stage = 2;
+                debug::print("getInMyBelly");
+                gcstaticsoundsptrarray::playtablesound(750);
+                this.physics(0);
+                this.locky.disablecollisions();
+                globalclass.level.cam.setaimode(7);
+                var1 = this.randnum.getrandomnumber(0, 2);
+                debug::print("******* SETTING NUDGE TARGET = 0,0,0");
+                globalclass.player.actor.setnudgetarget(0, 0, 0);
+                globalclass.player.actor.setpos(77, 10, 10);
+                if (var1 == 0) {
+                    globalclass.level.cam.interpolate(51.6, 18, 12, 77, 14, 10, 2);
+                }
+                else if (var1 == 1) {
+                    globalclass.level.cam.setpos(137, 15, 59);
+                    globalclass.level.cam.interpolate(-7, 8, -17, 77, 14, 10, 3);
+                }
+                else if (var1 == 2) {
+                    globalclass.level.cam.settargetpos(77, 10, 10);
+                    globalclass.level.cam.setpos(70, 10, 10);
+                    globalclass.level.cam.interpolate(-53, 3, 10, 77, 14, 10, 4.5);
+                }
+            }
+        }
+        return null;
+    }
+    
+    method shootgaly_a() {
+        globalclass.player.actor.setunderwater(0);
+        this.stage = 3;
+        debug::print("shootGaly_A");
+        this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy21"));
+        return null;
+    }
+    
+    method shootgaly_b() {
+        var var1;
+        var var2;
+        var var3;
+        this.stage = 4;
+        debug::print("shootGaly_B");
+        var1 = this.randnum.getrandomfloat(-65, -59);
+        var2 = this.randnum.getrandomfloat(58, 70);
+        var3 = this.randnum.getrandomfloat(-1, 1);
+        this.physics(1);
+        globalclass.player.actor.setvelocity(var1, var2, var3);
+        globalclass.player.actor.react(2);
+        gcstaticsoundsptrarray::playtablesound(62);
+        this.flytimer.reset();
+        this.flytimer.start();
+        this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy22"));
+        return null;
+    }
+    
+    method startfight() {
+        this.stage = 0;
+        debug::print("startFight");
+        this.locky.enablecollisions();
+        globalclass.level.cam.setaimode(11);
+        return null;
+    }
+    
+    method atack() {
+        if (this.stunned == 0) {
+            if (this.atacknum >= this.atackdelay) {
+                this.atacknum = 0;
+                if (this.zone == 0) {
+                    debug::print("Attacking at Zone far");
+                    this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy25"));
+                }
+                else if (this.zone == 1) {
+                    debug::print("Attacking at Zone 1");
+                    this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy03"));
+                }
+                else if (this.zone == 2) {
+                    debug::print("Attacking at Zone 2");
+                    this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy17"));
+                }
+                else if (this.zone == 3) {
+                    debug::print("Attacking at Zone 3");
+                    this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy06"));
+                }
+                else if (this.zone == 4) {
+                    debug::print("Attacking at Zone 4");
+                    this.locky.setsplitanimation(scslosifoundation::stringtoidentifier("hy04"));
+                }
+            }
+            else {
+                this.atacknum = this.atacknum + 1;
+            }
+        }
+        return null;
+    }
+    
+    method spit(param1) {
+        if (this.curentsplash < (this.splasharray.__length - 1)) {
+            this.curentsplash = this.curentsplash + 1;
+        }
+        else {
+            this.curentsplash = 0;
+        }
+        this.splasharray[this.curentsplash].launchfrom(param1);
+        gcstaticsoundsptrarray::playtablesound(752);
+        return null;
+    }
+    
+    method splat(param1) {
+        this.splasharray[param1].hide();
+        return null;
+    }
+    
+    method physics(param1) {
+        this.physicsbool = param1;
+        this.physicsneedswitch = 3;
+        return null;
+    }
+    
+    method interpcam() {
+        globalclass.level.cam.interpolate(0 - 29.5, 23.4, 0 - 11.1, 77.0, 10.0, 10.0, 3.0);
+        this.showintro = 0;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

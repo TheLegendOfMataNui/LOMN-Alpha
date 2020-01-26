@@ -1,0 +1,14 @@
+ANIMLIST for 1hat
+d000.bkd        1h_idle
+d007.bkd        1h_talk1
+d011.bkd        1h_talk2
+d010.bkd        1h_talk3
+d009.bkd        1h_talk4
+d008.bkd        1h_talk5
+d001.bkd        1h_walk
+1haB.bkd        1h_on_haka_button
+1haD.bkd        1h_on_haka_down
+1haW.bkd        1h_on_haka_idle
+1haL.bkd        1h_on_haka_lft
+1haU.bkd        1h_on_haka_up
+1haR.bkd        1h_on_haka_rt

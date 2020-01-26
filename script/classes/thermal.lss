@@ -1,0 +1,95 @@
+class thermal {
+    property obj;
+    property id;
+    property name;
+    property levitateup;
+    property curentorient;
+    property rotatetime;
+    property rotatespeed;
+    
+    method thermal(param1) {
+        this.name = param1;
+        this.id = scslosifoundation::stringtoidentifier(param1);
+        this.obj = new lego_moveableobject(param1);
+        this.obj.initfull();
+        this.obj.setresponse(4, 4, 4);
+        this.obj.setalpha();
+        this.levitateup = 0;
+        this.curentorient = 0;
+        this.rotatetime = 0;
+        this.rotatespeed = 9;
+        return null;
+    }
+    
+    method process(param1) {
+        this.obj.process(param1);
+        this.rotatetime = this.rotatetime + param1.deltatime;
+        if (this.rotatespeed > 0) {
+            if (this.rotatetime > (1 / this.rotatespeed)) {
+                this.rotatetime = 0;
+                this.spin();
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        this.obj.onevent(param1);
+        if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (param1.args[1] == this.obj.id) {
+                    if (param1.args[2] == 1) {
+                        this.switchlevitation(0);
+                    }
+                    else {
+                        this.switchlevitation(1);
+                    }
+                }
+            }
+        }
+        else if (param1.eventid == 1010) {
+            if (param1.args[0] == 1) {
+                if (this.levitateup) {
+                    globalclass.player.actor.insidelevitatevortex(1);
+                }
+            }
+        }
+        return null;
+    }
+    
+    method switchlevitation(param1) {
+        if (param1 == 1) {
+            if (this.levitateup == 0) {
+                this.levitateup = 1;
+                globalclass.player.actor.insidelevitatevortex(1);
+                debug::print("fly");
+            }
+        }
+        else if (this.levitateup == 1) {
+            this.levitateup = 0;
+            globalclass.player.actor.insidelevitatevortex(0);
+            debug::print("fall");
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.obj.cleanupfull();
+        this.obj = null;
+        this.id = null;
+        this.name = null;
+        this.levitateup = null;
+        return null;
+    }
+    
+    method spin() {
+        this.curentorient = this.curentorient + this.rotatespeed;
+        if (this.curentorient > 360) {
+            this.curentorient = this.curentorient - 360;
+        }
+        else {
+            this.obj.setorientation(0, this.curentorient, 0);
+        }
+        return null;
+    }
+}

@@ -1,0 +1,100 @@
+class gly35_puzzle {
+    property parent;
+    property abletosuft;
+    property surfing;
+    property glyph;
+    property showpickup;
+    
+    method gly35_puzzle(param1) {
+        this.parent = param1;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        this.abletosuft = 1;
+        this.surfing = 0;
+        var1 = gcsaver::findglyph(scslosifoundation::stringtoidentifier("glyp"));
+        if (var1) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup) {
+            this.glyph = new lego_pickup("glyp", 16, 2, "item", 6, 1);
+            this.glyph.initfull();
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.abletosuft = null;
+        this.surfing = null;
+        if (!(this.glyph == null)) {
+            this.glyph.cleanupfull();
+            this.glyph = null;
+        }
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            this.resetb();
+            debug::print("got player is dead");
+        }
+        else if (param1.eventid == 27) {
+            this.resetc();
+        }
+        return null;
+    }
+    
+    method resetb() {
+        gccollisionphysicsgroup::spinmask(1.2);
+        return null;
+    }
+    
+    method resetc() {
+        globalclass.player.unkill();
+        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        this.stopsurf();
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 90) {
+            if (param1.event == 2) {
+                this.startsurf();
+            }
+        }
+        if (param1.button == 88) {
+            if (param1.event == 2) {
+                this.stopsurf();
+            }
+        }
+        return null;
+    }
+    
+    method startsurf() {
+        if (this.surfing == 0) {
+            this.surfing = 1;
+            globalclass.player.actor.setsurfingability(1.0, 0.8);
+        }
+        return null;
+    }
+    
+    method stopsurf() {
+        if (this.surfing) {
+            this.surfing = 0;
+            globalclass.player.actor.setsurfingability(0.0, 0.8);
+        }
+        return null;
+    }
+}

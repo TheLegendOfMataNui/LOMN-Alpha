@@ -1,0 +1,252 @@
+class shrine4puzzle {
+    property parent;
+    property watterfall1_on;
+    property watterfall2_on;
+    property watterfall3_on;
+    property watterfall1;
+    property watterfall2;
+    property watterfall3;
+    property needstobeunderwater;
+    property doorsclosed;
+    property doors;
+    property bgmusic;
+    
+    method shrine4puzzle(param1) {
+        this.parent = param1;
+        this.watterfall1_on = 0;
+        this.watterfall2_on = 0;
+        this.watterfall3_on = 0;
+        this.needstobeunderwater = 1;
+        this.doorsclosed = [ 1, 
+            1, 
+            1 ];
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MusicShrine");
+        this.bgmusic.play(1);
+        this.doors = [ new lego_moveableobject("dor1"), 
+            new lego_moveableobject("dor3"), 
+            new lego_moveableobject("dor4") ];
+        var1 = 0;
+        while ((this.doors.__length - 1) >= var1) {
+            this.doors[var1].initfull();
+            var1 = var1 + 1;
+        }
+        this.watterfall1 = new lego_moveableobject("swf1");
+        this.watterfall1.initfull();
+        this.watterfall2 = new lego_moveableobject("swf2");
+        this.watterfall2.initfull();
+        this.watterfall3 = new lego_moveableobject("swf3");
+        this.watterfall3.initfull();
+        if (this.watterfall1_on) {
+            this.watterfall1.show();
+        }
+        else {
+            this.watterfall1.hide();
+        }
+        if (this.watterfall2_on) {
+            this.watterfall2.show();
+        }
+        else {
+            this.watterfall2.hide();
+        }
+        if (this.watterfall3_on) {
+            this.watterfall3.show();
+        }
+        else {
+            this.watterfall3.hide();
+        }
+        if (this.needstobeunderwater) {
+            globalclass.player.actor.setunderwater(1);
+            this.needstobeunderwater = 1;
+        }
+        var1 = 0;
+        while (2 >= var1) {
+            this.movedoorsdown(var1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        this.bgmusic.stop();
+        this.bgmusic = null;
+        var1 = 0;
+        while ((this.doors.__length - 1) >= var1) {
+            this.doors[var1].cleanupfull();
+            this.doors[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.doors = null;
+        this.watterfall1.cleanupfull();
+        this.watterfall1 = null;
+        this.watterfall2.cleanupfull();
+        this.watterfall2 = null;
+        this.watterfall3.cleanupfull();
+        this.watterfall3 = null;
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            if (this.needstobeunderwater) {
+                globalclass.player.actor.setunderwater(1);
+                this.needstobeunderwater = 1;
+            }
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (param1.args[1] == scslosifoundation::stringtoidentifier("whpl")) {
+                    gccollisionphysicsgroup::spinmask(1.2);
+                    gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("hydr"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+                }
+                param1.args[1];
+            }
+            param1.args[0];
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 90) {
+            if (param1.event == 2) {
+                this.cheat(0);
+            }
+        }
+        if (param1.button == 88) {
+            if (param1.event == 2) {
+                this.cheat(1);
+            }
+        }
+        if (param1.button == 67) {
+            if (param1.event == 2) {
+                this.cheat(2);
+            }
+        }
+        return null;
+    }
+    
+    method needstobeunderwater(param1) {
+        if (param1) {
+            this.needstobeunderwater = 1;
+        }
+        else {
+            this.needstobeunderwater = 0;
+        }
+        return null;
+    }
+    
+    method switchit(param1) {
+        if (param1 == 0) {
+            this.doorsclosed[param1] = 0;
+        }
+        else if (param1 == 1) {
+            this.doorsclosed[param1] = 0;
+        }
+        else if (param1 == 2) {
+            this.doorsclosed[param1] = 0;
+        }
+        return null;
+    }
+    
+    method movedoorsdown(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var1 = param1;
+        if (var1 == 0) {
+            if (this.doorsclosed[var1]) {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES DOWN");
+                var2 = this.doors[var1].getx();
+                var3 = this.doors[var1].getz();
+                this.doors[var1].interpolate(var2, 0 - 97.6, var3, 1.0);
+            }
+            else {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES UP");
+                var2 = this.doors[var1].getx();
+                var3 = this.doors[var1].getz();
+                this.doors[var1].interpolate(var2, 0 - 65.6, var3, 1.0);
+            }
+        }
+        else if (var1 == 1) {
+            if (this.doorsclosed[var1]) {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES DOWN");
+                var2 = this.doors[var1].getx();
+                var3 = this.doors[var1].getz();
+                this.doors[var1].interpolate(var2, 0 - 7.7, var3, 1.0);
+            }
+            else {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES UP");
+                var2 = this.doors[var1].getx();
+                var3 = this.doors[var1].getz();
+                this.doors[var1].interpolate(var2, 24.3, var3, 1.0);
+            }
+        }
+        else if (var1 == 2) {
+            if (this.doorsclosed[var1]) {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES DOWN");
+                var2 = this.doors[var1].getx();
+                var3 = this.doors[var1].getz();
+                this.doors[var1].interpolate(var2, 0 - 24.9, var3, 1.0);
+            }
+            else {
+                debug::print(("*****DOOR " + __tostring(var1)) + " GOES UP");
+                var2 = this.doors[var1].getx();
+                var3 = this.doors[var1].getz();
+                this.doors[var1].interpolate(var2, 0.0, var3, 1.0);
+            }
+        }
+        return null;
+    }
+    
+    method cheat(param1) {
+        var var1;
+        var1 = param1;
+        if (var1 == 0) {
+            if (this.doorsclosed[0]) {
+                this.doorsclosed[0] = 0;
+                this.movedoorsdown(var1);
+            }
+            else {
+                this.doorsclosed[0] = 1;
+                this.movedoorsdown(var1);
+            }
+        }
+        else if (var1 == 1) {
+            if (this.doorsclosed[1]) {
+                this.doorsclosed[1] = 0;
+                this.movedoorsdown(var1);
+            }
+            else {
+                this.doorsclosed[1] = 1;
+                this.movedoorsdown(var1);
+            }
+        }
+        else if (var1 == 2) {
+            if (this.doorsclosed[2]) {
+                this.doorsclosed[2] = 0;
+                this.movedoorsdown(var1);
+            }
+            else {
+                this.doorsclosed[2] = 1;
+                this.movedoorsdown(var1);
+            }
+        }
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

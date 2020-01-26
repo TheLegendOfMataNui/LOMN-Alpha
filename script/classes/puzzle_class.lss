@@ -1,0 +1,85 @@
+class puzzle_class {
+    property westdoor;
+    property northdoor;
+    property southdoor;
+    property westdoor_up;
+    property northdoor_up;
+    property southdoor_up;
+    property bgmusic;
+    
+    method puzzle_class(param1) {
+        this.westdoor_up = 1;
+        this.northdoor_up = 1;
+        this.southdoor_up = 1;
+        return null;
+    }
+    
+    method initfull() {
+        this.westdoor = new lego_moveableobject("drs0", "shrn");
+        this.northdoor = new lego_moveableobject("drs2", "shrn");
+        this.southdoor = new lego_moveableobject("drs4", "shrn");
+        this.westdoor.initfull();
+        this.northdoor.initfull();
+        this.southdoor.initfull();
+        this.placedoors();
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICpohatuambience");
+        this.bgmusic.play(1);
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        this.westdoor.cleanupfull();
+        this.westdoor = null;
+        this.northdoor.cleanupfull();
+        this.northdoor = null;
+        this.southdoor.cleanupfull();
+        this.southdoor = null;
+        this.westdoor_up = null;
+        this.northdoor_up = null;
+        this.southdoor_up = null;
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        return null;
+    }
+    
+    method placedoors() {
+        if (this.westdoor_up) {
+            this.westdoor.setposition(531.57, 27.13, 0 - 97.78);
+        }
+        else {
+            this.westdoor.setposition(531.57, 19.13, 0 - 97.78);
+        }
+        if (this.northdoor_up) {
+            this.northdoor.setposition(415.61, 0.11, 0 - 22.21);
+        }
+        else {
+            this.northdoor.setposition(415.61, 0 - 8.11, 0 - 22.21);
+        }
+        if (this.southdoor_up) {
+            this.southdoor.setposition(422.71, 1.75, 0 - 193.75);
+        }
+        else {
+            this.southdoor.setposition(422.71, 0 - 7.75, 0 - 193.75);
+        }
+        return null;
+    }
+}

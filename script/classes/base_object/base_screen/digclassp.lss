@@ -1,0 +1,148 @@
+class digclassp : base_screen {
+    property digarray;
+    property digplanes;
+    property disabledplanes;
+    property disabledmoveables;
+    property area;
+    property moveobj1;
+    property moveobj2;
+    property moveobj3;
+    property moveobj4;
+    property trigpln1;
+    property trigpln2;
+    property trigpln3;
+    property trigpln4;
+    
+    method digclassp(param1, param2, param3, param4, param5, param6, param7, param8, param9) {
+        this.area = param1;
+        this.moveobj1 = param2;
+        this.moveobj2 = param3;
+        this.moveobj3 = param4;
+        this.moveobj4 = param5;
+        this.trigpln1 = param6;
+        this.trigpln2 = param7;
+        this.trigpln3 = param8;
+        this.trigpln4 = param9;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var var2;
+        var var3;
+        gcareadirector::setnearestmax(100);
+        this.digarray = [  ];
+        var1 = new lego_moveableobject(this.moveobj1, this.area);
+        this.digarray.__append(var1);
+        var1 = new lego_moveableobject(this.moveobj2, this.area);
+        this.digarray.__append(var1);
+        var1 = new lego_moveableobject(this.moveobj3, this.area);
+        this.digarray.__append(var1);
+        var1 = new lego_moveableobject(this.moveobj4, this.area);
+        this.digarray.__append(var1);
+        this.digplanes = [  ];
+        var2 = new lego_triggerobject(this.trigpln1, this.area, 0);
+        this.digplanes.__append(var2);
+        var2 = new lego_triggerobject(this.trigpln2, this.area, 0);
+        this.digplanes.__append(var2);
+        var2 = new lego_triggerobject(this.trigpln3, this.area, 0);
+        this.digplanes.__append(var2);
+        var2 = new lego_triggerobject(this.trigpln4, this.area, 0);
+        this.digplanes.__append(var2);
+        this.disabledplanes = [  ];
+        this.disabledmoveables = [  ];
+        var3 = 0;
+        while ((this.digarray.__length - 1) >= var3) {
+            this.digarray[var3].initfull();
+            this.digarray[var3].setresponse(4, 4, 4);
+            this.digarray[var3].disablecollisions();
+            var3 = var3 + 1;
+        }
+        var3 = 0;
+        while ((this.digplanes.__length - 1) >= var3) {
+            this.digplanes[var3].initfull();
+            this.digplanes[var3].setresponse(3, 3);
+            var3 = var3 + 1;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var var2;
+        var1 = 0;
+        while ((this.digplanes.__length - 1) >= var1) {
+            var2 = this.digplanes[var1];
+            var2.process(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        if (param1.eventid == 4) {
+            var1 = param1.args[0];
+            var2 = param1.args[1];
+            var3 = 0;
+            while ((this.digplanes.__length - 1) >= var3) {
+                if (var1 == this.digplanes[var3].id) {
+                    if (var2 == 1) {
+                        if ((globalclass.player.actor.getcurrentanimationid() == scslosifoundation::stringtoidentifier("o013")) || (globalclass.player.actor.getcurrentanimationid() == scslosifoundation::stringtoidentifier("o014"))) {
+                            gcstaticsoundsptrarray::playtablesound();
+                            this.digplanes[var3].setcollide();
+                            this.digplanes[var3].hide();
+                            this.digarray[var3].hide();
+                            this.disabledmoveables.__append(this.digarray[var3]);
+                            this.disabledplanes.__append(this.digplanes[var3]);
+                        }
+                    }
+                }
+                var3 = var3 + 1;
+            }
+        }
+        else if (param1.eventid == 41) {
+            globalclass.player.setgrapplinghookdistance(120);
+            gcsaver::setcondition(4194304, 1);
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.digarray.__length - 1) >= var1) {
+            this.digarray[var1].cleanupfull();
+            this.digarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.digarray = null;
+        var1 = 0;
+        while ((this.digplanes.__length - 1) >= var1) {
+            this.digplanes[var1].cleanupfull();
+            this.digplanes[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.digplanes = null;
+        return null;
+    }
+    
+    method cleanupshort() {
+        this.cleanupfull();
+        return null;
+    }
+    
+    method show() {
+        return null;
+    }
+    
+    method hide() {
+        return null;
+    }
+}

@@ -1,0 +1,145 @@
+SHM V3.0
+UNITS Meters Radians
+
+KEYFRAMES
+Dummy08
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.122173,0,0,1
+	t(1):0,0,0,0
+}
+Dummy34
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0610864,1,0,0
+	t(1):0,0,0,0
+}
+Dummy07
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.122173,0,0,1
+	t(1):0,0,0,0
+}
+Dummy09
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.122173,0,0,1
+	t(1):0,0,0,0
+}
+Dummy10
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.122173,0,0,-1
+	t(1):0,0,0,0
+}
+Dummy04
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0872665,0,0,1
+	t(1):0,0,0,0
+}
+root
+{
+	CHANNELS (point)
+	t(0):0,0,0
+	t(0.5):0,-0.0389025,0
+	t(1):0,0,0
+}
+Dummy11
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.122173,0,0,-1
+	t(1):0,0,0,0
+}
+Dummy12
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.122173,0,0,-1
+	t(1):0,0,0,0
+}
+Dummy29
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0261799,1,0,0
+	t(1):0,0,0,0
+}
+Dummy03
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0872664,0,0,-1
+	t(1):0,0,0,0
+}
+Dummy01
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0872664,0,0,-1
+	t(1):0,0,0,0
+}
+Dummy19
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0349066,0,-1,0
+	t(1):0,0,0,0
+}
+Dummy33
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.366519,-1,0,0
+	t(1):0,0,0,0
+}
+Dummy02
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0872664,0,0,-1
+	t(1):0,0,0,0
+}
+Dummy06
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0872664,0,0,1
+	t(1):0,0,0,0
+}
+Dummy20
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0349066,0,1,0
+	t(1):0,0,0,0
+}
+Dummy05
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0872664,0,0,1
+	t(1):0,0,0,0
+}
+Dummy28
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0174533,1,0,0
+	t(1):0,0,0,0
+}
+Dummy30
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.5):0.0261799,1,0,0
+	t(1):0,0,0,0
+}
+

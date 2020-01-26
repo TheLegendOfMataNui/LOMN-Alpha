@@ -1,0 +1,12 @@
+class lego_area_front : gs_lego_area {
+    
+    method lego_area_front(param1) {
+        if (1) {
+            this.gs_lego_area("frnt", param1, 1, 0);
+        }
+        else {
+            this.gs_lego_area("bech", param1, 1, 0);
+        }
+        return null;
+    }
+}

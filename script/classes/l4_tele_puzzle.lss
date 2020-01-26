@@ -1,0 +1,286 @@
+class l4_tele_puzzle {
+    property parent;
+    property switch1;
+    property topdoor;
+    property bottomdoor;
+    property pushblock;
+    property teleblock;
+    property platform;
+    property tohunga;
+    property hitswitchonce;
+    property block;
+    property tempx;
+    property tempy;
+    property tempz;
+    property shakeonce;
+    property mask;
+    property callonce;
+    property founditem;
+    property showpickup;
+    property cameratimer;
+    
+    method l4_tele_puzzle(param1) {
+        this.parent = param1;
+        this.showpickup = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(50);
+        this.founditem = gcsaver::findmask(scslosifoundation::stringtoidentifier("mtel"));
+        if (this.founditem) {
+            this.showpickup = 0;
+        }
+        if (this.showpickup) {
+            this.mask = new lego_pickup("mtel", 11, 1, "item", 2, 1);
+            this.mask.initfull();
+            this.mask.show();
+        }
+        this.switch1 = new lego_moveableobject("sw00", this.parent.name);
+        this.teleblock = new lego_moveableobject("tblk", this.parent.name);
+        this.platform = new lego_moveableobject("plat", this.parent.name);
+        this.topdoor = new lego_moveableobject("drt1", this.parent.name);
+        this.bottomdoor = new lego_moveableobject("drb1", this.parent.name);
+        this.pushblock = new lego_moveableobject("bblk", this.parent.name);
+        this.tohunga = new runningcharacter("quaf", "vlgr", this.parent.name, -180, 753.7, 0.2, 0 - 374.7, "none");
+        this.cameratimer = new lego_timer("camt", 3.0, 0);
+        this.cameratimer.initfull();
+        this.switch1.initfull();
+        this.teleblock.initfull();
+        this.platform.initfull();
+        this.platform.setresponse(1, 0, 1);
+        this.topdoor.initfull();
+        this.bottomdoor.initfull();
+        this.pushblock.initfull();
+        this.pushblock.setresponse(5, 0, 1);
+        this.tohunga.init("Root/Data/Levels/lev4/tele/Line01.txt");
+        this.tohunga.speed = 5.0;
+        this.platform.settweakable();
+        this.hitswitchonce = 1;
+        this.block = 0;
+        this.shakeonce = 1;
+        this.callonce = 1;
+        var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vlgr"), 0);
+        gccharacter::sethafu(var1);
+        return null;
+    }
+    
+    method show() {
+        this.tohunga.add();
+        this.tohunga.show();
+        this.tohunga.setpos(this.platform.getx(), this.platform.gety() + 5.0, this.platform.getz());
+        this.platform.show();
+        this.switch1.show();
+        this.switch1.setresponse(0, 0, 0);
+        this.teleblock.show();
+        this.teleblock.setmytargetingflags(4);
+        this.teleblock.setmoveable(1.0, 0.8, 1, 0, 1, 1);
+        this.pushblock.show();
+        this.pushblock.settweakable();
+        this.pushblock.setposition(482.054, 0 - 33.0457, 0 - 862.936);
+        return null;
+    }
+    
+    method hide() {
+        if (!(this.mask == null)) {
+            this.mask.cleanupfull();
+            this.mask = null;
+        }
+        this.switch1.cleanupfull();
+        this.switch1 = null;
+        this.teleblock.cleanupfull();
+        this.teleblock = null;
+        this.platform.cleanupfull();
+        this.platform = null;
+        this.topdoor.cleanupfull();
+        this.topdoor = null;
+        this.bottomdoor.cleanupfull();
+        this.bottomdoor = null;
+        this.pushblock.cleanupfull();
+        this.pushblock = null;
+        this.tohunga.cleanupfull();
+        this.tohunga = null;
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        if (param1.eventid == 8) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("camt")) {
+                this.parent.level.cam.settargetpos(313.395, 4.94579, 0 - 758.757);
+            }
+        }
+        else if (param1.eventid == 1000) {
+            debug::print("_event.EventID.args = ***** " + __tostring(param1.args[0]));
+            if (__toint(param1.args[0]) == 1) {
+                debug::print("***OPENING DOOR");
+                this.opendoor();
+            }
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("sw00")) {
+                if (param1.args[1] == scslosifoundation::stringtoidentifier("tblk")) {
+                    this.switch1.setcollide();
+                    if (this.hitswitchonce) {
+                        debug::print("****INTERPING DOWN");
+                        this.switch1.interpolate(this.switch1.getx(), this.switch1.gety() - 0.8, this.switch1.getz(), 0.5);
+                        this.platform.interpolate(this.platform.getx(), 0 - 37.5, this.platform.getz(), 3.0);
+                        this.hitswitchonce = 0;
+                        this.block = 1;
+                    }
+                }
+                param1.args[1];
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (param1.args[1] == scslosifoundation::stringtoidentifier("sw00")) {
+                    this.switch1.setcollide();
+                    if (this.hitswitchonce) {
+                        debug::print("****INTERPING DOWN");
+                        this.switch1.interpolate(this.switch1.getx(), this.switch1.gety() - 0.8, this.switch1.getz(), 0.5);
+                        globalclass.scriptmessage("You Need Something Heavier\n", 0.5);
+                        this.hitswitchonce = 0;
+                    }
+                }
+                else if (param1.args[1] == scslosifoundation::stringtoidentifier("bblk")) {
+                    debug::print("colliding with the strength block");
+                    if ((globalclass.player.whichmaskonface() == 0) && (globalclass.player.ismaskpoweron() == 1)) {
+                        debug::print("got past the strength mask test");
+                        debug::print("callonce = " + __tostring(this.callonce));
+                        if (this.callonce) {
+                            debug::print("SETTING SLIDE TIMER");
+                            this.pushblock.setslidetimer(34.0, 0.0, 0.0, 3.0, 1, 0.5);
+                            this.callonce = 0;
+                        }
+                    }
+                }
+                else if (param1.args[1] == scslosifoundation::stringtoidentifier("mtel")) {
+                    this.startcamera();
+                }
+            }
+        }
+        else if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                this.parent.level.cam.setaimode(7);
+                gccollisionphysicsgroup::spinmask(0.5);
+                globalclass.player.actor.setinputstate("none");
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+        }
+        else if (param1.eventid == 12) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("plat")) {
+                this.tohunga.startrunning();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("drb1")) {
+                this.bottomdoor.setresponse(0, 0, 0);
+                var1 = globalclass.player.actor.getpos();
+                var2 = var1.x1;
+                var3 = var1.y1;
+                var4 = var1.z;
+                if ((this.bottomdoor.getx() > (var2 - 12.0)) && (this.bottomdoor.getx() < (var2 + 12.0))) {
+                    debug::print("********Passed the X");
+                    if ((this.bottomdoor.gety() > (var3 - 8.0)) && (this.bottomdoor.gety() < (var3 + 8.0))) {
+                        debug::print("********Passed the Y");
+                        if ((this.bottomdoor.getz() > (var4 - 12.0)) && (this.bottomdoor.getz() < (var4 + 12.0))) {
+                            debug::print("********Passed the Z Shaking camera");
+                            if (this.shakeonce) {
+                                this.parent.level.cam.shakecamera(0.1, 0.08);
+                                this.shakeonce = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if (param1.eventid == 7) {
+            if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
+                gcstaticsoundsptrarray::playtablesound(144);
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 80) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        if (param1.button == 48) {
+            if (param1.event == 2) {
+                this.cheat1();
+            }
+        }
+        if (param1.button == 57) {
+            if (param1.event == 2) {
+                this.cheat2();
+            }
+        }
+        if (param1.button == 67) {
+            if (param1.event == 2) {
+                this.startcamera();
+            }
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        this.switch1.process();
+        this.tohunga.process(param1);
+        if (this.switch1.collide == 0) {
+            if (this.hitswitchonce == 0) {
+                if (!(this.block == 1)) {
+                    this.switch1.interpolate(this.switch1.getx(), this.switch1.gety() + 0.8, this.switch1.getz(), 0.5);
+                    this.hitswitchonce = 1;
+                }
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        debug::print("Calling SetSlideTimer");
+        globalclass.player.addmask("msk1", 0);
+        return null;
+    }
+    
+    method cheat1() {
+        globalclass.player.actor.setpos(this.platform.getx(), this.platform.gety() + 5.0, this.platform.getz());
+        return null;
+    }
+    
+    method cheat2() {
+        globalclass.player.addmask("msk2", 11);
+        return null;
+    }
+    
+    method opendoor() {
+        this.topdoor.interpolate(this.topdoor.getx(), this.topdoor.gety() + 10.0, this.topdoor.getz(), 5.0);
+        this.bottomdoor.interpolate(this.bottomdoor.getx(), this.bottomdoor.gety() - 10.0, this.bottomdoor.getz(), 5.0);
+        return null;
+    }
+    
+    method startcamera() {
+        this.parent.level.cam.makespline("Root/Data/Levels/lev4/tele/tele_CAM.slb");
+        this.parent.level.cam.setspline(0, 10.0, 1, 0);
+        this.parent.level.cam.setaimode(2);
+        this.parent.level.cam.settargetpos(334.246, 7.10743, 0 - 887.407);
+        this.parent.level.cam.scaletocutscene();
+        globalclass.hud.hide();
+        this.cameratimer.reset(1);
+        return null;
+    }
+}

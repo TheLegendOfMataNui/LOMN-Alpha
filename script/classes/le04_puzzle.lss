@@ -1,0 +1,58 @@
+class le04_puzzle {
+    property parent;
+    property spiderpickup;
+    
+    method le04_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        var1 = gcsaver::finditem(scslosifoundation::stringtoidentifier("tspd"));
+        if (var1 == 0) {
+            this.spiderpickup = new lego_pickup("tspd", 0, 5, "item", 8, 1);
+            this.spiderpickup.initfull();
+            this.spiderpickup.show();
+            this.spiderpickup.setcondition(131072);
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        if (!(this.spiderpickup == null)) {
+            this.spiderpickup.cleanupfull();
+            this.spiderpickup = null;
+        }
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                gccollisionphysicsgroup::spinmask(1.2);
+                gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+            }
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

@@ -1,0 +1,13 @@
+SHM V3.0
+UNITS Meters Radians
+KEYFRAMES
+root
+{
+	CHANNELS (quaternion)
+	t(0):0,0,0,0
+	t(0.0666667):1.5708,0,1,0
+	t(0.133333):3.14159,0,1,0
+	t(0.2):1.5708,0,-1,0
+	t(0.266667):0,0,0,0
+}
+

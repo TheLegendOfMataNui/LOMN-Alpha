@@ -1,0 +1,101 @@
+class wthk2_puzzle {
+    property parent;
+    property bubbles;
+    property spouts;
+    property piras;
+    
+    method wthk2_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(8);
+        this.piras = [ new gs_lego_character("pir0", "pira", "wthk", 0, 3927.8, 1258.6, 9988.2, "aiin"), 
+            new gs_lego_character("pir1", "pira", "wthk", 0, 3921.4, 1265.2, 9944.7, "aiin"), 
+            new gs_lego_character("pir2", "pira", "wthk", 0, 3945.3, 1271.1, 9930.2, "aiin"), 
+            new gs_lego_character("pir3", "pira", "wthk", 0, 3962.1, 1284.6, 9858.1, "aiin"), 
+            new gs_lego_character("pir4", "pira", "wthk", 0, 3902.4, 1280.3, 9846.5, "aiin"), 
+            new gs_lego_character("pir5", "pira", "wthk", 0, 3880.0, 1293.5, 9771.0, "aiin"), 
+            new gs_lego_character("pir6", "pira", "wthk", 0, 3894.3, 1310.3, 9730.4, "aiin") ];
+        var1 = 0;
+        while ((this.piras.__length - 1) >= var1) {
+            this.piras[var1].initfull();
+            this.piras[var1].add();
+            this.piras[var1].setlocalgravity(0);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        var1 = 0;
+        while ((this.piras.__length - 1) >= var1) {
+            this.piras[var1].show();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.piras.__length - 1) >= var1) {
+            this.piras[var1].cleanupfull();
+            this.piras[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.piras = null;
+        globalclass.player.actor.setsurfingability(0.0, 0.8);
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 4) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tp02")) {
+                globalclass.player.actor.setsurfminspeed(10);
+                globalclass.player.actor.setsurfmaxspeed(15);
+                globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("g032"), -1);
+                globalclass.player.actor.setsurfingability(1.0, 0.8);
+            }
+            param1.args[0];
+        }
+        else if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                globalclass.player.kill();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
+                globalclass.player.kill();
+            }
+            else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb02")) {
+                globalclass.player.kill();
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            this.initshort();
+        }
+        return null;
+    }
+    
+    method initshort() {
+        globalclass.player.actor.setsurfingability(0.0, 0.8);
+        globalclass.player.actor.setunderwater(1);
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
+}

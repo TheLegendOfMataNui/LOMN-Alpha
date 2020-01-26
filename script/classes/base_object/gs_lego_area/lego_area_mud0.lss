@@ -1,0 +1,47 @@
+class lego_area_mud0 : gs_lego_area {
+    property mudpuzzle;
+    
+    method lego_area_mud0(param1) {
+        this.gs_lego_area("mud0", param1, 0, 0);
+        this.lego_area_initfull();
+        gcareadirector::setnearestmax(50);
+        return null;
+    }
+    
+    method initfull() {
+        this.lego_area_show();
+        this.mudpuzzle = new mudmonster_puzzle(this);
+        this.mudpuzzle.initfull();
+        globalclass.player.actor.setcontext(2);
+        gclightdirector::setcavelighting(1);
+        gcareadirector::setfog(-14145496, 0 - 20.0, 0 - 175.0, 0.05);
+        return null;
+    }
+    
+    method process(param1) {
+        this.mudpuzzle.process(param1);
+        return null;
+    }
+    
+    method input(param1) {
+        this.mudpuzzle.input(param1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        this.mudpuzzle.onevent(param1);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.lego_area_hide();
+        this.mudpuzzle.cleanupfull();
+        return null;
+    }
+    
+    method exit() {
+        this.mudpuzzle.exit();
+        this.mudpuzzle = null;
+        return null;
+    }
+}

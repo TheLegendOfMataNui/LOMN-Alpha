@@ -1,0 +1,52 @@
+class lego_area_pzzl : gs_lego_area {
+    property puzzle;
+    property sounddirector;
+    
+    method lego_area_pzzl(param1) {
+        this.gs_lego_area("pzzl", param1, 0, 0);
+        this.puzzle = new pizza_puzzlep(this);
+        gcareadirector::setnearestmax(4);
+        this.lego_area_initfull();
+        this.startingarea = [ 180, 
+            0 - 340.3, 
+            0 - 48.7, 
+            208.6 ];
+        return null;
+    }
+    
+    method initfull() {
+        this.lego_area_show();
+        gcareadirector::setfog(-16777216, 0 - 30.0, 0 - 80.0, 0.05);
+        this.puzzle.initfull();
+        globalclass.player.actor.setcontext(2);
+        gclightdirector::setcavelighting(1);
+        return null;
+    }
+    
+    method process(param1) {
+        this.puzzle.process(param1);
+        return null;
+    }
+    
+    method input(param1) {
+        this.puzzle.input(param1);
+        return null;
+    }
+    
+    method onevent(param1) {
+        this.puzzle.onevent(param1);
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.lego_area_hide();
+        this.puzzle.cleanupfull();
+        return null;
+    }
+    
+    method exit() {
+        this.puzzle.exit();
+        this.puzzle = null;
+        return null;
+    }
+}

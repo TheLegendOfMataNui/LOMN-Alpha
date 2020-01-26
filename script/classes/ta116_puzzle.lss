@@ -1,0 +1,368 @@
+class ta116_puzzle {
+    property parent;
+    property platforms;
+    property bats;
+    property canhit;
+    property originaly;
+    property mask;
+    property showmask;
+    
+    method ta116_puzzle(param1) {
+        this.parent = param1;
+        this.showmask = 1;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(13);
+        if (this.showmask) {
+            this.mask = new lego_pickup("mk5a", 5, 1, "item", 2, 1);
+            this.mask.initfull();
+            this.mask.show();
+        }
+        this.canhit = [ 1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1, 
+            1 ];
+        this.platforms = [ new lego_moveableobject("pl01"), 
+            new lego_moveableobject("pl02"), 
+            new lego_moveableobject("pl03"), 
+            new lego_moveableobject("pl04"), 
+            new lego_moveableobject("pl05"), 
+            new lego_moveableobject("pl06"), 
+            new lego_moveableobject("pl07"), 
+            new lego_moveableobject("pl08"), 
+            new lego_moveableobject("pl09"), 
+            new lego_moveableobject("pl10"), 
+            new lego_moveableobject("pl11"), 
+            new lego_moveableobject("pl12"), 
+            new lego_moveableobject("pl13"), 
+            new lego_moveableobject("pl14"), 
+            new lego_moveableobject("pl15"), 
+            new lego_moveableobject("pl16"), 
+            new lego_moveableobject("pl17"), 
+            new lego_moveableobject("pl18"), 
+            new lego_moveableobject("pl19"), 
+            new lego_moveableobject("pl20"), 
+            new lego_moveableobject("pl21"), 
+            new lego_moveableobject("pl22"), 
+            new lego_moveableobject("pl23"), 
+            new lego_moveableobject("pl24"), 
+            new lego_moveableobject("pl25"), 
+            new lego_moveableobject("pl26"), 
+            new lego_moveableobject("pl27"), 
+            new lego_moveableobject("pl28"), 
+            new lego_moveableobject("pl29"), 
+            new lego_moveableobject("pl30"), 
+            new lego_moveableobject("pl31"), 
+            new lego_moveableobject("pl32"), 
+            new lego_moveableobject("pl33"), 
+            new lego_moveableobject("pl34"), 
+            new lego_moveableobject("pl35"), 
+            new lego_moveableobject("pl36"), 
+            new lego_moveableobject("pl37"), 
+            new lego_moveableobject("pl38"), 
+            new lego_moveableobject("pl39") ];
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].initfull();
+            this.platforms[var1].setresponse(0, 0, 0);
+            var1 = var1 + 1;
+        }
+        this.bats = [ new gs_lego_character("bt00", "btfr", "ta11", 0, 0 - 20.9, 0 - 6.6, 0 - 13.2, "aiin"), 
+            new gs_lego_character("bt01", "btfr", "ta11", 0, 2.1, 0 - 11.6, 74.1, "aiin"), 
+            new gs_lego_character("bt02", "btfr", "ta11", 0, 78.6, 0 - 15.2, 185.2, "aiin"), 
+            new gs_lego_character("bt03", "btfr", "ta11", 0, 214.8, 0 - 1.1, 294.0, "aiin"), 
+            new gs_lego_character("bt04", "btfr", "ta11", 0, 270.6, 0 - 6.0, 439.7, "aiin"), 
+            new gs_lego_character("bt05", "btfr", "ta11", 0, 282.5, 0 - 1.5, 527.9, "aiin") ];
+        var1 = 0;
+        while ((this.bats.__length - 1) >= var1) {
+            this.bats[var1].initfull();
+            this.bats[var1].add();
+            var1 = var1 + 1;
+        }
+        this.bats[0].settweakable();
+        this.originaly = [ 0 - 23.7, 
+            0 - 26.3, 
+            0 - 29.9, 
+            0 - 28.8, 
+            0 - 26.3, 
+            0 - 23.3, 
+            0 - 28.5, 
+            0 - 27.2, 
+            0 - 22.2, 
+            0 - 26.3, 
+            0 - 26.3, 
+            0 - 23.6, 
+            0 - 26.2, 
+            0 - 30.1, 
+            0 - 27.8, 
+            0 - 23.9, 
+            0 - 26.3, 
+            0 - 24.5, 
+            0 - 26.3, 
+            0 - 29.1, 
+            0 - 18.0, 
+            0 - 14.9, 
+            0 - 12.2, 
+            0 - 14.0, 
+            0 - 12.6, 
+            0 - 10.2, 
+            0 - 12.6, 
+            0 - 14.3, 
+            0 - 16.0, 
+            0 - 12.6, 
+            0 - 12.6, 
+            0 - 15.7, 
+            0 - 12.6, 
+            0 - 8.7, 
+            0 - 12.6, 
+            0 - 15.4, 
+            0 - 17.4, 
+            0 - 14.8, 
+            0 - 10.2, 
+            0 - 12.6 ];
+        return null;
+    }
+    
+    method initshort() {
+        var var1;
+        var var2;
+        var var3;
+        var1 = 0;
+        while ((this.canhit.__length - 1) >= var1) {
+            this.canhit[var1] = 1;
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            var2 = this.platforms[var1].getx();
+            var3 = this.platforms[var1].getz();
+            if (var1 > 2) {
+                this.platforms[var1].setpos(var2, 0 - 33.3, var3);
+            }
+            else {
+                this.platforms[var1].setpos(var2, this.originaly[var1], var3);
+            }
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        var var2;
+        var var3;
+        if (!(this.mask == null)) {
+            if (this.mask.objshown) {
+                this.mask.show();
+            }
+        }
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].show();
+            if (var1 > 2) {
+                var2 = this.platforms[var1].getx();
+                var3 = this.platforms[var1].getz();
+                this.platforms[var1].setpos(var2, 0 - 33.3, var3);
+            }
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.bats.__length - 1) >= var1) {
+            this.bats[var1].show();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        if (!(this.mask == null)) {
+            this.showmask = this.mask.objshown;
+            this.mask.cleanupfull();
+            this.mask = null;
+        }
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].cleanupfull();
+            this.platforms[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.platforms = null;
+        var1 = 0;
+        while ((this.bats.__length - 1) >= var1) {
+            this.bats[var1].cleanupfull();
+            this.bats[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.bats = null;
+        var1 = 0;
+        while ((this.canhit.__length - 1) >= var1) {
+            this.canhit[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.canhit = null;
+        var1 = 0;
+        while ((this.originaly.__length - 1) >= var1) {
+            this.originaly[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.originaly = null;
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
+        this.showmask = null;
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var1 = 0;
+        while ((this.platforms.__length - 1) >= var1) {
+            this.platforms[var1].process();
+            if (this.canhit[var1] == 0) {
+                if (this.platforms[var1].collide == 0) {
+                    var2 = this.platforms[var1].getx();
+                    var3 = this.platforms[var1].getz();
+                    this.platforms[var1].interpolate(var2, this.originaly[var1], var3, 3.0);
+                    this.canhit[var1] = 1;
+                }
+            }
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        var var7;
+        var var8;
+        var var9;
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            this.initshort();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+        }
+        else if (param1.eventid == 1) {
+            if (param1.args[2] == 1) {
+                
+            }
+            else {
+                if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                    var1 = 0;
+                    while ((this.platforms.__length - 1) >= var1) {
+                        if (param1.args[1] == this.platforms[var1].id) {
+                            if (this.canhit[var1]) {
+                                debug::print("*** colition with " + __tostring(var1));
+                                if (this.platforms[var1].collide == 0) {
+                                    var2 = this.platforms[var1].getx();
+                                    var3 = this.platforms[var1].getz();
+                                    var4 = var1 + 3;
+                                    if (var4 >= (this.platforms.__length - 1)) {
+                                        
+                                    }
+                                    else {
+                                        var5 = this.platforms[var4].getx();
+                                        var6 = this.platforms[var4].getz();
+                                        this.platforms[var4].interpolate(var5, this.originaly[var4], var6, 2.0);
+                                    }
+                                    var7 = var1 - 3;
+                                    if (var7 < 0) {
+                                        
+                                    }
+                                    else {
+                                        var8 = this.platforms[var7].getx();
+                                        var9 = this.platforms[var7].getz();
+                                        this.platforms[var7].interpolate(var8, 0 - 33.3, var9, 2.0);
+                                    }
+                                    if (var1 >= 20) {
+                                        this.platforms[var1].interpolate(var2, 0 - 22.3, var3, 1.6);
+                                    }
+                                    else {
+                                        this.platforms[var1].interpolate(var2, 0 - 33.3, var3, 1.6);
+                                    }
+                                    this.canhit[var1] = 0;
+                                }
+                            }
+                            this.platforms[var1].setcollide();
+                        }
+                        param1.args[1];
+                        var1 = var1 + 1;
+                    }
+                }
+                param1.args[0];
+            }
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 89) {
+            if (param1.event == 2) {
+                this.cheat();
+            }
+        }
+        return null;
+    }
+    
+    method cheat() {
+        var var1;
+        var var2;
+        var var3;
+        var1 = this.parent.level.cam.getpositionx();
+        var2 = this.parent.level.cam.getpositiony();
+        var3 = this.parent.level.cam.getpositionz();
+        this.bats[0].setpos(var1, var2, var3);
+        return null;
+    }
+}

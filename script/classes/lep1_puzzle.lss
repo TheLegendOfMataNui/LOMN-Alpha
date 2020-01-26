@@ -1,0 +1,47 @@
+class lep1_puzzle {
+    property parent;
+    property gern;
+    
+    method lep1_puzzle(param1) {
+        this.parent = param1;
+        return null;
+    }
+    
+    method initfull() {
+        this.gern = new gs_lego_character("rptl", "rptl", "fake", 0, -19, -6, -85, "aiin");
+        this.gern.initfull();
+        this.gern.settweakable();
+        this.gern.add(0);
+        this.gern.show();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.gern.cleanupfull();
+        this.gern = null;
+        return null;
+    }
+    
+    method exit() {
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        return null;
+    }
+}

@@ -1,0 +1,772 @@
+class iceelemental : gs_lego_character {
+    property ppuzzle;
+    property movetimer;
+    property state;
+    property hitpoints;
+    property safehit;
+    property curplat;
+    property toaplat;
+    property toaonplat;
+    property findtoa;
+    property checkanimtime;
+    property maxanimtime;
+    property spinnum;
+    property needspin;
+    property needturn;
+    property needintro;
+    property plattimer;
+    property text1;
+    property text2;
+    
+    method iceelemental(param1) {
+        this.ppuzzle = param1;
+        this.gs_lego_character("zice", "imon", this.ppuzzle.parent.name, 180, 1510.33, 0 - 189.02, 21.68, "aiin");
+        this.maxanimtime = 25.0 / 30.0;
+        return null;
+    }
+    
+    method init() {
+        var var1;
+        this.initfull();
+        this.add();
+        this.show();
+        this.disableai();
+        this.setsplitanimation(scslosifoundation::stringtoidentifier("im00"), 0.01);
+        gccharacter::setattackraycastable(this.handle, 1);
+        this.reset();
+        this.needintro = 1;
+        var1 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 0, 0);
+        this.text1 = new gs_legotext("Root/Data/Art/Fonts/BionicleFontHi", var1, screenx * 0.5, screeny - 130, 0, 1.5, 256, 0, 0);
+        var1 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 0, 1);
+        this.text2 = new gs_legotext("Root/Data/Art/Fonts/BionicleFontHi", var1, screenx * 0.5, screeny - 110, 0, 1.5, 256, 0, 0);
+        return null;
+    }
+    
+    method cleanup() {
+        this.text1.cleanupfull();
+        this.text1 = null;
+        this.text2.cleanupfull();
+        this.text2 = null;
+        this.cleanupfull();
+        return null;
+    }
+    
+    method reset() {
+        this.state = 99;
+        this.hitpoints = 4;
+        this.movetimer = 0.0;
+        this.setorientation(180.0);
+        this.safehit = 1;
+        this.curplat = 2;
+        this.toaplat = 0;
+        this.toaonplat = 0;
+        this.findtoa = 1;
+        this.checkanimtime = 0;
+        this.spinnum = 0;
+        this.needspin = 0;
+        this.needturn = 0;
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        if (param1.eventid == 35) {
+            if ((param1.args[0] == this.contid) && (param1.args[1] == 0)) {
+                gcmodeldirector::hide(this.contid, this.areaid);
+            }
+        }
+        else if (param1.eventid == 37) {
+            if (param1.args[0] == this.contid) {
+                if (this.spinnum > 0) {
+                    if (this.spinnum == 1) {
+                        this.spin(2);
+                    }
+                    else if (this.spinnum == 2) {
+                        this.stopspin();
+                    }
+                }
+                else {
+                    this.finishrotation();
+                }
+            }
+        }
+        else if (param1.eventid == 19) {
+            if ((param1.args[0] == this.contid) && this.safehit) {
+                if (this.getcurrentanimationid() == scslosifoundation::stringtoidentifier("im02")) {
+                    debug::print("projectile " + scslosifoundation::identifiertostring(param1.args[1]));
+                    var1 = gccharacter::getorientation(this.handle);
+                    var2 = gccharacter::getorientation(globalclass.player.actor.handle);
+                    this.hit(var1, var2);
+                }
+            }
+        }
+        else if (param1.eventid == 3) {
+            var3 = param1.args[0] - scslosifoundation::stringtoidentifier("tb01");
+            if ((var3 >= 1) && (var3 <= 5)) {
+                this.toaplat = var3;
+                if (param1.args[1] == 1) {
+                    this.toaonplat = 1;
+                    if (this.needintro) {
+                        this.plattimer = 0;
+                    }
+                }
+                else {
+                    this.toaonplat = 0;
+                }
+            }
+            else if (((param1.args[0] == scslosifoundation::stringtoidentifier("tb07")) && (this.state == 100)) && (this.ppuzzle.hasstone == 1)) {
+                debug::print("On to LEWA...");
+            }
+        }
+        else if (param1.eventid == 14) {
+            globalclass.level.cam.setaimode(11);
+        }
+        return null;
+    }
+    
+    method start() {
+        this.movetimer = 1;
+        this.aiidle();
+        if (this.needintro) {
+            this.state = 101;
+            this.plattimer = 0;
+        }
+        else {
+            this.state = 4;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        if (this.toaonplat) {
+            var1 = gccharacter::getpositiony(globalclass.player.actor.handle);
+            if ((var1 < -190) || (var1 > -188)) {
+                this.toaonplat = 0;
+                gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb01") + this.toaplat, 0);
+            }
+        }
+        this.movetimer = this.movetimer + param1.deltatime;
+        if (this.movetimer > 60) {
+            this.movetimer = 0.0;
+        }
+        if (this.needspin) {
+            if (this.movetimer > 1.4) {
+                this.spin();
+            }
+        }
+        else if (this.state == 101) {
+            if (this.needintro && this.toaonplat) {
+                this.plattimer = this.plattimer + param1.deltatime;
+                if (this.plattimer > 0.3) {
+                    this.intro();
+                }
+            }
+            if (this.needintro == 0) {
+                if (this.movetimer > 3.3) {
+                    this.laugh();
+                    this.movetimer = 0.0;
+                    this.state = 0;
+                    globalclass.player.actor.setinputstate("ninp");
+                }
+                else if ((this.movetimer > 0.5) && (this.findtoa == 0)) {
+                    this.laugh();
+                    this.findtoa = 1;
+                }
+            }
+        }
+        else if (this.state == 99) {
+            
+        }
+        else if (this.state == 98) {
+            
+        }
+        else if (this.state == 0) {
+            if (!(this.text1 == null)) {
+                this.text1.hide();
+                this.text1.cleanupfull();
+                this.text1 = null;
+                this.text2.hide();
+                this.text2.cleanupfull();
+                this.text2 = null;
+            }
+            if (this.findtoa && (this.movetimer > 2)) {
+                this.findkopa();
+            }
+            if (this.movetimer > 5) {
+                this.safehit = 1;
+                this.curplat = this.toaplat;
+                this.smash(2);
+                this.state = 1;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 1) {
+            this.hitplatform();
+            if (this.movetimer > 2) {
+                this.nextplat();
+                this.smash(1);
+                this.movetimer = 0.0;
+                this.state = 2;
+            }
+        }
+        else if (this.state == 2) {
+            this.hitplatform();
+            if (this.movetimer > 2) {
+                this.nextplat();
+                this.smash(2);
+                this.movetimer = 0.0;
+                this.state = 3;
+            }
+        }
+        else if (this.state == 3) {
+            this.hitplatform();
+            if (this.movetimer > 2) {
+                this.nextplat();
+                this.smash(3);
+                this.movetimer = 0.0;
+                this.state = 4;
+            }
+        }
+        else if (this.state == 4) {
+            this.hitplatform(1);
+            if (this.movetimer > 2) {
+                this.laugh();
+                this.movetimer = 0.0;
+                this.state = 0;
+                this.findtoa = 1;
+            }
+        }
+        else if (this.state == 10) {
+            if (this.findtoa && (this.movetimer > 2)) {
+                this.findkopa();
+            }
+            if (this.movetimer > 5) {
+                this.safehit = 1;
+                this.curplat = this.toaplat;
+                this.smash(2);
+                this.state = 11;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 11) {
+            this.hitplatform();
+            if (this.movetimer > 2) {
+                this.prevplat();
+                this.smash(1);
+                this.movetimer = 0.0;
+                this.state = 12;
+            }
+        }
+        else if (this.state == 12) {
+            this.hitplatform();
+            if (this.movetimer > 2) {
+                this.prevplat();
+                this.smash(2);
+                this.movetimer = 0.0;
+                this.state = 13;
+            }
+        }
+        else if (this.state == 13) {
+            this.hitplatform();
+            if (this.movetimer > 2) {
+                this.prevplat();
+                this.smash(1);
+                this.movetimer = 0.0;
+                this.state = 14;
+            }
+        }
+        else if (this.state == 14) {
+            this.hitplatform();
+            if (this.movetimer > 2) {
+                this.prevplat();
+                this.smash(3);
+                this.state = 15;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 15) {
+            this.hitplatform(1);
+            if (this.movetimer > 2) {
+                this.laugh();
+                this.movetimer = 0.0;
+                this.state = 10;
+                this.findtoa = 1;
+            }
+        }
+        else if (this.state == 20) {
+            if (this.findtoa && (this.movetimer > 2)) {
+                this.findkopa();
+            }
+            if (this.movetimer > 5) {
+                this.safehit = 1;
+                this.curplat = this.toaplat;
+                this.smash(2);
+                this.state = 21;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 21) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.nextplat(2);
+                this.smash(1);
+                this.movetimer = 0.0;
+                this.state = 22;
+            }
+        }
+        else if (this.state == 22) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.nextplat(2);
+                this.smash(3);
+                this.movetimer = 0.0;
+                this.state = 23;
+            }
+        }
+        else if (this.state == 23) {
+            this.hitplatform(1);
+            if (this.movetimer > 1.5) {
+                this.nextplat(2);
+                this.smash(2);
+                this.movetimer = 0.0;
+                this.state = 24;
+            }
+        }
+        else if (this.state == 24) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.nextplat(2);
+                this.smash(2);
+                this.state = 25;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 25) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.nextplat(2);
+                this.smash(1);
+                this.state = 26;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 26) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.laugh();
+                this.movetimer = 0.0;
+                this.state = 20;
+                this.findtoa = 1;
+            }
+        }
+        else if (this.state == 30) {
+            if (this.findtoa && (this.movetimer > 2)) {
+                this.findkopa();
+            }
+            if (this.movetimer > 5) {
+                this.safehit = 1;
+                this.curplat = this.toaplat;
+                this.smash(3);
+                this.state = 31;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 31) {
+            this.hitplatform(1);
+            if (this.movetimer > 2) {
+                this.prevplat(3);
+                this.smash(2);
+                this.movetimer = 0.0;
+                this.state = 32;
+            }
+        }
+        else if (this.state == 32) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.prevplat(3);
+                this.smash(1);
+                this.movetimer = 0.0;
+                this.state = 33;
+            }
+        }
+        else if (this.state == 33) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.prevplat(3);
+                this.smash(3);
+                this.movetimer = 0.0;
+                this.state = 34;
+            }
+        }
+        else if (this.state == 34) {
+            this.hitplatform(1);
+            if (this.movetimer > 1.5) {
+                this.prevplat(3);
+                this.smash(2);
+                this.state = 35;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 35) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.prevplat(3);
+                this.smash(1);
+                this.state = 36;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 36) {
+            this.hitplatform();
+            if (this.movetimer > 1.5) {
+                this.prevplat(3);
+                this.smash(3);
+                this.state = 37;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 37) {
+            this.hitplatform(1);
+            if (this.movetimer > 1.5) {
+                this.prevplat(3);
+                this.smash(3);
+                this.state = 38;
+                this.movetimer = 0.0;
+            }
+        }
+        else if (this.state == 38) {
+            this.hitplatform(1);
+            if (this.movetimer > 2) {
+                this.laugh();
+                this.movetimer = 0.0;
+                this.state = 30;
+                this.findtoa = 1;
+            }
+        }
+        else if (this.state == 100) {
+            
+        }
+        return null;
+    }
+    
+    method intro() {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        this.needintro = 0;
+        this.movetimer = 0;
+        globalclass.player.actor.setinputstate("none");
+        this.findkopa(0.5);
+        this.text1.initfull();
+        this.text1.add();
+        this.text1.show();
+        this.text2.initfull();
+        this.text2.add();
+        this.text2.show();
+        var1 = globalclass.player.actor.getposx();
+        var2 = globalclass.player.actor.getposy();
+        var3 = globalclass.player.actor.getposz();
+        var4 = this.getposx();
+        var5 = this.getposy();
+        var6 = this.getposz();
+        globalclass.level.cam.interpolate(var1, var2 + 8.0, var3, var4, var5, var6, 4.5);
+        return null;
+    }
+    
+    method spin(param1) {
+        if (param1 == null) {
+            this.spinnum = 1;
+            this.needspin = 0;
+            this.setsplitanimation(scslosifoundation::stringtoidentifier("im08"), 0.01);
+        }
+        else {
+            this.spinnum = param1;
+        }
+        this.interporientation(180, 0.5);
+        return null;
+    }
+    
+    method stopspin() {
+        this.spinnum = 0;
+        this.setsplitanimation(scslosifoundation::stringtoidentifier("im00"), 0.01);
+        return null;
+    }
+    
+    method hitplatform(param1) {
+        var var1;
+        if (this.checkanimtime && (this.movetimer > this.maxanimtime)) {
+            var1 = gccharacter::ishanging(globalclass.player.actor.handle);
+            if (!(param1 == null)) {
+                if ((this.toaonplat == 1) || (var1 == 1)) {
+                    globalclass.player.actor.react(1, 1, this.contid);
+                }
+            }
+            else if (((this.toaonplat == 1) || (var1 == 1)) && (this.toaplat == this.curplat)) {
+                globalclass.player.actor.react(1, 1, this.contid);
+            }
+            this.checkanimtime = 0;
+        }
+        return null;
+    }
+    
+    method prevplat(param1) {
+        var var1;
+        if (param1 == null) {
+            var1 = 1;
+        }
+        else {
+            var1 = param1;
+        }
+        this.curplat = this.curplat - var1;
+        if (this.curplat < 1) {
+            this.curplat = this.curplat + 5;
+        }
+        return null;
+    }
+    
+    method nextplat(param1) {
+        var var1;
+        if (param1 == null) {
+            var1 = 1;
+        }
+        else {
+            var1 = param1;
+        }
+        this.curplat = this.curplat + var1;
+        if (this.curplat > 5) {
+            this.curplat = this.curplat - 5;
+        }
+        return null;
+    }
+    
+    method findkopa(param1) {
+        var var1;
+        var var2;
+        var1 = 0.0;
+        this.curplat = this.toaplat;
+        if (this.curplat == 1) {
+            var1 = 0;
+        }
+        else if (this.curplat == 2) {
+            var1 = 72;
+        }
+        else if (this.curplat == 3) {
+            var1 = 144;
+        }
+        else if (this.curplat == 4) {
+            var1 = -144;
+        }
+        else if (this.curplat == 5) {
+            var1 = -72;
+        }
+        var2 = gccharacter::getorientation(this.handle);
+        this.angle = var1 - var2;
+        if (this.angle > 180) {
+            this.angle = this.angle - 360;
+        }
+        else if (this.angle < -180) {
+            this.angle = this.angle + 360;
+        }
+        if (!(param1 == null)) {
+            this.interporientation(this.angle, 2.0);
+        }
+        else {
+            this.interporientation(this.angle, param1);
+        }
+        this.findtoa = 0;
+        return null;
+    }
+    
+    method turn(param1, param2) {
+        var var1;
+        var var2;
+        var var3;
+        if (!(param1 == null)) {
+            if (param1 >= 1) {
+                this.nextplat(param1);
+            }
+            if (param1 <= -1) {
+                this.prevplat(param1 * -1);
+            }
+        }
+        if (param2 == null) {
+            var1 = 1.4;
+        }
+        else {
+            var1 = param2;
+        }
+        if (this.needturn && (this.movetimer > var1)) {
+            this.needturn = 0;
+            var2 = 0.0;
+            if (this.curplat == 1) {
+                var2 = 0;
+            }
+            else if (this.curplat == 2) {
+                var2 = 72;
+            }
+            else if (this.curplat == 3) {
+                var2 = 144;
+            }
+            else if (this.curplat == 4) {
+                var2 = -144;
+            }
+            else if (this.curplat == 5) {
+                var2 = -72;
+            }
+            var3 = gccharacter::getorientation(this.handle);
+            this.angle = var2 - var3;
+            if (this.angle > 180) {
+                this.angle = this.angle - 360;
+            }
+            else if (this.angle < -180) {
+                this.angle = this.angle + 360;
+            }
+            this.interporientation(this.angle, 0.75);
+        }
+        return null;
+    }
+    
+    method smash(param1) {
+        var var1;
+        var var2;
+        var1 = 0.0;
+        if (this.curplat == 1) {
+            var1 = 0;
+        }
+        else if (this.curplat == 2) {
+            var1 = 72;
+        }
+        else if (this.curplat == 3) {
+            var1 = 144;
+        }
+        else if (this.curplat == 4) {
+            var1 = -144;
+        }
+        else if (this.curplat == 5) {
+            var1 = -72;
+        }
+        var2 = gccharacter::getorientation(this.handle);
+        this.angle = var1 - var2;
+        if (this.angle > 180) {
+            this.angle = this.angle - 360;
+        }
+        else if (this.angle < -180) {
+            this.angle = this.angle + 360;
+        }
+        this.interporientation(this.angle, 0.5);
+        this.checkanimtime = 1;
+        if (param1 == 1) {
+            this.setsplitanimation(scslosifoundation::stringtoidentifier("im03"), 0.01);
+        }
+        else if (param1 == 2) {
+            this.setsplitanimation(scslosifoundation::stringtoidentifier("im04"), 0.01);
+        }
+        else if (param1 == 3) {
+            this.setsplitanimation(scslosifoundation::stringtoidentifier("im06"), 0.01);
+        }
+        return null;
+    }
+    
+    method finishrotation() {
+        if (this.curplat == 1) {
+            this.setorientation(0);
+        }
+        else if (this.curplat == 2) {
+            this.setorientation(72);
+        }
+        else if (this.curplat == 3) {
+            this.setorientation(144);
+        }
+        else if (this.curplat == 4) {
+            this.setorientation(-144);
+        }
+        else if (this.curplat == 5) {
+            this.setorientation(-72);
+        }
+        return null;
+    }
+    
+    method laugh() {
+        this.setsplitanimation(scslosifoundation::stringtoidentifier("im02"), 0.01);
+        return null;
+    }
+    
+    method ouch() {
+        this.hitpoints = this.hitpoints - 1;
+        this.needspin = 1;
+        if (this.hitpoints == 3) {
+            this.setsplitanimation(scslosifoundation::stringtoidentifier("im05"), 0.01);
+            this.movetimer = 0;
+            this.state = 10;
+        }
+        else if (this.hitpoints == 2) {
+            this.setsplitanimation(scslosifoundation::stringtoidentifier("im05"), 0.01);
+            this.movetimer = 0;
+            this.state = 20;
+        }
+        else if (this.hitpoints == 1) {
+            this.setsplitanimation(scslosifoundation::stringtoidentifier("im05"), 0.01);
+            this.movetimer = 0;
+            this.state = 30;
+        }
+        else if (this.hitpoints == 0) {
+            this.setsplitanimation(scslosifoundation::stringtoidentifier("im07"), 0.01);
+            this.state = 100;
+            this.needspin = 0;
+            this.fadeout(2);
+            this.ppuzzle.showstone();
+        }
+        return null;
+    }
+    
+    method hit(param1, param2) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var var6;
+        var var7;
+        var1 = param1;
+        var2 = param2;
+        var3 = var1 + 80.0;
+        var4 = 0;
+        if (var3 > 180.0) {
+            var3 = var3 - 180.0;
+            var4 = 1;
+        }
+        var5 = var1 - 80.0;
+        var6 = 0;
+        if (var5 < (0 - 180.0)) {
+            var5 = var5 + 180.0;
+            var6 = 1;
+        }
+        var7 = 0;
+        if ((var2 <= var3) && (var2 >= var5)) {
+            var7 = 1;
+        }
+        else if (var4 == 1) {
+            var3 = var1 + 80.0;
+            if ((var2 <= var3) && (var2 >= var5)) {
+                var7 = 1;
+            }
+        }
+        else if (var6 == 1) {
+            var5 = var1 - 80.0;
+            if ((var2 <= var3) && (var2 >= var5)) {
+                var7 = 1;
+            }
+        }
+        if (var7 == 1) {
+            this.safehit = 0;
+            this.ouch();
+        }
+        return null;
+    }
+}

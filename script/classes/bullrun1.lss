@@ -1,0 +1,73 @@
+class bullrun1 {
+    property parea;
+    property bully;
+    property bgmusic;
+    
+    method bullrun1(param1) {
+        this.parea = param1;
+        return null;
+    }
+    
+    method init() {
+        var var1;
+        this.bully = this.parea.level.getbull();
+        var1 = this.parea.name;
+        this.bully.changearea(scslosifoundation::stringtoidentifier(var1));
+        this.bully.setclimb(5);
+        this.bully.setpos(36, 2, 248);
+        this.bully.enableanim(scslosifoundation::stringtoidentifier("bl09"));
+        globalclass.player.actor.ride(scslosifoundation::stringtoidentifier(this.bully.contstring), scslosifoundation::stringtoidentifier(this.bully.area), 2063160497);
+        return null;
+    }
+    
+    method cleanup() {
+        if (!(this.bgmusic == null)) {
+            this.bgmusic.stop();
+            this.bgmusic = null;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.event == 2) {
+            if (param1.button == 79) {
+                this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            }
+            else if (param1.button == 80) {
+                this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str1"), scslosifoundation::stringtoidentifier("lok1"));
+            }
+        }
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                gccollisionphysicsgroup::spinmask(1.2);
+            }
+        }
+        else if (param1.eventid == 46) {
+            gccollisionphysicsgroup::spinmask(1.2);
+        }
+        else if (param1.eventid == 27) {
+            this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            globalclass.player.unkill();
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+            globalclass.player.actor.setinputstate("ninp");
+            this.parea.level.cam.setaimode(11);
+        }
+        else if (param1.eventid == 29) {
+            
+        }
+        return null;
+    }
+    
+    method exit() {
+        this.parea = null;
+        return null;
+    }
+}

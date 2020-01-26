@@ -1,0 +1,1094 @@
+class gs_lego_screenfrontend : base_object {
+    property items;
+    property pointer;
+    property destination;
+    property argarray;
+    property point;
+    property startx;
+    property starty;
+    property xchange;
+    property ychange;
+    property maxlines;
+    property lineposition;
+    property activemenu;
+    property backmenu;
+    property activebutton;
+    property screentimer;
+    property advancescreen;
+    property backscreen;
+    property levelfe;
+    property curscreen;
+    property minidx;
+    property maxidx;
+    property showidx;
+    property x;
+    property y;
+    property curidx;
+    property mainmenutext;
+    property optiontext;
+    property soundtext;
+    property languagetext;
+    property music;
+    property cheattext;
+    property glossarytext;
+    property graphicstext;
+    property printing;
+    property tempmx;
+    property tempmy;
+    property startnewscreen;
+    property reallyback;
+    property menuactive;
+    property ingame;
+    
+    method gs_lego_screenfrontend(param1) {
+        this.items = param1;
+        this.point = new ss_basesprite("Root/Data/Art/MenuArt/cursor0000", 50, 50, 0, 82, 82);
+        this.curscreen = -1;
+        return null;
+    }
+    
+    method setupmainscreen() {
+        this.mainmenutext = [ [ "NEW GAME", 
+                400, 
+                280, 
+                31, 
+                639, 
+                319 ], 
+            [ "LOAD GAME", 
+                400, 
+                320, 
+                32, 
+                639, 
+                359 ], 
+            [ "OPTIONS", 
+                400, 
+                360, 
+                33, 
+                639, 
+                399 ], 
+            [ "QUIT GAME", 
+                400, 
+                400, 
+                34, 
+                639, 
+                439 ] ];
+        return null;
+    }
+    
+    method setupoptionscreen() {
+        this.optiontext = [ [ "SOUND", 
+                400, 
+                200, 
+                31, 
+                639, 
+                239 ], 
+            [ "GRAPHICS", 
+                400, 
+                240, 
+                32, 
+                639, 
+                279 ], 
+            [ "LANGUAGE", 
+                400, 
+                280, 
+                33, 
+                639, 
+                319 ], 
+            [ "GLOSSARY", 
+                400, 
+                320, 
+                34, 
+                639, 
+                359 ], 
+            [ "PRINT", 
+                400, 
+                360, 
+                35, 
+                639, 
+                399 ], 
+            [ "CREDITS", 
+                400, 
+                400, 
+                36, 
+                639, 
+                439 ] ];
+        return null;
+    }
+    
+    method setupsoundscreen() {
+        this.soundtext = [ [ "SOUND VOLUME", 
+                320, 
+                240, 
+                31, 
+                639, 
+                279 ], 
+            [ "MUSIC VOLUME", 
+                320, 
+                320, 
+                32, 
+                639, 
+                359 ], 
+            [ "STEREO SOUND", 
+                320, 
+                400, 
+                33, 
+                639, 
+                439 ], 
+            [ "MONO SOUND", 
+                320, 
+                400, 
+                34, 
+                639, 
+                439 ] ];
+        return null;
+    }
+    
+    method setuplanguagescreen() {
+        this.languagetext = [ [ "ENGLISH", 
+                96, 
+                40, 
+                31, 
+                639, 
+                79 ], 
+            [ "FRENCH", 
+                96, 
+                80, 
+                32, 
+                639, 
+                119 ], 
+            [ "SPANISH", 
+                96, 
+                120, 
+                33, 
+                639, 
+                159 ], 
+            [ "ITALIAN", 
+                96, 
+                160, 
+                34, 
+                639, 
+                199 ], 
+            [ "DUTCH", 
+                96, 
+                200, 
+                35, 
+                639, 
+                239 ], 
+            [ "GERMAN", 
+                96, 
+                240, 
+                36, 
+                639, 
+                279 ], 
+            [ "DANISH", 
+                96, 
+                280, 
+                37, 
+                639, 
+                319 ], 
+            [ "SWEDISH", 
+                96, 
+                320, 
+                38, 
+                639, 
+                359 ], 
+            [ "NORWEGIAN", 
+                96, 
+                360, 
+                39, 
+                639, 
+                399 ], 
+            [ "FINNISH", 
+                96, 
+                400, 
+                40, 
+                639, 
+                439 ], 
+            [ "JAPANESE", 
+                96, 
+                440, 
+                41, 
+                639, 
+                479 ] ];
+        return null;
+    }
+    
+    method setupgraphicsscreen() {
+        this.graphicstext = [ [ "FOG", 
+                32, 
+                40, 
+                31, 
+                639, 
+                79 ], 
+            [ "DRAW DISTANCE", 
+                32, 
+                80, 
+                32, 
+                639, 
+                119 ], 
+            [ "CHARACTER DETAIL", 
+                32, 
+                120, 
+                33, 
+                639, 
+                159 ], 
+            [ "WORLD DETAIL", 
+                32, 
+                160, 
+                34, 
+                639, 
+                199 ], 
+            [ "SHADOW DETAIL", 
+                32, 
+                200, 
+                35, 
+                639, 
+                239 ], 
+            [ "SCREEN RESOLUTION", 
+                32, 
+                240, 
+                36, 
+                639, 
+                279 ], 
+            [ "COLOR DEPTH", 
+                32, 
+                280, 
+                37, 
+                639, 
+                319 ], 
+            [ "FSAA", 
+                32, 
+                320, 
+                38, 
+                639, 
+                359 ], 
+            [ "GAMMA", 
+                32, 
+                360, 
+                39, 
+                639, 
+                399 ], 
+            [ "SKY DETAIL", 
+                32, 
+                400, 
+                40, 
+                639, 
+                439 ], 
+            [ "PARTICLE DETAIL", 
+                32, 
+                440, 
+                41, 
+                639, 
+                479 ] ];
+        return null;
+    }
+    
+    method setupcheatscreen() {
+        this.cheattext = [ [ "Printing", 
+                249, 
+                358, 
+                31, 
+                366, 
+                392 ] ];
+        return null;
+    }
+    
+    method setupglossaryscreen() {
+        this.glossarytext = [ [ "Mata Nui", 
+                32, 
+                40, 
+                31, 
+                639, 
+                79 ], 
+            [ "Makuta", 
+                32, 
+                80, 
+                32, 
+                639, 
+                119 ], 
+            [ "Onua", 
+                32, 
+                120, 
+                33, 
+                639, 
+                159 ], 
+            [ "Gali", 
+                32, 
+                160, 
+                34, 
+                639, 
+                199 ], 
+            [ "Kopaka", 
+                32, 
+                200, 
+                35, 
+                639, 
+                239 ], 
+            [ "Pohatu", 
+                32, 
+                240, 
+                36, 
+                639, 
+                279 ], 
+            [ "Lewa", 
+                32, 
+                280, 
+                37, 
+                639, 
+                319 ], 
+            [ "Tahu", 
+                32, 
+                320, 
+                38, 
+                639, 
+                359 ], 
+            [ "Tohungan", 
+                32, 
+                360, 
+                39, 
+                639, 
+                399 ], 
+            [ "Rahi", 
+                32, 
+                400, 
+                40, 
+                639, 
+                439 ], 
+            [ "Manas", 
+                32, 
+                440, 
+                41, 
+                639, 
+                479 ] ];
+        return null;
+    }
+    
+    method setupprintingscreen() {
+        this.printing = [ "IMAGE ONE", 
+            "IMAGE TWO" ];
+        return null;
+    }
+    
+    method initfull() {
+        this.point.initfull();
+        this.point.add();
+        this.point.show();
+        this.point.enablealphachannel(1);
+        this.levelfe = new lego_level_frontend([ "frnt" ]);
+        this.minidx = 0;
+        this.showidx = 10;
+        this.curidx = 0;
+        this.screentimer = 0;
+        this.advancescreen = 0;
+        this.backscreen = 0;
+        this.activemenu = [  ];
+        this.backmenu = [  ];
+        this.activebutton = [  ];
+        this.startnewscreen = 0;
+        this.reallyback = 0;
+        this.menuactive = 0;
+        this.ingame = 0;
+        this.setupmainscreen();
+        this.setupoptionscreen();
+        this.setupgraphicsscreen();
+        this.setupsoundscreen();
+        this.setuplanguagescreen();
+        this.setupcheatscreen();
+        this.setupglossaryscreen();
+        this.setupprintingscreen();
+        this.gotodifferentscreen(this.mainmenutext, -1, 3);
+        this.levelfe.initfull();
+        return null;
+    }
+    
+    method initshort() {
+        this.initfull();
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var var2;
+        debug::print("[][0][] cleanup Gs_Lego_ScreenFrontEnd");
+        if (!(this.items == null)) {
+            var1 = this.items.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.items[var1 - var2].hide();
+                this.items[var1 - var2].remove();
+                this.items[var1 - var2].cleanupfull();
+                this.items[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.items = null;
+        }
+        if (!(this.argarray == null)) {
+            var1 = this.argarray.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.argarray[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.argarray = null;
+        }
+        if (!(this.point == null)) {
+            this.point.hide();
+            this.point.remove();
+            this.point.cleanupfull();
+            this.point = null;
+        }
+        if (!(this.activemenu == null)) {
+            var1 = this.activemenu.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.activemenu[var1 - var2].hide();
+                this.activemenu[var1 - var2].remove();
+                this.activemenu[var1 - var2].cleanupfull();
+                this.activemenu[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.activemenu = null;
+        }
+        if (!(this.backmenu == null)) {
+            var1 = this.backmenu.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.backmenu[var1 - var2].hide();
+                this.backmenu[var1 - var2].remove();
+                this.backmenu[var1 - var2].cleanupfull();
+                this.backmenu[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.backmenu = null;
+        }
+        this.activebutton = null;
+        if (!(this.levelfe == null)) {
+            this.levelfe.cleanupfull();
+            this.levelfe = null;
+        }
+        if (!(this.mainmenutext == null)) {
+            var1 = this.mainmenutext.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.mainmenutext[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.mainmenutext = null;
+        }
+        if (!(this.optiontext == null)) {
+            var1 = this.optiontext.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.optiontext[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.optiontext = null;
+        }
+        if (!(this.soundtext == null)) {
+            var1 = this.soundtext.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.soundtext[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.soundtext = null;
+        }
+        if (!(this.languagetext == null)) {
+            var1 = this.languagetext.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.languagetext[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.languagetext = null;
+        }
+        if (!(this.cheattext == null)) {
+            var1 = this.cheattext.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.cheattext[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.cheattext = null;
+        }
+        if (!(this.glossarytext == null)) {
+            var1 = this.glossarytext.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.glossarytext[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.glossarytext = null;
+        }
+        if (!(this.graphicstext == null)) {
+            var1 = this.graphicstext.__length - 1;
+            var2 = 0;
+            while (var1 >= var2) {
+                this.graphicstext[var1 - var2] = null;
+                var2 = var2 + 1;
+            }
+            this.graphicstext = null;
+        }
+        this.printing = null;
+        debug::print("[][1][] cleanup Gs_Lego_ScreenFrontEnd");
+        return null;
+    }
+    
+    method mousebuttonreleased(param1, param2, param3) {
+        var var1;
+        var var2;
+        var var3;
+        if (this.menuactive == 1) {
+            if (param1 == 1) {
+                if (this.curscreen == -1) {
+                    var1 = 3;
+                }
+                else if (this.curscreen == 6) {
+                    var1 = 10;
+                }
+                else if (this.curscreen == 0) {
+                    var1 = 5;
+                }
+                else if (this.curscreen == 1) {
+                    var1 = 2;
+                }
+                else if (this.curscreen == 5) {
+                    var1 = 2;
+                }
+                else if (this.curscreen == 4) {
+                    var1 = 10;
+                }
+                else if (this.curscreen == 8) {
+                    var1 = 10;
+                }
+                var2 = 0;
+                while (var1 >= var2) {
+                    var3 = this.activemenu[var2].getactive();
+                    if (var3 == 1) {
+                        this.menuactive = 0;
+                        this.screentimer = 0;
+                        this.advancescreen = 1;
+                        this.backscreen = 0;
+                    }
+                    var2 = var2 + 1;
+                }
+            }
+            else if (param1 == 2) {
+                this.screentimer = 0;
+                this.advancescreen = 0;
+                this.backscreen = 1;
+            }
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        if (this.screentimer > 0.25) {
+            if (this.advancescreen == 1) {
+                this.screentimer = 0;
+                this.advancetonextarea(this.curidx);
+                this.resetactivemenu();
+                this.advancescreen = 0;
+            }
+            else if (this.backscreen == 1) {
+                this.screentimer = 0;
+                this.backtolastarea();
+                this.resetactivemenu();
+                this.backscreen = 0;
+                this.reallyback = 1;
+            }
+        }
+        else if ((this.advancescreen == 1) || (this.backscreen == 1)) {
+            this.screentimer = this.screentimer + param1.deltatime;
+        }
+        if (this.startnewscreen == 1) {
+            if (this.reallyback == 1) {
+                this.backtolastscreen();
+                this.reallyback = 0;
+            }
+            else {
+                this.advancetonextscreen(this.curidx);
+            }
+            this.startnewscreen = 0;
+        }
+        if (this.levelfe.getcameramode() == 0) {
+            this.levelfe.addyaw();
+        }
+        return null;
+    }
+    
+    method cleanupfe() {
+        return null;
+    }
+    
+    method input(param1) {
+        if (this.menuactive == 1) {
+            if (param1.button == 9) {
+                if (param1.event == 2) {
+                    this.scrollup();
+                }
+            }
+            if (param1.button == 12) {
+                if (param1.event == 2) {
+                    this.scrolldown();
+                }
+            }
+            if (param1.button == 38) {
+                if (param1.event == 2) {
+                    this.scrollup();
+                }
+            }
+            if (param1.button == 40) {
+                if (param1.event == 2) {
+                    this.scrolldown();
+                }
+            }
+            if (param1.button == 13) {
+                this.screentimer = 0;
+                this.advancescreen = 1;
+                this.backscreen = 0;
+                this.menuactive = 0;
+            }
+            else if (param1.button == 27) {
+                if (!(this.curscreen == -1)) {
+                    this.screentimer = 0;
+                    this.advancescreen = 0;
+                    this.backscreen = 1;
+                    this.menuactive = 0;
+                }
+            }
+        }
+        return null;
+    }
+    
+    method startgame() {
+        return 0;
+    }
+    
+    method advancetonextscreen(param1) {
+        if (this.curscreen == -1) {
+            if (param1 == 0) {
+                
+            }
+            else if (param1 == 1) {
+                this.gotodifferentscreen(this.optiontext, 0, 5);
+            }
+            else if (param1 == 2) {
+                this.gotodifferentscreen(this.optiontext, 0, 5);
+            }
+            else if (param1 == 3) {
+                this.gotodifferentscreen(this.optiontext, 0, 5);
+            }
+        }
+        else if (this.curscreen == 0) {
+            if (param1 == 0) {
+                this.gotodifferentscreen(this.soundtext, 1, 2);
+            }
+            else if (param1 == 2) {
+                this.gotodifferentscreen(this.languagetext, 6, 10);
+            }
+            else if (param1 == 4) {
+                this.gotodifferentscreen(this.cheattext, 3, 0);
+            }
+            else if (param1 == 3) {
+                this.gotodifferentscreen(this.glossarytext, 4, 10);
+            }
+            else if (param1 == 5) {
+                this.gotodifferentscreen(this.cheattext, 7, 0);
+            }
+            else if (param1 == 1) {
+                this.gotodifferentscreen(this.graphicstext, 8, 10);
+            }
+        }
+        else if (this.curscreen == 3) {
+            if (param1 == 0) {
+                this.gotodifferentscreen(this.glossarytext, 4, 10);
+            }
+            else if (param1 == 1) {
+                
+            }
+        }
+        else if (this.curscreen == 1) {
+            param1;
+        }
+        return null;
+    }
+    
+    method advancetonextarea(param1) {
+        if (this.curscreen == -1) {
+            if (param1 == 0) {
+                globalclass.setnextlevel("lev1");
+            }
+            else if (param1 == 1) {
+                
+            }
+            else if (param1 == 2) {
+                this.levelfe.adjustcamera(0, 1, 1, 5.0);
+            }
+            else if (param1 == 3) {
+                globalclass.setexitflag();
+            }
+        }
+        else if (this.curscreen == 0) {
+            if (param1 == 0) {
+                this.levelfe.adjustcamera(4, 1, 1, 5.0);
+            }
+            else if (param1 == 2) {
+                this.levelfe.adjustcamera(6, 1, 1, 5.0);
+            }
+            else if (param1 == 4) {
+                this.levelfe.adjustcamera(2, 1, 1, 5.0);
+            }
+            else if (param1 == 3) {
+                this.levelfe.adjustcamera(1, 1, 1, 5.0);
+            }
+            else if (param1 == 5) {
+                this.levelfe.adjustcamera(5, 1, 1, 5.0);
+            }
+            else if (param1 == 1) {
+                this.levelfe.adjustcamera(3, 1, 1, 5.0);
+            }
+        }
+        else if (this.curscreen == 3) {
+            if (param1 == 0) {
+                this.levelfe.adjustcamera(0, 1, 1, 5.0);
+            }
+            else if (param1 == 1) {
+                
+            }
+        }
+        else if (this.curscreen == 1) {
+            param1;
+        }
+        return null;
+    }
+    
+    method backtolastscreen() {
+        if (this.curscreen == 0) {
+            this.gotodifferentscreen(this.mainmenutext, -1, 3);
+        }
+        else if (this.curscreen == 1) {
+            this.gotodifferentscreen(this.optiontext, 0, 5);
+        }
+        else if (this.curscreen == 8) {
+            this.gotodifferentscreen(this.optiontext, 0, 5);
+        }
+        else if (this.curscreen == 6) {
+            this.gotodifferentscreen(this.optiontext, 0, 5);
+        }
+        else if (this.curscreen == 3) {
+            this.gotodifferentscreen(this.optiontext, 0, 5);
+        }
+        else if (this.curscreen == 7) {
+            this.gotodifferentscreen(this.optiontext, 0, 5);
+        }
+        else if (this.curscreen == 4) {
+            this.gotodifferentscreen(this.optiontext, 0, 5);
+        }
+        else if (this.curscreen == 5) {
+            this.gotodifferentscreen(this.optiontext, 0, 5);
+        }
+        return null;
+    }
+    
+    method backtolastarea() {
+        if (this.curscreen == 0) {
+            this.levelfe.adjustcamera(0, 0, 1, 5.0);
+        }
+        else if (this.curscreen == 1) {
+            this.levelfe.adjustcamera(4, 0, 1, 5.0);
+        }
+        else if (this.curscreen == 8) {
+            this.levelfe.adjustcamera(3, 0, 1, 5.0);
+        }
+        else if (this.curscreen == 6) {
+            this.levelfe.adjustcamera(6, 0, 1, 5.0);
+        }
+        else if (this.curscreen == 3) {
+            this.levelfe.adjustcamera(2, 0, 1, 5.0);
+        }
+        else if (this.curscreen == 7) {
+            this.levelfe.adjustcamera(5, 0, 1, 5.0);
+        }
+        else if (this.curscreen == 4) {
+            this.levelfe.adjustcamera(1, 0, 1, 5.0);
+        }
+        else if (this.curscreen == 5) {
+            this.levelfe.adjustcamera(2, 0, 1, 5.0);
+        }
+        return null;
+    }
+    
+    method resetactivemenu() {
+        var var1;
+        var1 = 0;
+        while ((this.activemenu.__length - 1) >= var1) {
+            this.activemenu[var1].hide();
+            this.backmenu[var1].hide();
+            var1 = var1 + 1;
+        }
+        this.activemenu = null;
+        this.activemenu = [  ];
+        this.backmenu = null;
+        this.backmenu = [  ];
+        var1 = 0;
+        while ((this.activebutton.__length - 1) >= var1) {
+            gceditorslider::setactive(this.activebutton[var1], 0);
+            var1 = var1 + 1;
+        }
+        this.activebutton = null;
+        this.activebutton = [  ];
+        this.minidx = 0;
+        return null;
+    }
+    
+    method gotodifferentscreen(param1, param2, param3) {
+        var var1;
+        var var2;
+        gcmousedriver::setcursorposition(param1[0][1], param1[0][2]);
+        this.curscreen = param2;
+        this.maxidx = param3;
+        var1 = 0;
+        while (param3 >= var1) {
+            var2 = new gs_legotext("Root/Data/Art/Fonts/BionicleFont", param1[var1][0], param1[var1][1], param1[var1][2], 4, 0.8, 0, 0);
+            var2.initfull();
+            var2.add();
+            var2.scalefont(2.0);
+            if (var1 <= this.showidx) {
+                var2.show();
+            }
+            this.backmenu.__append(var2);
+            var2 = new gs_legoactivetext("Root/Data/Art/Fonts/BionicleFont", "Root/Data/Art/Fonts/BionicleFontHi", param1[var1][0], param1[var1][1], param1[var1][2], 4, 0.8, 0, 0, 0);
+            var2.initfull();
+            var2.add();
+            var2.scalefont(2.0);
+            if (var1 <= this.showidx) {
+                var2.show();
+            }
+            this.activemenu.__append(var2);
+            var1 = var1 + 1;
+        }
+        this.activemenu[0].setactive();
+        this.curidx = 0;
+        this.menuactive = 1;
+        return null;
+    }
+    
+    method resetcamera() {
+        if (this.ingame == 0) {
+            this.levelfe.setcameraback();
+        }
+        this.startnewscreen = 1;
+        return null;
+    }
+    
+    method setthecursor() {
+        this.tempmx = gcmousedriver::getpositionx();
+        this.tempmy = gcmousedriver::getpositiony();
+        if (this.curscreen == -1) {
+            if (this.tempmx < this.mainmenutext[this.curidx][1]) {
+                this.tempmx = this.mainmenutext[this.curidx][1];
+            }
+            gcmousedriver::setcursorposition(this.tempmx, this.mainmenutext[this.curidx][2]);
+        }
+        else if (this.curscreen == 0) {
+            if (this.tempmx < this.optiontext[this.curidx][1]) {
+                this.tempmx = this.mainmenutext[this.curidx][1];
+            }
+            gcmousedriver::setcursorposition(this.tempmx, this.optiontext[this.curidx][2]);
+        }
+        else if (this.curscreen == 1) {
+            if (this.tempmx < this.soundtext[this.curidx][1]) {
+                this.tempmx = this.mainmenutext[this.curidx][1];
+            }
+            gcmousedriver::setcursorposition(this.tempmx, this.soundtext[this.curidx][2]);
+        }
+        else if (this.curscreen == 6) {
+            if (this.tempmx < this.languagetext[this.curidx][1]) {
+                this.tempmx = this.mainmenutext[this.curidx][1];
+            }
+            gcmousedriver::setcursorposition(this.tempmx, this.languagetext[this.curidx][2]);
+        }
+        else if (this.curscreen == 8) {
+            if (this.tempmx < this.graphicstext[this.curidx][1]) {
+                this.tempmx = this.mainmenutext[this.curidx][1];
+            }
+            gcmousedriver::setcursorposition(this.tempmx, this.graphicstext[this.curidx][2]);
+        }
+        else if (this.curscreen == 3) {
+            if (this.tempmx < this.cheattext[this.curidx][1]) {
+                this.tempmx = this.mainmenutext[this.curidx][1];
+            }
+            gcmousedriver::setcursorposition(this.tempmx, this.cheattext[this.curidx][2]);
+        }
+        else if (this.curscreen == 4) {
+            if (this.tempmx < this.glossarytext[this.curidx][1]) {
+                this.tempmx = this.mainmenutext[this.curidx][1];
+            }
+            gcmousedriver::setcursorposition(this.tempmx, this.glossarytext[this.curidx][2]);
+        }
+        else if (this.curscreen == 5) {
+            
+        }
+        return null;
+    }
+    
+    method scrolldown() {
+        var var1;
+        if (this.curidx < this.maxidx) {
+            this.activemenu[this.curidx].setinactive();
+            this.curidx = this.curidx + 1;
+            this.activemenu[this.curidx].setactive();
+        }
+        else if (this.curidx < (this.activemenu.__length - 1)) {
+            this.activemenu[this.curidx].setinactive();
+            this.curidx = this.curidx + 1;
+            this.activemenu[this.curidx].setactive();
+            this.activemenu[this.minidx].hide();
+            this.minidx = this.minidx + 1;
+            this.maxidx = this.maxidx + 1;
+            this.activemenu[this.maxidx].show();
+            var1 = 0;
+            while (this.showidx >= var1) {
+                this.activemenu[this.minidx + var1].setpos(this.x, this.y + (var1 * 15), 0);
+                var1 = var1 + 1;
+            }
+        }
+        else {
+            this.activemenu[this.curidx].setinactive();
+            this.curidx = 0;
+            this.activemenu[this.curidx].setactive();
+        }
+        this.setthecursor();
+        return null;
+    }
+    
+    method scrollup() {
+        var var1;
+        if (this.curidx > this.minidx) {
+            this.activemenu[this.curidx].setinactive();
+            this.curidx = this.curidx - 1;
+            this.activemenu[this.curidx].setactive();
+        }
+        else if (this.curidx > 0) {
+            this.activemenu[this.curidx].setinactive();
+            this.curidx = this.curidx - 1;
+            this.activemenu[this.curidx].setactive();
+            this.activemenu[this.maxidx].hide();
+            this.minidx = this.minidx - 1;
+            this.maxidx = this.maxidx - 1;
+            this.activemenu[this.minidx].show();
+            var1 = 0;
+            while (this.showidx >= var1) {
+                this.activemenu[this.minidx + var1].setpos(this.x, this.y + (var1 * 15), 0);
+                var1 = var1 + 1;
+            }
+        }
+        else {
+            this.activemenu[this.curidx].setinactive();
+            this.curidx = this.activemenu.__length - 1;
+            this.activemenu[this.curidx].setactive();
+        }
+        this.setthecursor();
+        return null;
+    }
+    
+    method checkrealhighlights(param1, param2, param3, param4) {
+        if (this.menuactive == 1) {
+            if ((param3 > (param1[param2][1] - 1)) && (param3 < (param1[param2][4] - 1))) {
+                if ((param4 > (param1[param2][2] - 1)) && (param4 < (param1[param2][5] - 1))) {
+                    if (((this.activemenu.__length - 1) + 1) > param2) {
+                        this.activemenu[this.curidx].setinactive();
+                        this.curidx = param2;
+                        this.activemenu[this.curidx].setactive();
+                    }
+                }
+                else if (((this.activemenu.__length - 1) + 1) > param2) {
+                    this.activemenu[param2].setinactive();
+                }
+            }
+            else if (((this.activemenu.__length - 1) + 1) > param2) {
+                this.activemenu[param2].setinactive();
+            }
+        }
+        return null;
+    }
+    
+    method checkhighlites(param1, param2) {
+        var var1;
+        if (this.curscreen == -1) {
+            var1 = 0;
+            while (3 >= var1) {
+                this.checkrealhighlights(this.mainmenutext, var1, param1, param2);
+                var1 = var1 + 1;
+            }
+        }
+        else if (this.curscreen == 0) {
+            var1 = 0;
+            while (5 >= var1) {
+                this.checkrealhighlights(this.optiontext, var1, param1, param2);
+                var1 = var1 + 1;
+            }
+        }
+        else if (this.curscreen == 1) {
+            var1 = 0;
+            while (2 >= var1) {
+                this.checkrealhighlights(this.soundtext, var1, param1, param2);
+                var1 = var1 + 1;
+            }
+        }
+        else if (this.curscreen == 2) {
+            
+        }
+        else if (this.curscreen == 6) {
+            var1 = 0;
+            while (10 >= var1) {
+                this.checkrealhighlights(this.languagetext, var1, param1, param2);
+                var1 = var1 + 1;
+            }
+        }
+        else if (this.curscreen == 3) {
+            var1 = 0;
+            while (0 >= var1) {
+                this.checkrealhighlights(this.cheattext, var1, param1, param2);
+                var1 = var1 + 1;
+            }
+        }
+        else if (this.curscreen == 4) {
+            var1 = 0;
+            while (10 >= var1) {
+                this.checkrealhighlights(this.glossarytext, var1, param1, param2);
+                var1 = var1 + 1;
+            }
+        }
+        else if (this.curscreen == 5) {
+            
+        }
+        else if (this.curscreen == 8) {
+            var1 = 0;
+            while (10 >= var1) {
+                this.checkrealhighlights(this.graphicstext, var1, param1, param2);
+                var1 = var1 + 1;
+            }
+        }
+        return null;
+    }
+    
+    method setmenupointer(param1, param2) {
+        this.point.setpos(param1 - 16, param2 - 16, param1 + 16, param2 + 16);
+        return null;
+    }
+    
+    method hidenonselected() {
+        var var1;
+        var1 = 0;
+        while ((this.activemenu.__length - 1) >= var1) {
+            if (!(var1 == this.pointer)) {
+                this.activemenu[var1].hide();
+                this.backmenu[var1].hide();
+            }
+            var1 = var1 + 3;
+        }
+        return null;
+    }
+}

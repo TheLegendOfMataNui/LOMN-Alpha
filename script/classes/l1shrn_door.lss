@@ -1,0 +1,75 @@
+class l1shrn_door {
+    property isopen;
+    property object;
+    property name;
+    property sound;
+    
+    method l1shrn_door(param1) {
+        this.isopen = 0;
+        this.object = null;
+        this.name = param1;
+        this.sound = null;
+        return null;
+    }
+    
+    method open() {
+        this.object.interpolate(this.object.getx(), this.object.gety() + 10.0, this.object.getz(), 15.0);
+        this.sound = new tablecopysound(723);
+        this.sound.synctoobject(this.object.id);
+        this.sound.play(0);
+        this.isopen = 1;
+        return null;
+    }
+    
+    method close() {
+        this.object.setpos(this.object.getx(), this.object.gety() + 10.0, this.object.getz());
+        this.object.interpolate(this.object.getx(), this.object.gety() - 10.0, this.object.getz(), 4);
+        this.sound = new tablecopysound(723);
+        this.sound.synctoobject(this.object.id);
+        this.sound.play(0);
+        this.isopen = 0;
+        return null;
+    }
+    
+    method initfull() {
+        this.object = new lego_moveableobject(this.name, "shrn");
+        this.object.initfull();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.object.cleanupfull();
+        this.object = null;
+        if (!(this.sound == null)) {
+            this.sound.stop();
+            this.sound = null;
+        }
+        return null;
+    }
+    
+    method show() {
+        this.object.show();
+        return null;
+    }
+    
+    method hide() {
+        this.object.hide();
+        return null;
+    }
+    
+    method onevent(param1) {
+        if (param1.eventid == 12) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier(this.name)) {
+                this.sound.stop();
+                if (this.isopen) {
+                    gcstaticsoundsptrarray::playtablesound(768);
+                }
+                else {
+                    gcstaticsoundsptrarray::playtablesound(767);
+                }
+            }
+        }
+        param1.eventid;
+        return null;
+    }
+}

@@ -1,0 +1,355 @@
+class startpuzzle {
+    property bldr1;
+    property parent;
+    property bldarray;
+    property button;
+    property buttonup;
+    property blckarray;
+    property doortop;
+    property doorbottom;
+    property dooropen;
+    property tiggerboxid;
+    property timer;
+    property camposnum;
+    property startedfalling;
+    
+    method startpuzzle(param1) {
+        this.parent = param1;
+        this.buttonup = 1;
+        this.dooropen = 0;
+        return null;
+    }
+    
+    method initfull() {
+        var var1;
+        gcareadirector::setnearestmax(15);
+        this.blckarray = [ new lego_moveableobject("blk1"), 
+            new lego_moveableobject("blk2"), 
+            new lego_moveableobject("blk3") ];
+        var1 = 0;
+        while ((this.blckarray.__length - 1) >= var1) {
+            this.blckarray[var1].initfull("iblk", "Root/data/levels/lev4/strt", -10, -6, -3, 12, 6, 3);
+            this.blckarray[var1].setresponse(0, 0, 0);
+            this.blckarray[var1].settweakable();
+            var1 = var1 + 1;
+        }
+        this.doortop = new lego_moveableobject("drt1");
+        this.doortop.initfull();
+        this.doorbottom = new lego_moveableobject("drb1");
+        this.doorbottom.initfull();
+        this.button = new lego_moveableobject("sw00");
+        this.button.initfull();
+        this.bldarray = [ new ballclass("bll1", "bal1", "bal2", this, new basicpoint(0, -250, 1836), new basicpoint(-90, -245, 1726)), 
+            new ballclass("bll2", "bal3", "bal4", this, new basicpoint(0, -250, 1836), new basicpoint(-90, -245, 1726)), 
+            new ballclass("bll3", "bal5", "bal6", this, new basicpoint(0, -250, 1836), new basicpoint(-90, -245, 1726)), 
+            new ballclass("bll4", "bal7", "bal8", this, new basicpoint(0, -250, 1836), new basicpoint(-90, -245, 1726)), 
+            new ballclass("bll5", "bal9", "bal0", this, new basicpoint(0, -250, 1836), new basicpoint(-90, -245, 1726)), 
+            new ballclass("bll6", "bala", "balb", this, new basicpoint(0, -250, 1836), new basicpoint(-90, -245, 1726)), 
+            new ballclass("bll7", "balc", "bald", this, new basicpoint(0, -250, 1836), new basicpoint(-90, -245, 1726)) ];
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].initfull();
+            this.bldarray[var1].setstartingvelocity(new basicpoint(15, 1, 1), new basicpoint(10, 0, 0));
+            var1 = var1 + 1;
+        }
+        this.setupstardingpositions();
+        this.tiggerboxid = 0;
+        this.timer = new lego_timer("timr", 1, 0);
+        this.timer.initfull();
+        this.camposnum = 0;
+        this.startedfalling = 0;
+        return null;
+    }
+    
+    method cleanupfull() {
+        var var1;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].cleanupfull();
+            this.bldarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.bldarray = null;
+        var1 = 0;
+        while ((this.blckarray.__length - 1) >= var1) {
+            this.blckarray[var1].cleanupfull();
+            this.blckarray[var1] = null;
+            var1 = var1 + 1;
+        }
+        this.blckarray = null;
+        this.doortop.cleanupfull();
+        this.doortop = null;
+        this.doorbottom.cleanupfull();
+        this.doorbottom = null;
+        this.button.cleanupfull();
+        this.button = null;
+        this.timer.cleanupfull();
+        this.timer = null;
+        return null;
+    }
+    
+    method show() {
+        var var1;
+        var var2;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].show();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.blckarray.__length - 1) >= var1) {
+            this.blckarray[var1].show();
+            this.blckarray[var1].setobjscale(0.4);
+            var1 = var1 + 1;
+        }
+        var2 = [ 240, 
+            -413, 
+            1941, 
+            230, 
+            -414, 
+            1935, 
+            230, 
+            -415, 
+            1929 ];
+        var1 = 0;
+        while ((this.blckarray.__length - 1) >= var1) {
+            this.blckarray[var1].setpos(var2[var1 * 3], var2[(var1 * 3) + 1], var2[(var1 * 3) + 2]);
+            var1 = var1 + 1;
+        }
+        this.startslideing();
+        return null;
+    }
+    
+    method hide() {
+        var var1;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].hide();
+            var1 = var1 + 1;
+        }
+        var1 = 0;
+        while ((this.blckarray.__length - 1) >= var1) {
+            this.blckarray[var1].hide();
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method process(param1) {
+        var var1;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].process(param1);
+            var1 = var1 + 1;
+        }
+        return null;
+    }
+    
+    method input(param1) {
+        if (param1.button == 85) {
+            if (param1.event == 2) {
+                this.startdropping();
+            }
+        }
+        if (param1.button == 49) {
+            if (param1.event == 2) {
+                this.startcam();
+            }
+        }
+        return null;
+    }
+    
+    method startslideing() {
+        this.blckarray[0].setslidetimer(-10, 0, 0, 3, -1, 1);
+        this.blckarray[1].setslidetimer(10, 0, 0, 3, -1, 1);
+        this.blckarray[2].setslidetimer(10, 0, 0, 2, -1, 2);
+        return null;
+    }
+    
+    method startdropping() {
+        var var1;
+        this.camposnum = 10;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].startdropping();
+            var1 = var1 + 1;
+        }
+        this.parent.level.cam.interpolate(this.parent.level.cam.getpositionx(), this.parent.level.cam.getpositiony(), this.parent.level.cam.getpositionz(), 6, -264, 1747, 3.0);
+        return null;
+    }
+    
+    method onevent(param1) {
+        var var1;
+        var var2;
+        var var3;
+        var var4;
+        var var5;
+        var1 = 0;
+        while ((this.bldarray.__length - 1) >= var1) {
+            this.bldarray[var1].onevent(param1);
+            var1 = var1 + 1;
+        }
+        if (param1.eventid == 1) {
+            var2 = param1.args[0];
+            var3 = param1.args[1];
+            if (var2 == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (var3 == scslosifoundation::stringtoidentifier("sw00")) {
+                    this.hitswitch();
+                }
+                var3;
+            }
+        }
+        else if (param1.eventid == 4) {
+            var4 = param1.args[0];
+            if (var4 == scslosifoundation::stringtoidentifier("tp02")) {
+                this.startthefall();
+            }
+            if (var4 == scslosifoundation::stringtoidentifier("tp04")) {
+                
+            }
+            if (var4 == scslosifoundation::stringtoidentifier("tp03")) {
+                
+            }
+        }
+        else if (param1.eventid == 3) {
+            var4 = param1.args[0];
+            if (var4 == scslosifoundation::stringtoidentifier("tb00")) {
+                this.reseta();
+                this.tiggerboxid = scslosifoundation::stringtoidentifier("tb00");
+                debug::print("hit 2nd trigerBox");
+            }
+            if (var4 == scslosifoundation::stringtoidentifier("tb01")) {
+                this.reseta();
+                this.tiggerboxid = scslosifoundation::stringtoidentifier("tb01");
+                debug::print("hit 1st trigerBox");
+            }
+            if (var4 == scslosifoundation::stringtoidentifier("tb02")) {
+                this.reseta();
+                debug::print("hit 3rd trigerBox");
+                this.tiggerboxid = scslosifoundation::stringtoidentifier("tb02");
+            }
+        }
+        else if (param1.eventid == 8) {
+            var5 = param1.args[0];
+            if (var5 == scslosifoundation::stringtoidentifier("timr")) {
+                this.resetb();
+            }
+        }
+        else if (param1.eventid == 27) {
+            debug::print("Screen Black Event");
+            globalclass.player.kill();
+        }
+        else if (param1.eventid == 46) {
+            globalclass.player.unkill();
+            this.resetc();
+        }
+        else if (param1.eventid == 14) {
+            if (this.camposnum == 0) {
+                this.camposnum = 1;
+                this.secondcaminterp();
+            }
+            else if (this.camposnum == 1) {
+                this.parent.level.cam.setaimode(11);
+                this.parent.level.cam.resetviewport();
+            }
+            else if (this.camposnum == 10) {
+                this.parent.level.cam.setaimode(11);
+            }
+        }
+        else if (param1.eventid == 7) {
+            if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
+                gcstaticsoundsptrarray::playtablesound(144);
+            }
+        }
+        return null;
+    }
+    
+    method startthefall() {
+        if (this.startedfalling == 0) {
+            this.startedfalling = 1;
+            this.startdropping();
+            this.parent.level.cam.shakecamera(0.1, 0.18);
+        }
+        return null;
+    }
+    
+    method reseta() {
+        this.parent.level.cam.setaimode(7);
+        this.timer.reset();
+        this.timer.start();
+        return null;
+    }
+    
+    method resetb() {
+        gccollisionphysicsgroup::spinmask(1.2);
+        return null;
+    }
+    
+    method resetc() {
+        if (this.tiggerboxid == scslosifoundation::stringtoidentifier("tb00")) {
+            globalclass.player.actor.setpos(146.3, -346, 1683.7);
+            globalclass.player.actor.setorientation(270);
+        }
+        else if (this.tiggerboxid == scslosifoundation::stringtoidentifier("tb01")) {
+            globalclass.player.actor.setpos(203.5, -402, 1869);
+            globalclass.player.actor.setorientation(245);
+        }
+        else if (this.tiggerboxid == scslosifoundation::stringtoidentifier("tb02")) {
+            globalclass.player.actor.setpos(173.5, -331, 1548);
+            globalclass.player.actor.setorientation(140);
+        }
+        gccollisionphysicsgroup::toggletriggerboxentered(this.tiggerboxid, 0);
+        this.parent.level.cam.setaimode(11);
+        return null;
+    }
+    
+    method cheat() {
+        this.bldr1.obj.setposition(284, -420, 2058);
+        return null;
+    }
+    
+    method hitswitch() {
+        if (this.buttonup) {
+            this.buttonup = 0;
+            this.button.changeposition(0, 0 - 1.2, 0, 1);
+            this.button.setresponse(0, 0, 0);
+            this.startcam();
+            globalclass.player.actor.setpos(127.3, -270, 1606);
+            globalclass.player.actor.setorientation(140);
+        }
+        return null;
+    }
+    
+    method startcam() {
+        this.camposnum = 0;
+        this.parent.level.cam.scaletocutscene();
+        this.parent.level.cam.setpos(138.16, 0 - 274.25, 1605.6);
+        this.parent.level.cam.settargetpos(56, -207, 1675);
+        this.parent.level.cam.interpolate(216.8, 0 - 307.7, 1552.7, 226, -320, 1508, 4.0);
+        return null;
+    }
+    
+    method secondcaminterp() {
+        this.parent.level.cam.interpolate(119.96, 0 - 265.92, 1614.7, 226, -320, 1508, 2.0);
+        this.opendoors();
+        return null;
+    }
+    
+    method setupstardingpositions() {
+        if (this.dooropen) {
+            this.button.changeposition(0, 0 - 1.2, 0, 0);
+            this.button.setresponse(0, 0, 0);
+            this.opendoors();
+        }
+        return null;
+    }
+    
+    method opendoors() {
+        this.dooropen = 1;
+        this.doortop.changeposition(0, 7, 0, 3);
+        this.doortop.setresponse(0, 0, 0);
+        this.doorbottom.changeposition(0, -5, 0, 3);
+        this.doorbottom.setresponse(0, 0, 0);
+        return null;
+    }
+}
