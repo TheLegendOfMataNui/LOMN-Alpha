@@ -12,6 +12,7 @@ class startpuzzle {
     property timer;
     property camposnum;
     property startedfalling;
+    property cinema;
     
     method startpuzzle(param1) {
         this.parent = param1;
@@ -58,6 +59,10 @@ class startpuzzle {
         this.timer.initfull();
         this.camposnum = 0;
         this.startedfalling = 0;
+        this.cinema = gccinemaengine::create();
+        gccinemaengine::load(this.cinema, "cin1");
+        globalclass.hud.hide();
+        gccinemaengine::play(this.cinema);
         return null;
     }
     
@@ -155,6 +160,14 @@ class startpuzzle {
             if (param1.event == 2) {
                 this.startcam();
             }
+        }
+        if (param1.event == 2) {
+            if (param1.button == 255) {
+                if (!(this.cinema == null)) {
+                    gccinemaengine::stop(this.cinema);
+                }
+            }
+            param1.button;
         }
         return null;
     }
@@ -260,6 +273,10 @@ class startpuzzle {
             if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
                 gcstaticsoundsptrarray::playtablesound(144);
             }
+        }
+        else if (param1.eventid == 30) {
+            globalclass.player.maskcontrol.changemask(3);
+            globalclass.hud.show();
         }
         return null;
     }

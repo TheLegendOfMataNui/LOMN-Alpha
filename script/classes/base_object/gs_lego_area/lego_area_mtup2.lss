@@ -7,11 +7,11 @@ class lego_area_mtup2 : gs_lego_area {
     }
     
     method initfull() {
+        globalclass.hud.hide();
         gclightdirector::setcavelighting(0);
         this.cinema = gccinemaengine::create();
         gccinemaengine::load(this.cinema, "cin1");
         gccinemaengine::setnextarea(this.cinema, scslosifoundation::stringtoidentifier("bech"));
-        globalclass.hud.hide();
         gccinemaengine::play(this.cinema);
         return null;
     }
@@ -34,9 +34,6 @@ class lego_area_mtup2 : gs_lego_area {
     }
     
     method onevent(param1) {
-        if (param1.eventid == 30) {
-            globalclass.player.maskcontrol.changemask(0);
-        }
         return null;
     }
 }

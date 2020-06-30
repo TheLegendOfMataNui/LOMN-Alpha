@@ -18,7 +18,7 @@ function createmenuobject() {
         [ "bech" ], 
         "Level-2 Gali", 
         10, 
-        [ "bech" ], 
+        [ "mtup" ], 
         "Level-3 Pohatu", 
         11, 
         [ "mtup" ], 
