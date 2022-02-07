@@ -1,42 +1,38 @@
 class snowman_puzzle {
     property parent;
-    property movetimer;
     property icey;
     property stone;
     property hasstone;
     
     method snowman_puzzle(param1) {
         this.parent = param1;
-        this.movetimer = 0.0;
         this.icey = null;
         this.stone = null;
         return null;
     }
     
     method initfull() {
-        var var1;
-        var var2;
         gcareadirector::setnearestmax(20);
         this.icey = new iceelemental(this);
         this.icey.init();
         globalclass.player.actor.setsurfingability(0.8, 1.0);
         globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("k033"), 0.1);
-        var1 = scslosifoundation::stringtoidentifier("ston");
-        var2 = gcsaver::finditem(var1);
-        if (var2 == 0) {
+        if (gcsaver::finditem(scslosifoundation::stringtoidentifier("ston")) == 0) {
             this.stone = new lego_pickup("ston", 0, 4, "item", 11, 0);
             this.stone.initfull();
             this.stone.show();
-            gcareadirector::hide(var1, var1);
+            this.stone.hide();
         }
         this.hasstone = 0;
         return null;
     }
     
     method cleanupfull() {
-        this.icey.cleanup();
-        this.icey = null;
-        if (!(this.stone == null)) {
+        if (this.icey != null) {
+            this.icey.cleanup();
+            this.icey = null;
+        }
+        if (this.stone != null) {
             this.stone.cleanupfull();
             this.stone = null;
         }
@@ -44,9 +40,7 @@ class snowman_puzzle {
     }
     
     method showstone() {
-        var var1;
-        var1 = scslosifoundation::stringtoidentifier("ston");
-        gcareadirector::show(var1, var1);
+        this.stone.show();
         return null;
     }
     
@@ -72,15 +66,16 @@ class snowman_puzzle {
     
     method onevent(param1) {
         var var1;
-        this.icey.onevent(param1);
+        if (this.icey != null) {
+            this.icey.onevent(param1);
+        }
         if (param1.eventid == 3) {
-            var1 = scslosifoundation::stringtoidentifier("tb00");
-            if (param1.args[0] == var1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
                 this.parent.level.cam.setaimode(7);
                 gccollisionphysicsgroup::spinmask(2.0);
                 globalclass.player.actor.setinputstate("none");
             }
-            else if (param1.args[0] == (var1 + 1)) {
+            else if (param1.args[0] == (scslosifoundation::stringtoidentifier("tb00") + 1)) {
                 globalclass.player.actor.setsurfingability(0, 1.0);
                 globalclass.player.actor.idle();
                 this.icey.start();
