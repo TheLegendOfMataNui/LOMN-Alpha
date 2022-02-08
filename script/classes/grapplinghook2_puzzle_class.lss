@@ -172,7 +172,7 @@ class grapplinghook2_puzzle_class {
             var1 = var1 + 1;
         }
         this.ledgearray = null;
-        if (!(this.glyph == null)) {
+        if (this.glyph != null) {
             if (this.glyph.objshown == 0) {
                 this.showglyph = 0;
             }
@@ -277,14 +277,10 @@ class grapplinghook2_puzzle_class {
             debug::print("Screen Black Event");
             this.resetc();
         }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
         return null;
     }
     
     method reseta(param1, param2, param3, param4, param5) {
-        this.parent.level.cam.setaimode(7);
         this.resetpoint.x = param1;
         this.resetpoint.y = param2;
         this.resetpoint.z = param3;
@@ -297,7 +293,6 @@ class grapplinghook2_puzzle_class {
     
     method resetb() {
         globalclass.player.kill();
-        gccollisionphysicsgroup::spinmask(1.2);
         return null;
     }
     

@@ -86,7 +86,7 @@ class puzzle_pst2 {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
                 var1 = param1.args[1];
                 if ((var1 >= scslosifoundation::stringtoidentifier("bp01")) && (var1 <= scslosifoundation::stringtoidentifier("bp08"))) {
-                    this.resetc();
+                    globalclass.player.kill();
                 }
             }
         }
@@ -177,9 +177,7 @@ class puzzle_pst2 {
     }
     
     method reseta() {
-        globalclass.level.cam.setaimode(7);
         globalclass.player.kill();
-        gccollisionphysicsgroup::spinmask(1.2);
         gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
         return null;
     }
@@ -188,12 +186,6 @@ class puzzle_pst2 {
         globalclass.player.unkill();
         gccollisionphysicsgroup::settoaposition(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
         this.reset();
-        return null;
-    }
-    
-    method resetc() {
-        globalclass.player.kill();
-        gccollisionphysicsgroup::spinmask(1.2);
         return null;
     }
     

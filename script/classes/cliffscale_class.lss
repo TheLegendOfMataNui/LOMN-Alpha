@@ -91,14 +91,10 @@ class cliffscale_class {
             debug::print("Screen Black Event");
             this.resetc();
         }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
         return null;
     }
     
     method reseta(param1) {
-        this.parent.parent.cam.setaimode(7);
         this.timer.start();
         return null;
     }

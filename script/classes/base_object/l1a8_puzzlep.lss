@@ -165,14 +165,9 @@ class l1a8_puzzlep : base_object {
                         this.platbarray[var1].touch();
                         this.platcarray[var1].touch();
                     }
-                    param1.args[1];
                     var1 = var1 + 1;
                 }
             }
-            param1.args[0];
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
@@ -193,8 +188,6 @@ class l1a8_puzzlep : base_object {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tbl5")) {
                 globalclass.player.kill();
                 gcstaticsoundsptrarray::playtablesound(737);
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
             }
         }
         return null;
@@ -216,7 +209,7 @@ class l1a8_puzzlep : base_object {
     method cleanupfull() {
         var var1;
         var var2;
-        if (!(this.plataarray == null)) {
+        if (this.plataarray != null) {
             var1 = this.plataarray.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
@@ -225,7 +218,7 @@ class l1a8_puzzlep : base_object {
                 var2 = var2 + 1;
             }
         }
-        if (!(this.platbarray == null)) {
+        if (this.platbarray != null) {
             var1 = this.platbarray.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
@@ -234,7 +227,7 @@ class l1a8_puzzlep : base_object {
                 var2 = var2 + 1;
             }
         }
-        if (!(this.platcarray == null)) {
+        if (this.platcarray != null) {
             var1 = this.platcarray.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
@@ -249,11 +242,11 @@ class l1a8_puzzlep : base_object {
         this.fadepause = null;
         this.callonce = null;
         this.toggle = null;
-        if (!(this.door == null)) {
+        if (this.door != null) {
             this.door.cleanupfull();
             this.door = null;
         }
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }

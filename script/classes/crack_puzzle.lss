@@ -152,17 +152,17 @@ class crack_puzzle {
         var var3;
         var1 = null;
         this.edoortexttimer = null;
-        if (!(this.edoortext == null)) {
+        if (this.edoortext != null) {
             this.edoortext.remove();
             this.edoortext.cleanupfull();
             this.edoortext = null;
         }
-        if (!(this.edoor == null)) {
+        if (this.edoor != null) {
             this.edoor.cleanupfull();
             this.edoor = null;
         }
         this.showedoor = null;
-        if (!(this.crackparts == null)) {
+        if (this.crackparts != null) {
             var2 = this.crackparts.__length - 1;
             var3 = 0;
             while (var2 >= var3) {
@@ -173,14 +173,14 @@ class crack_puzzle {
             this.crackparts = null;
         }
         this.crackdefaults = null;
-        if (!(this.cracktimer == null)) {
+        if (this.cracktimer != null) {
             this.cracktimer = null;
         }
-        if (!(this.crackplane == null)) {
+        if (this.crackplane != null) {
             this.crackplane.cleanupfull();
             this.crackplane = null;
         }
-        if (!(this.mdoors == null)) {
+        if (this.mdoors != null) {
             var2 = this.mdoors.__length - 1;
             var3 = 0;
             while (var2 >= var3) {
@@ -190,11 +190,11 @@ class crack_puzzle {
             }
             this.mdoors = null;
         }
-        if (!(this.doscreen == null)) {
+        if (this.doscreen != null) {
             this.doscreen.cleanupfull();
             this.doscreen = null;
         }
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
@@ -322,9 +322,6 @@ class crack_puzzle {
                     gcsaver::setcondition(67108864, 1);
                 }
             }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.unkill();

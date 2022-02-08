@@ -250,7 +250,6 @@ class tp026_puzzle {
         var var2;
         var var3;
         if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
             this.music.stop();
         }
         else if (param1.eventid == 27) {

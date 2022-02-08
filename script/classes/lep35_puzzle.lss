@@ -45,10 +45,6 @@ class lep35_puzzle {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
                 globalclass.player.kill();
             }
-            param1.args[0];
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             this.initshort();

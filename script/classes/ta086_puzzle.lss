@@ -118,7 +118,6 @@ class ta086_puzzle {
             
         }
         else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
             this.music.stop();
         }
         else if (param1.eventid == 27) {

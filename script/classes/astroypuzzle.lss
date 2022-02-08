@@ -102,7 +102,7 @@ class astroypuzzle {
         this.ringz = null;
         this.switchinterptimer.cleanupfull();
         this.switchinterptimer = null;
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
@@ -192,7 +192,6 @@ class astroypuzzle {
             if (scslosifoundation::identifiertostring(param1.args[0]) == "sint") {
                 this.parent.parent.cam.setaimode(3);
             }
-            scslosifoundation::identifiertostring(param1.args[0]);
         }
         else if (param1.eventid == 1) {
             var2 = param1.args[0];
@@ -212,7 +211,6 @@ class astroypuzzle {
         }
         else if (param1.eventid == 46) {
             this.bgmusic.stop();
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             debug::print("Screen Black Event");
@@ -238,7 +236,6 @@ class astroypuzzle {
         this.parent.parent.cam.setspline(0, 4.0, 1);
         this.parent.parent.cam.settargetspline(3, 1);
         debug::print("RESET A");
-        this.parent.parent.cam.setaimode(7);
         globalclass.player.kill();
         return null;
     }

@@ -46,18 +46,9 @@ class gly35_puzzle {
     }
     
     method onevent(param1) {
-        if (param1.eventid == 46) {
-            this.resetb();
-            debug::print("got player is dead");
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             this.resetc();
         }
-        return null;
-    }
-    
-    method resetb() {
-        gccollisionphysicsgroup::spinmask(1.2);
         return null;
     }
     

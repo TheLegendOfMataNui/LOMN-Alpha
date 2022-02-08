@@ -81,7 +81,7 @@ class acmaskpuzzle {
             var1 = var1 + 1;
         }
         this.wallchunks = null;
-        if (!(this.mask == null)) {
+        if (this.mask != null) {
             this.mask.cleanupfull();
             this.mask = null;
         }
@@ -90,7 +90,7 @@ class acmaskpuzzle {
         this.bully = null;
         this.cinema1 = null;
         this.cinema2 = null;
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
@@ -119,29 +119,26 @@ class acmaskpuzzle {
     method input(param1) {
         if (param1.event == 2) {
             if (param1.button == 255) {
-                if (!(this.cinema1 == null)) {
+                if (this.cinema1 != null) {
                     gccinemaengine::stop(this.cinema1);
                 }
-                else if (!(this.cinema2 == null)) {
+                else if (this.cinema2 != null) {
                     gccinemaengine::stop(this.cinema2);
                 }
             }
-            param1.button;
         }
         return null;
     }
     
     method onevent(param1) {
-        var var1;
         if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
-                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.kill();
             }
         }
         else if (param1.eventid == 11) {
             if (scslosifoundation::identifiertostring(param1.args[1]) == "p047") {
                 this.mask.hide();
-                var1 = 1;
                 globalclass.hud.hide();
                 gccinemaengine::play(this.cinema1);
                 this.cinema1_shown = 1;
@@ -151,10 +148,6 @@ class acmaskpuzzle {
                 this.bully.disableanim(scslosifoundation::stringtoidentifier("bl09"));
                 this.bully.aipatrol();
             }
-            scslosifoundation::identifiertostring(param1.args[1]);
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parea.enterstartid, this.parea.enterlookid);

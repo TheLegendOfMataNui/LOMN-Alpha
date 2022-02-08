@@ -72,7 +72,7 @@ class glyph2_lev4_puzzle {
         }
         this.lastgyzer.cleanupfull();
         this.lastgyzer = null;
-        if (!(this.glyph == null)) {
+        if (this.glyph != null) {
             this.glyph.cleanupfull();
             this.glyph = null;
         }
@@ -81,10 +81,7 @@ class glyph2_lev4_puzzle {
     
     method onevent(param1) {
         var var1;
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.unkill();
             globalclass.player.actor.setunderwater(1);
@@ -96,14 +93,12 @@ class glyph2_lev4_puzzle {
             if (param1.args[1] == scslosifoundation::stringtoidentifier("glyp")) {
                 this.glyph.pickup();
             }
-            param1.args[1];
         }
         else if (param1.eventid == 4) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tp01")) {
                 screenlist.screens[2].screen.areas[12].puzzle.needstobeunderwater(1);
                 screenlist.screens[2].screen.areas[12].puzzle.switchit(1);
             }
-            param1.args[0];
         }
         var1 = 0;
         while ((this.gyzerarray.__length - 1) >= var1) {

@@ -26,12 +26,8 @@ class lego_area_xrod : gs_lego_area {
         var var1;
         if (param1.eventid == 3) {
             if ((((param1.args[0] == scslosifoundation::stringtoidentifier("tp00")) || (param1.args[0] == scslosifoundation::stringtoidentifier("tp01"))) || (param1.args[0] == scslosifoundation::stringtoidentifier("tp02"))) || (param1.args[0] == scslosifoundation::stringtoidentifier("tp03"))) {
-                this.level.cam.setaimode(7);
                 globalclass.player.kill();
             }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.enterstartid, this.enterlookid);
@@ -46,7 +42,7 @@ class lego_area_xrod : gs_lego_area {
         }
         else if (param1.eventid == 21) {
             var1 = this.level.getbull();
-            if (!(var1 == null)) {
+            if (var1 != null) {
                 this.level.destroybull();
                 var1 = null;
                 debug::print("destroying bully....");
@@ -56,11 +52,11 @@ class lego_area_xrod : gs_lego_area {
     }
     
     method cleanupfull() {
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
-        if (!(this.discpickup == null)) {
+        if (this.discpickup != null) {
             this.discpickup.cleanupfull();
             this.discpickup = null;
         }

@@ -410,7 +410,7 @@ class boss6_puzzle {
             this.sitidleunderwatertimer.start();
         }
         if (this.canvibrate) {
-            if (!(this.currentspike == null)) {
+            if (this.currentspike != null) {
                 this.vibrate(this.currentspike);
             }
         }
@@ -982,7 +982,6 @@ class boss6_puzzle {
         else if (param1.eventid == 46) {
             this.sitidleunderwatertimer.reset(0);
             this.attacktimer.reset(0);
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
@@ -1061,7 +1060,7 @@ class boss6_puzzle {
     method vibrate(param1) {
         var var1;
         var var2;
-        if (!(param1 == null)) {
+        if (param1 != null) {
             var1 = globalclass.randnum.getrandomfloat(0 - 0.3, 0.3);
             var2 = globalclass.randnum.getrandomfloat(0 - 0.3, 0.3);
             param1.setposition(param1.getx() + var1, param1.gety(), param1.getz() + var2);

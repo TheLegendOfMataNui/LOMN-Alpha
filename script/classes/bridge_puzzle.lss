@@ -121,7 +121,7 @@ class bridge_puzzle {
                 this.shakecamtimer.reset(0);
                 this.shakecamtimer.start();
                 if (param1.args[0] == scslosifoundation::stringtoidentifier("tpb0")) {
-                    if ((param1.args[1] == 1) && !(this.lasttouched == 1)) {
+                    if ((param1.args[1] == 1) && (this.lasttouched != 1)) {
                         this.bridgeparts[39].touch();
                         this.bridgeparts[37].touch();
                         this.bridgeparts[33].touch();
@@ -135,7 +135,7 @@ class bridge_puzzle {
                 this.firstcollisionwithtp = 0;
             }
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tpb1")) {
-                if ((param1.args[1] == 1) && !(this.lasttouched == 2)) {
+                if ((param1.args[1] == 1) && (this.lasttouched != 2)) {
                     this.bridgeparts[1].touch();
                     this.bridgeparts[6].touch();
                     this.bridgeparts[8].touch();
@@ -156,17 +156,16 @@ class bridge_puzzle {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("shct")) {
                 globalclass.level.cam.interpolate(0 - 64.75, 32.44, 266.36, 31.1, 0.2, 314.65, 7.0);
             }
-            param1.args[0];
         }
         else if (param1.eventid == 1) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
-                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl05")) && !(this.lasttouched == 3)) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl05")) && (this.lasttouched != 3)) {
                     this.bridgeparts[0].touch();
                     this.bridgeparts[9].touch();
                     this.bridgeparts[11].touch();
                     this.lasttouched = 3;
                 }
-                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl07")) && !(this.lasttouched == 4)) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl07")) && (this.lasttouched != 4)) {
                     this.bridgeparts[1].touch();
                     this.bridgeparts[2].touch();
                     this.bridgeparts[12].touch();
@@ -175,24 +174,24 @@ class bridge_puzzle {
                     this.bridgeparts[18].touch();
                     this.lasttouched = 5;
                 }
-                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl15")) && !(this.lasttouched == 6)) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl15")) && (this.lasttouched != 6)) {
                     this.bridgeparts[9].touch();
                     this.bridgeparts[11].touch();
                     this.bridgeparts[17].touch();
                     this.lasttouched = 6;
                 }
-                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl20")) && !(this.lasttouched == 7)) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl20")) && (this.lasttouched != 7)) {
                     this.bridgeparts[14].touch();
                     this.lasttouched = 7;
                 }
-                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl25")) && !(this.lasttouched == 8)) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl25")) && (this.lasttouched != 8)) {
                     this.bridgeparts[21].touch();
                     this.bridgeparts[26].touch();
                     this.bridgeparts[27].touch();
                     this.bridgeparts[32].touch();
                     this.lasttouched = 8;
                 }
-                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl32")) && !(this.lasttouched == 10)) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl32")) && (this.lasttouched != 10)) {
                     this.bridgeparts[22].touch();
                     this.bridgeparts[24].touch();
                     this.bridgeparts[34].touch();
@@ -201,13 +200,13 @@ class bridge_puzzle {
                     this.bridgeparts[41].touch();
                     this.lasttouched = 9;
                 }
-                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl35")) && !(this.lasttouched == 11)) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl35")) && (this.lasttouched != 11)) {
                     this.bridgeparts[29].touch();
                     this.bridgeparts[32].touch();
                     this.bridgeparts[39].touch();
                     this.lasttouched = 11;
                 }
-                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl40")) && !(this.lasttouched == 12)) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("pl40")) && (this.lasttouched != 12)) {
                     this.bridgeparts[34].touch();
                     this.bridgeparts[42].touch();
                     this.lasttouched = 12;
@@ -227,12 +226,8 @@ class bridge_puzzle {
             this.bridgeparts[14].touch();
             this.bridgeparts[9].touch();
             this.bridgeparts[3].touch();
-            this.parea.level.cam.setaimode(7);
             globalclass.player.kill();
             globalclass.player.actor.setinputstate("none");
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parea.enterstartid, this.parea.enterlookid);

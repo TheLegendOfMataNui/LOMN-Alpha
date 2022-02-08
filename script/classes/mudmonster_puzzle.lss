@@ -237,10 +237,7 @@ class mudmonster_puzzle {
     
     method onevent(param1) {
         this.mudmonster.onevent(param1);
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 7) {
+        if (param1.eventid == 7) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("cnyy")) {
                 if (param1.args[2] == scslosifoundation::stringtoidentifier("Fprj")) {
                     debug::print((("ANIMATION EVENT : " + scslosifoundation::identifiertostring(param1.args[0])) + ":") + scslosifoundation::identifiertostring(param1.args[1]));

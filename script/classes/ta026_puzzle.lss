@@ -8,6 +8,7 @@ class ta026_puzzle {
     property secretdoorshow;
     property secreetdoorgone;
     property boardpickup;
+    property ded;
     
     method ta026_puzzle(param1) {
         this.parent = param1;
@@ -17,7 +18,6 @@ class ta026_puzzle {
     
     method initfull() {
         var var1;
-        var var2;
         this.secretdoorshow = 0;
         this.platformarray = [ new bounceyplatform("pl00"), 
             new bounceyplatform("pl02"), 
@@ -103,19 +103,19 @@ class ta026_puzzle {
             this.state = 0;
         }
         this.setup_hot_or_cold();
-        var2 = gcsaver::finditem(scslosifoundation::stringtoidentifier("sled"));
-        if (var2 == 0) {
+        if (gcsaver::finditem(scslosifoundation::stringtoidentifier("sled")) == 0) {
             this.boardpickup = new lego_pickup("sled", 0, 5, "item", 9, 1);
             this.boardpickup.initfull();
             this.boardpickup.show();
             this.boardpickup.setcondition(32768);
         }
+        this.ded = 0;
         return null;
     }
     
     method cleanupfull() {
         var var1;
-        if (!(this.boardpickup == null)) {
+        if (this.boardpickup != null) {
             this.boardpickup.cleanupfull();
             this.boardpickup = null;
         }
@@ -150,17 +150,7 @@ class ta026_puzzle {
         this.state = null;
         this.secretdoorshow = null;
         this.secreetdoorgone = null;
-        return null;
-    }
-    
-    method initshort() {
-        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
-        globalclass.player.unkill();
-        globalclass.player.actor.setinputstate("ninp");
-        return null;
-    }
-    
-    method cleanupshort() {
+        this.ded = null;
         return null;
     }
     
@@ -170,9 +160,9 @@ class ta026_puzzle {
     }
     
     method process(param1) {
-        if (globalclass.player.actor.getpos().y1 < 220) {
-            globalclass.level.cam.setaimode(7);
+        if ((this.ded == 0) && (globalclass.player.actor.getpos().y1 < 220)) {
             globalclass.player.kill();
+            this.ded = 1;
         }
         return null;
     }
@@ -211,12 +201,11 @@ class ta026_puzzle {
                 }
             }
         }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-            this.cleanupshort();
-        }
         else if (param1.eventid == 27) {
-            this.initshort();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.setinputstate("ninp");
+            this.ded = 0;
         }
         return null;
     }

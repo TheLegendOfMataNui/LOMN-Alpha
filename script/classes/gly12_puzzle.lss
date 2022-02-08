@@ -59,10 +59,7 @@ class gly12_puzzle {
     }
     
     method onevent(param1) {
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.unkill();
         }
@@ -71,23 +68,20 @@ class gly12_puzzle {
                 if (param1.args[1] == scslosifoundation::stringtoidentifier("glyp")) {
                     this.glyph.pickup();
                 }
-                param1.args[1];
             }
-            param1.args[0];
         }
         else if (param1.eventid == 4) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tp00")) {
                 screenlist.screens[2].screen.areas[12].puzzle.needstobeunderwater(1);
                 screenlist.screens[2].screen.areas[12].puzzle.switchit(0);
             }
-            param1.args[0];
         }
         return null;
     }
     
     method cleanupfull() {
         var var1;
-        if (!(this.glyph == null)) {
+        if (this.glyph != null) {
             this.glyph.cleanupfull();
             this.glyph = null;
         }

@@ -56,7 +56,7 @@ class bullrun4 {
     }
     
     method cleanup() {
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
@@ -82,9 +82,6 @@ class bullrun4 {
     method onevent(param1) {
         if (param1.eventid == 29) {
             
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));

@@ -93,10 +93,7 @@ class shrine4puzzle {
     }
     
     method onevent(param1) {
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.unkill();
             if (this.needstobeunderwater) {
@@ -110,9 +107,7 @@ class shrine4puzzle {
                     gccollisionphysicsgroup::spinmask(1.2);
                     gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("hydr"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
                 }
-                param1.args[1];
             }
-            param1.args[0];
         }
         return null;
     }

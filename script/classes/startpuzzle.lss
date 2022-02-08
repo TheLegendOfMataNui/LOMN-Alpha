@@ -9,7 +9,6 @@ class startpuzzle {
     property doorbottom;
     property dooropen;
     property tiggerboxid;
-    property timer;
     property camposnum;
     property startedfalling;
     property cinema;
@@ -55,8 +54,6 @@ class startpuzzle {
         }
         this.setupstardingpositions();
         this.tiggerboxid = 0;
-        this.timer = new lego_timer("timr", 1, 0);
-        this.timer.initfull();
         this.camposnum = 0;
         this.startedfalling = 0;
         this.cinema = gccinemaengine::create();
@@ -88,8 +85,6 @@ class startpuzzle {
         this.doorbottom = null;
         this.button.cleanupfull();
         this.button = null;
-        this.timer.cleanupfull();
-        this.timer = null;
         return null;
     }
     
@@ -163,11 +158,10 @@ class startpuzzle {
         }
         if (param1.event == 2) {
             if (param1.button == 255) {
-                if (!(this.cinema == null)) {
+                if (this.cinema != null) {
                     gccinemaengine::stop(this.cinema);
                 }
             }
-            param1.button;
         }
         return null;
     }
@@ -196,7 +190,6 @@ class startpuzzle {
         var var2;
         var var3;
         var var4;
-        var var5;
         var1 = 0;
         while ((this.bldarray.__length - 1) >= var1) {
             this.bldarray[var1].onevent(param1);
@@ -227,32 +220,23 @@ class startpuzzle {
         else if (param1.eventid == 3) {
             var4 = param1.args[0];
             if (var4 == scslosifoundation::stringtoidentifier("tb00")) {
-                this.reseta();
+                globalclass.player.kill();
                 this.tiggerboxid = scslosifoundation::stringtoidentifier("tb00");
                 debug::print("hit 2nd trigerBox");
             }
             if (var4 == scslosifoundation::stringtoidentifier("tb01")) {
-                this.reseta();
+                globalclass.player.kill();
                 this.tiggerboxid = scslosifoundation::stringtoidentifier("tb01");
                 debug::print("hit 1st trigerBox");
             }
             if (var4 == scslosifoundation::stringtoidentifier("tb02")) {
-                this.reseta();
+                globalclass.player.kill();
                 debug::print("hit 3rd trigerBox");
                 this.tiggerboxid = scslosifoundation::stringtoidentifier("tb02");
             }
         }
-        else if (param1.eventid == 8) {
-            var5 = param1.args[0];
-            if (var5 == scslosifoundation::stringtoidentifier("timr")) {
-                this.resetb();
-            }
-        }
         else if (param1.eventid == 27) {
             debug::print("Screen Black Event");
-            globalclass.player.kill();
-        }
-        else if (param1.eventid == 46) {
             globalclass.player.unkill();
             this.resetc();
         }
@@ -287,18 +271,6 @@ class startpuzzle {
             this.startdropping();
             this.parent.level.cam.shakecamera(0.1, 0.18);
         }
-        return null;
-    }
-    
-    method reseta() {
-        this.parent.level.cam.setaimode(7);
-        this.timer.reset();
-        this.timer.start();
-        return null;
-    }
-    
-    method resetb() {
-        gccollisionphysicsgroup::spinmask(1.2);
         return null;
     }
     

@@ -16,12 +16,7 @@ class l1a2_puzzlep : base_object {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
                 globalclass.player.kill();
                 gcstaticsoundsptrarray::playtablesound(737);
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
             }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.unkill();
@@ -59,7 +54,7 @@ class l1a2_puzzlep : base_object {
     }
     
     method hide() {
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }

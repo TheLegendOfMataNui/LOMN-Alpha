@@ -212,7 +212,7 @@ class boss_puzzle {
                     this.attacking = 0;
                 }
                 else {
-                    if (!(this.state == 0)) {
+                    if (this.state != 0) {
                         this.state = 4;
                         debug::print("Going to wait state from THROW2");
                     }
@@ -234,7 +234,7 @@ class boss_puzzle {
             }
             else if (param1.args[1] == 1919627569) {
                 this.shake();
-                if (!(this.state == 0)) {
+                if (this.state != 0) {
                     this.state = 4;
                     debug::print("Going to wait state from STOMP2");
                 }
@@ -405,7 +405,6 @@ class boss_puzzle {
             }
         }
         else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
             this.state = 0;
             this.oldstate = 0;
             debug::print("Resetting to NO_STATE from PLAYER_IS_DEAD");
@@ -429,7 +428,7 @@ class boss_puzzle {
         var var2;
         var var3;
         this.rocker.process(param1);
-        if (((this.state == 5) && (this.attacking == 0)) && !(this.oldstate == 6)) {
+        if (((this.state == 5) && (this.attacking == 0)) && (this.oldstate != 6)) {
             globalclass.randnum.setseed(param1.currenttime);
             var1 = globalclass.randnum.getrandomnumber(0, 10);
             if (this.numhitsonboss == 4) {
@@ -610,7 +609,7 @@ class boss_puzzle {
         this.rockmandead = null;
         this.turaga.cleanupfull();
         this.turaga = null;
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }

@@ -24,26 +24,13 @@ class fvil6_puzzle {
     }
     
     method cleanupfull() {
-        if (!(this.leverpickup == null)) {
+        if (this.leverpickup != null) {
             this.leverpickup.cleanupfull();
             this.leverpickup = null;
         }
         this.music.stop();
         this.music.cleanupfordestroy();
         this.music = null;
-        return null;
-    }
-    
-    method initshort() {
-        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
-        globalclass.player.unkill();
-        globalclass.player.actor.setinputstate("ninp");
-        this.music.play(1);
-        return null;
-    }
-    
-    method cleanupshort() {
-        this.music.stop();
         return null;
     }
     
@@ -58,11 +45,13 @@ class fvil6_puzzle {
             }
         }
         else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-            this.cleanupshort();
+            this.music.stop();
         }
         else if (param1.eventid == 27) {
-            this.initshort();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.setinputstate("ninp");
+            this.music.play(1);
         }
         return null;
     }

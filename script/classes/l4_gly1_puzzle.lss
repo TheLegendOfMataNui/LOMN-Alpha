@@ -73,7 +73,7 @@ class l4_gly1_puzzle {
     
     method cleanupfull() {
         var var1;
-        if (!(this.glyph == null)) {
+        if (this.glyph != null) {
             this.glyph.cleanupfull();
             this.glyph = null;
         }
@@ -220,13 +220,11 @@ class l4_gly1_puzzle {
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.kill();
                 globalclass.player.actor.setinputstate("none");
             }
             else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.kill();
                 globalclass.player.actor.setinputstate("none");
             }
         }
@@ -246,9 +244,6 @@ class l4_gly1_puzzle {
             }
         }
         else if (param1.eventid == 27) {
-            globalclass.player.kill();
-        }
-        else if (param1.eventid == 46) {
             globalclass.player.unkill();
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("k000"));
@@ -304,7 +299,7 @@ class l4_gly1_puzzle {
     method process(param1) {
         var var1;
         if (this.canvibrate) {
-            if (!(this.currentpil == null)) {
+            if (this.currentpil != null) {
                 this.vibrate(this.currentpil);
             }
         }

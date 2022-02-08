@@ -204,12 +204,17 @@ class snowfallpuzzle {
         else if (param1.eventid == 3) {
             var4 = param1.args[0];
             if (var4 == scslosifoundation::stringtoidentifier("tb00")) {
-                this.reseta();
+                globalclass.player.kill();
             }
         }
         else if (param1.eventid == 27) {
             debug::print("Screen Black Event");
-            this.resetb();
+            globalclass.player.unkill();
+            globalclass.player.actor.setpos(0 - 139.6, 0.9, -81);
+            globalclass.player.actor.setorientation(180);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+            this.parent.parent.cam.setaimode(11);
+            this.reset();
         }
         else if (param1.eventid == 6) {
             globalclass.player.actor.setorientation(90);
@@ -224,23 +229,6 @@ class snowfallpuzzle {
                 gcstaticsoundsptrarray::playtablesound(144);
             }
         }
-        return null;
-    }
-    
-    method reseta() {
-        debug::print("RESET A");
-        this.parent.parent.cam.setaimode(7);
-        gccollisionphysicsgroup::spinmask(1);
-        return null;
-    }
-    
-    method resetb() {
-        debug::print("RESET B");
-        globalclass.player.actor.setpos(0 - 139.6, 0.9, -81);
-        globalclass.player.actor.setorientation(180);
-        gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
-        this.parent.parent.cam.setaimode(11);
-        this.reset();
         return null;
     }
     

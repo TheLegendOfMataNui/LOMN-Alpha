@@ -34,10 +34,6 @@ class lego_area_mtup : gs_lego_area {
                 this.bgmusic.play(1);
                 globalclass.player.maskcontrol.changemask(1);
             }
-            param1.args[0];
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.enterstartid, this.enterlookid);
@@ -55,7 +51,7 @@ class lego_area_mtup : gs_lego_area {
     method input(param1) {
         if (param1.event == 2) {
             if (param1.button == 255) {
-                if (!(this.cinema == null)) {
+                if (this.cinema != null) {
                     gccinemaengine::stop(this.cinema);
                     this.bgmusic.stop();
                     this.bgmusic.setupforplay("Root/Data/sounds/MUSICpohatutheme");
@@ -69,7 +65,7 @@ class lego_area_mtup : gs_lego_area {
     
     method cleanupfull() {
         this.cinema = null;
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }

@@ -71,15 +71,15 @@ class icmz_puzzle {
     
     method cleanupfull() {
         var var1;
-        if (!(this.discpickup == null)) {
+        if (this.discpickup != null) {
             this.discpickup.cleanupfull();
             this.discpickup = null;
         }
-        if (!(this.skatespickup == null)) {
+        if (this.skatespickup != null) {
             this.skatespickup.cleanupfull();
             this.skatespickup = null;
         }
-        if (!(this.glyph == null)) {
+        if (this.glyph != null) {
             this.glyph.cleanupfull();
             this.glyph = null;
         }
@@ -160,10 +160,7 @@ class icmz_puzzle {
                 }
             }
         }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(0.5);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.unkill();
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.actor.setinputstate("ninp");

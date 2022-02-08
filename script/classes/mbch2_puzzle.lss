@@ -145,7 +145,7 @@ class mbch2_puzzle {
         this.mwatarea = null;
         this.wirly.cleanupfull();
         this.wirly = null;
-        if (!(this.discpickup == null)) {
+        if (this.discpickup != null) {
             this.discpickup.cleanupfull();
             this.discpickup = null;
         }
@@ -245,7 +245,6 @@ class mbch2_puzzle {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tp01")) {
                 this.dropland();
             }
-            param1.args[0];
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
@@ -256,9 +255,6 @@ class mbch2_puzzle {
                 gcstaticsoundsptrarray::playtablesound(774);
                 gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("mwat"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
             }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);

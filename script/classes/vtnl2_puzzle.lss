@@ -104,14 +104,9 @@ class vtnl2_puzzle {
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.kill();
                 globalclass.player.actor.setinputstate("none");
             }
-            param1.args[0];
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.setpos(0 - 259.5, 68.7, 0 - 279.0);

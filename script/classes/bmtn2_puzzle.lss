@@ -31,7 +31,7 @@ class bmtn2_puzzle {
     }
     
     method cleanupfull() {
-        if (!(this.stonepickup == null)) {
+        if (this.stonepickup != null) {
             this.stonepickup.cleanupfull();
             this.stonepickup = null;
         }
@@ -46,24 +46,17 @@ class bmtn2_puzzle {
                 if (param1.args[1] == scslosifoundation::stringtoidentifier("gtst")) {
                     this.door.interpolate(0 - 182.6, 131.1, 0 - 323.1, 1.0);
                 }
-                param1.args[1];
             }
-            param1.args[0];
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.kill();
                 globalclass.player.actor.setinputstate("none");
             }
             else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.kill();
                 globalclass.player.actor.setinputstate("none");
             }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);

@@ -14,17 +14,6 @@ class tvil6_puzzle {
         return null;
     }
     
-    method initshort() {
-        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
-        globalclass.player.unkill();
-        globalclass.player.actor.setinputstate("ninp");
-        return null;
-    }
-    
-    method cleanupshort() {
-        return null;
-    }
-    
     method exit() {
         this.parent = null;
         return null;
@@ -40,12 +29,10 @@ class tvil6_puzzle {
                 
             }
         }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-            this.cleanupshort();
-        }
         else if (param1.eventid == 27) {
-            this.initshort();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            globalclass.player.actor.setinputstate("ninp");
         }
         return null;
     }

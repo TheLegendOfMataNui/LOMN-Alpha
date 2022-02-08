@@ -101,7 +101,6 @@ class lego_level_6 : gs_lego_level {
         this.lego_level_onevent(param1);
         if (param1.eventid == 42) {
             debug::print("hit LAVA");
-            this.cam.setaimode(7);
             globalclass.player.kill();
             this.burnsound.play();
         }

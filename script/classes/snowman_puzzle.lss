@@ -71,8 +71,7 @@ class snowman_puzzle {
         }
         if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(2.0);
+                globalclass.player.kill();
                 globalclass.player.actor.setinputstate("none");
             }
             else if (param1.args[0] == (scslosifoundation::stringtoidentifier("tb00") + 1)) {
@@ -82,9 +81,6 @@ class snowman_puzzle {
             }
         }
         else if (param1.eventid == 27) {
-            globalclass.player.kill();
-        }
-        else if (param1.eventid == 46) {
             this.resetplayer();
         }
         else if (param1.eventid == 39) {

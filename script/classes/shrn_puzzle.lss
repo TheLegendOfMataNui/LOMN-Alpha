@@ -72,17 +72,17 @@ class shrn_puzzle {
                 gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("gly1"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
             }
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
-                this.reseta();
+                globalclass.player.kill();
             }
-        }
-        else if (param1.eventid == 46) {
-            this.resetb();
         }
         else if (param1.eventid == 30) {
             globalclass.hud.show();
         }
         else if (param1.eventid == 27) {
-            this.resetc();
+            globalclass.player.unkill();
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.level.cam.setaimode(11);
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb01"), 0);
         }
         return null;
     }
@@ -90,11 +90,10 @@ class shrn_puzzle {
     method input(param1) {
         if (param1.event == 2) {
             if (param1.button == 255) {
-                if (!(this.cinema == null)) {
+                if (this.cinema != null) {
                     gccinemaengine::stop(this.cinema);
                 }
             }
-            param1.button;
         }
         return null;
     }
@@ -113,25 +112,6 @@ class shrn_puzzle {
     
     method openbossdoor() {
         this.doorarray[0].hide();
-        return null;
-    }
-    
-    method reseta(param1) {
-        globalclass.level.cam.setaimode(7);
-        gccollisionphysicsgroup::spinmask(1.5);
-        gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb01"), 0);
-        return null;
-    }
-    
-    method resetb() {
-        gccollisionphysicsgroup::spinmask(1.2);
-        return null;
-    }
-    
-    method resetc() {
-        globalclass.player.unkill();
-        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
-        globalclass.level.cam.setaimode(11);
         return null;
     }
 }

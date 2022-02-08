@@ -95,10 +95,7 @@ class l1a7_puzzlep : base_object {
     method onevent(param1) {
         var var1;
         var var2;
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tbl5"), 0);
             globalclass.player.unkill();
@@ -116,8 +113,6 @@ class l1a7_puzzlep : base_object {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tbl5")) {
                 globalclass.player.kill();
                 gcstaticsoundsptrarray::playtablesound(737);
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
             }
         }
         else if (param1.eventid == 8) {
@@ -159,7 +154,7 @@ class l1a7_puzzlep : base_object {
     method cleanupfull() {
         var var1;
         var var2;
-        if (!(this.plataarray == null)) {
+        if (this.plataarray != null) {
             var1 = this.plataarray.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
@@ -168,7 +163,7 @@ class l1a7_puzzlep : base_object {
                 var2 = var2 + 1;
             }
         }
-        if (!(this.platbarray == null)) {
+        if (this.platbarray != null) {
             var1 = this.platbarray.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
@@ -177,7 +172,7 @@ class l1a7_puzzlep : base_object {
                 var2 = var2 + 1;
             }
         }
-        if (!(this.platcarray == null)) {
+        if (this.platcarray != null) {
             var1 = this.platcarray.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
@@ -189,23 +184,23 @@ class l1a7_puzzlep : base_object {
         this.plataarray = null;
         this.platbarray = null;
         this.platcarray = null;
-        if (!(this.glyph == null)) {
+        if (this.glyph != null) {
             if (this.glyph.objshown == 0) {
                 this.showglyph = 0;
             }
             this.glyph.cleanupfull();
             this.glyph = null;
         }
-        if (!(this.door == null)) {
+        if (this.door != null) {
             this.door.cleanupfull();
             this.door = null;
         }
-        if (!(this.mycamtimer == null)) {
+        if (this.mycamtimer != null) {
             this.mycamtimer.cleanupfull();
             this.mycamtimer = null;
         }
         this.camstate = null;
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }

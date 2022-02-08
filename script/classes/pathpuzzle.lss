@@ -1,6 +1,5 @@
 class pathpuzzle {
     property parent;
-    property timer;
     property tiggerboxid;
     property cumpus;
     property showcumpus;
@@ -45,8 +44,6 @@ class pathpuzzle {
             this.bldarray[var1].setstartingvelocity(new basicpoint(1, 150, 1), new basicpoint(0, 110, 0));
             var1 = var1 + 1;
         }
-        this.timer = new lego_timer("timr", 1, 0);
-        this.timer.initfull();
         this.tiggerboxid = 0;
         this.showcumpus = 0;
         this.cumpus = new lego_moveableobject("cmps");
@@ -74,7 +71,7 @@ class pathpuzzle {
             new platform("pl18") ];
         var1 = 0;
         while ((this.platformarray.__length - 1) >= var1) {
-            if (!(var1 == 6)) {
+            if (var1 != 6) {
                 this.platformarray[var1].initfull("pl00", "Root/data/levels/lev4/crss", -4, -1, -4, 4, 1, 4);
                 this.platformarray[var1].obj.setobjscale(0.4);
             }
@@ -193,9 +190,8 @@ class pathpuzzle {
             var1 = var1 + 1;
         }
         this.platformarray = null;
-        this.timer = null;
         this.cumpus = null;
-        if (!(this.meltpickup == null)) {
+        if (this.meltpickup != null) {
             this.meltpickup.cleanupfull();
             this.meltpickup = null;
         }
@@ -279,11 +275,13 @@ class pathpuzzle {
         if (param1.eventid == 3) {
             var2 = param1.args[0];
             if (var2 == scslosifoundation::stringtoidentifier("tb00")) {
+                globalclass.player.kill();
                 this.reseta();
                 this.tiggerboxid = scslosifoundation::stringtoidentifier("tb00");
                 debug::print("hit 1st trigerBox");
             }
             if (var2 == scslosifoundation::stringtoidentifier("tb01")) {
+                globalclass.player.kill();
                 this.reseta();
                 this.tiggerboxid = scslosifoundation::stringtoidentifier("tb01");
                 debug::print("hit 2nd trigerBox");
@@ -322,17 +320,8 @@ class pathpuzzle {
                 this.blockmoving[2] = 0;
             }
         }
-        else if (param1.eventid == 8) {
-            var4 = param1.args[0];
-            if (var4 == scslosifoundation::stringtoidentifier("timr")) {
-                this.resetb();
-            }
-        }
         else if (param1.eventid == 27) {
             debug::print("Screen Black Event");
-            globalclass.player.kill();
-        }
-        else if (param1.eventid == 46) {
             globalclass.player.unkill();
             this.resetc();
         }
@@ -351,18 +340,7 @@ class pathpuzzle {
         }
         return null;
     }
-    
-    method reseta() {
-        this.parent.level.cam.setaimode(7);
-        this.timer.start();
-        return null;
-    }
-    
-    method resetb() {
-        gccollisionphysicsgroup::spinmask(1.2);
-        return null;
-    }
-    
+        
     method resetc() {
         if (this.tiggerboxid == scslosifoundation::stringtoidentifier("tb00")) {
             globalclass.player.actor.setpos(43, -196, 1206);

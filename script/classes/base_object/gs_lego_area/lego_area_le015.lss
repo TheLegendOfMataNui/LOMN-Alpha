@@ -24,7 +24,7 @@ class lego_area_le015 : gs_lego_area {
     }
     
     method cleanupfull() {
-        if (!(this.launcherpickup == null)) {
+        if (this.launcherpickup != null) {
             this.launcherpickup.cleanupfull();
             this.launcherpickup = null;
         }
@@ -40,10 +40,7 @@ class lego_area_le015 : gs_lego_area {
     }
     
     method onevent(param1) {
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.enterstartid, this.enterlookid);
             globalclass.player.unkill();
         }

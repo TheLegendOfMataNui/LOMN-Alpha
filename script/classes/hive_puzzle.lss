@@ -29,7 +29,7 @@ class hive_puzzle {
     
     method cleanupfull() {
         this.cinema = null;
-        if (!(this.mask == null)) {
+        if (this.mask != null) {
             this.showmask = this.mask.objshown;
             this.mask.cleanupfull();
             this.mask = null;
@@ -43,10 +43,7 @@ class hive_puzzle {
     }
     
     method onevent(param1) {
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.unkill();
         }
@@ -61,11 +58,10 @@ class hive_puzzle {
     method input(param1) {
         if (param1.event == 2) {
             if (param1.button == 255) {
-                if (!(this.cinema == null)) {
+                if (this.cinema != null) {
                     gccinemaengine::stop(this.cinema);
                 }
             }
-            param1.button;
         }
         return null;
     }

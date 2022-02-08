@@ -158,10 +158,7 @@ class cliff1_puzzle : base_object {
         var var9;
         var var10;
         var var11;
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.unkill();
             globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
@@ -173,9 +170,7 @@ class cliff1_puzzle : base_object {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
                 globalclass.player.kill();
                 gcstaticsoundsptrarray::playtablesound(303);
-                this.parent.level.cam.setaimode(7);
                 globalclass.player.actor.setinputstate("none");
-                gccollisionphysicsgroup::spinmask(1.2);
             }
         }
         else if (param1.eventid == 1) {

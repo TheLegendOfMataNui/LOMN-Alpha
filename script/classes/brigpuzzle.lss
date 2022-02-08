@@ -112,11 +112,11 @@ class brigpuzzle {
     
     method hide() {
         var var1;
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
-        if (!(this.glyph == null)) {
+        if (this.glyph != null) {
             this.glyph.cleanupfull();
             this.glyph = null;
         }
@@ -203,10 +203,6 @@ class brigpuzzle {
                     this.door.interpolate(this.door.getx(), this.door.gety() - 8, this.door.getz(), 2);
                 }
             }
-            param1.args[0];
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             debug::print("Screen Black Event");
@@ -216,7 +212,6 @@ class brigpuzzle {
     }
     
     method reseta() {
-        this.parent.parent.cam.setaimode(7);
         this.timer.reset();
         this.timer.start();
         return null;

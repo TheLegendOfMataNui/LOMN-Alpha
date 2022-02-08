@@ -242,6 +242,7 @@ class crosspuzzle {
             var3 = param1.args[0];
             if (var3 == scslosifoundation::stringtoidentifier("tb00")) {
                 this.reseta();
+                globalclass.player.kill();
             }
         }
         else if (param1.eventid == 8) {
@@ -258,18 +259,17 @@ class crosspuzzle {
     }
     
     method reseta() {
-        this.parent.level.cam.setaimode(7);
         this.falltimer.reset();
         this.falltimer.start();
         return null;
     }
     
     method resetb() {
-        gccollisionphysicsgroup::spinmask(1.2);
         return null;
     }
     
     method resetc() {
+        globalclass.player.unkill();
         globalclass.player.actor.setpos(260.88, 0 - 37.88, 14.61);
         globalclass.player.actor.setorientation(225);
         gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);

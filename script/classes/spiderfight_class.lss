@@ -123,15 +123,15 @@ class spiderfight_class {
         var var2;
         this.spider.cleanupfull();
         this.spider = null;
-        if (!(this.desctext == null)) {
+        if (this.desctext != null) {
             this.desctext.cleanupfull();
             this.desctext = null;
         }
-        if (!(this.howtotext == null)) {
+        if (this.howtotext != null) {
             this.howtotext.cleanupfull();
             this.howtotext = null;
         }
-        if (!(this.spitballs == null)) {
+        if (this.spitballs != null) {
             var1 = this.spitballs.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
@@ -139,22 +139,22 @@ class spiderfight_class {
                 var2 = var2 + 1;
             }
         }
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
-        if (!(this.mask == null)) {
+        if (this.mask != null) {
             if (this.mask.objshown == 0) {
                 this.showmask = 0;
             }
             this.mask.cleanupfull();
             this.mask = null;
         }
-        if (!(this.web1 == null)) {
+        if (this.web1 != null) {
             this.web1.cleanupfull();
             this.web1 = null;
         }
-        if (!(this.webtimers == null)) {
+        if (this.webtimers != null) {
             var1 = this.webtimers.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
@@ -180,7 +180,6 @@ class spiderfight_class {
             if (param1.button == 67) {
                 this.firespitball();
             }
-            param1.button;
         }
         return null;
     }
@@ -204,9 +203,7 @@ class spiderfight_class {
                 if (param1.args[1] == scslosifoundation::stringtoidentifier("s010")) {
                     this.firespitball();
                 }
-                param1.args[1];
             }
-            param1.args[0];
         }
         else if (param1.eventid == 8) {
             var1 = 0;
@@ -228,9 +225,6 @@ class spiderfight_class {
             if ((param1.args[0] == this.web1.id) && (param1.args[1] == 0)) {
                 this.web1.hide();
             }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);

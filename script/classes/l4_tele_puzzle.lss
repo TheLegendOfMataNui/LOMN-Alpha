@@ -83,7 +83,7 @@ class l4_tele_puzzle {
     }
     
     method hide() {
-        if (!(this.mask == null)) {
+        if (this.mask != null) {
             this.mask.cleanupfull();
             this.mask = null;
         }
@@ -164,16 +164,11 @@ class l4_tele_puzzle {
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(0.5);
+                globalclass.player.kill();
                 globalclass.player.actor.setinputstate("none");
             }
-            param1.args[0];
         }
         else if (param1.eventid == 27) {
-            globalclass.player.kill();
-        }
-        else if (param1.eventid == 46) {
             globalclass.player.unkill();
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.actor.setinputstate("ninp");
@@ -242,7 +237,7 @@ class l4_tele_puzzle {
         this.tohunga.process(param1);
         if (this.switch1.collide == 0) {
             if (this.hitswitchonce == 0) {
-                if (!(this.block == 1)) {
+                if (this.block != 1) {
                     this.switch1.interpolate(this.switch1.getx(), this.switch1.gety() + 0.8, this.switch1.getz(), 0.5);
                     this.hitswitchonce = 1;
                 }

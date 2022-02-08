@@ -95,7 +95,6 @@ class shrn6_puzzle {
             globalclass.hud.show();
         }
         else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
             this.cleanupshort();
         }
         else if (param1.eventid == 27) {
@@ -145,7 +144,6 @@ class shrn6_puzzle {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("drs4")) {
                 this.openbossdoor(3);
             }
-            param1.args[0];
         }
         else if (param1.eventid == 27) {
             this.parent.level.cam.setaimode(11);
@@ -156,11 +154,10 @@ class shrn6_puzzle {
     method input(param1) {
         if (param1.event == 2) {
             if (param1.button == 255) {
-                if (!(this.cinema == null)) {
+                if (this.cinema != null) {
                     gccinemaengine::stop(this.cinema);
                 }
             }
-            param1.button;
         }
         if (param1.button == 90) {
             if (param1.event == 2) {
@@ -265,7 +262,7 @@ class shrn6_puzzle {
             this.doors[3].interpolate(var1, 58.3, var2, 1.5);
         }
         else if (param1 == 3) {
-            gccollisionphysicsgroup::spinmask(1.2);
+
         }
         return null;
     }

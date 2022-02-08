@@ -103,11 +103,11 @@ class boss5_puzzle {
     }
     
     method cleanupfull() {
-        if (!(this.desctext == null)) {
+        if (this.desctext != null) {
             this.desctext.cleanupfull();
             this.desctext = null;
         }
-        if (!(this.howtotext == null)) {
+        if (this.howtotext != null) {
             this.howtotext.cleanupfull();
             this.howtotext = null;
         }
@@ -141,10 +141,7 @@ class boss5_puzzle {
     method onevent(param1) {
         var var1;
         var var2;
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.mparent.enterstartid, this.mparent.enterlookid);
             globalclass.player.unkill();
             this.initshort();
@@ -180,11 +177,10 @@ class boss5_puzzle {
                     this.mwindy.setsplitanimation(scslosifoundation::stringtoidentifier("wi07"));
                 }
             }
-            param1.args[0];
         }
         else if (param1.eventid == 8) {
             debug::print("TIMER event caught");
-            if (!(this.mattacktimer == null)) {
+            if (this.mattacktimer != null) {
                 if (param1.args[0] == this.mattacktimer.id) {
                     debug::print("attack timer triggered");
                     this.attack();
@@ -205,7 +201,7 @@ class boss5_puzzle {
                 }
                 var2 = var2 + 1;
             }
-            if (!(this.mcurrentwaterfall == 3)) {
+            if (this.mcurrentwaterfall != 3) {
                 this.mwindy.interpolate(this.mwaterfalls[this.mcurrentwaterfall].mposition.x, 6.0, this.mwaterfalls[this.mcurrentwaterfall].mposition.y, 3.0);
             }
         }

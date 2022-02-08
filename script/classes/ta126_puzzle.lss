@@ -110,7 +110,7 @@ class ta126_puzzle {
             this.timers[var1].initfull();
             var1 = var1 + 1;
         }
-        if (!((this.pillars.__length - 1) == (this.timers.__length - 1))) {
+        if ((this.pillars.__length - 1) != (this.timers.__length - 1)) {
             debug::print("ERROR -- pillars and timers are out of sink (sync) ** ");
         }
         this.music = new legomp3player();
@@ -180,7 +180,6 @@ class ta126_puzzle {
         var var3;
         var var4;
         if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
             this.music.stop();
         }
         else if (param1.eventid == 27) {

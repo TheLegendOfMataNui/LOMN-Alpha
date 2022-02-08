@@ -65,7 +65,7 @@ class mwat2_puzzle {
     method cleanupfull() {
         var var1;
         this.bubbles = null;
-        if (!(this.maskx == null)) {
+        if (this.maskx != null) {
             this.maskx.cleanupfull();
             this.maskx = null;
         }
@@ -97,10 +97,7 @@ class mwat2_puzzle {
     }
     
     method onevent(param1) {
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             
         }
         else if (param1.eventid == 1) {
@@ -117,7 +114,6 @@ class mwat2_puzzle {
                     gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("isld"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
                 }
             }
-            param1.args[0];
         }
         else if (param1.eventid == 12) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("mask")) {
@@ -125,7 +121,6 @@ class mwat2_puzzle {
                     this.nextpos();
                 }
             }
-            param1.args[0];
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {

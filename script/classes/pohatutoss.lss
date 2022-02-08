@@ -105,9 +105,6 @@ class pohatutoss {
                 globalclass.player.kill();
             }
         }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
         else if (param1.eventid == 27) {
             if (this.cameinthebackdoor) {
                 globalclass.player.actor.gotostartpos(scslosifoundation::stringtoidentifier("str1"), scslosifoundation::stringtoidentifier("lok1"));

@@ -3,7 +3,6 @@ class racepuzzle_class {
     property rider;
     property parent;
     property tiggerboxid;
-    property timer;
     property areaid;
     property roadrunnerwon;
     property switchai;
@@ -31,8 +30,6 @@ class racepuzzle_class {
         this.rider.settweakable();
         this.rider.show();
         this.roadrunnerwon = null;
-        this.timer = new lego_timer("timr", 1, 0);
-        this.timer.initfull();
         this.setuprace();
         return null;
     }
@@ -64,7 +61,7 @@ class racepuzzle_class {
     }
     
     method cleanupfull() {
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
@@ -124,51 +121,26 @@ class racepuzzle_class {
         else if (param1.eventid == 3) {
             var1 = param1.args[0];
             if (var1 == scslosifoundation::stringtoidentifier("tb00")) {
-                this.reseta();
+                globalclass.player.kill();
                 this.tiggerboxid = scslosifoundation::stringtoidentifier("tb00");
             }
             if (var1 == scslosifoundation::stringtoidentifier("tb01")) {
-                this.reseta();
+                globalclass.player.kill();
                 this.tiggerboxid = scslosifoundation::stringtoidentifier("tb01");
             }
         }
         else if (param1.eventid == 27) {
             debug::print("Screen Black Event");
-            this.resetc();
-        }
-        else if (param1.eventid == 8) {
-            var2 = param1.args[0];
-            if (var2 == scslosifoundation::stringtoidentifier("timr")) {
-                this.resetb();
-            }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
+            globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
+            globalclass.player.unkill();
+            gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
+            globalclass.player.actor.setinputstate("ninp");
+            this.parent.level.cam.setaimode(11);
+            this.initshort();
         }
         return null;
     }
-    
-    method reseta() {
-        this.parent.parent.cam.setaimode(7);
-        this.timer.start();
-        return null;
-    }
-    
-    method resetb() {
-        globalclass.player.kill();
-        return null;
-    }
-    
-    method resetc() {
-        globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
-        globalclass.player.unkill();
-        gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
-        globalclass.player.actor.setinputstate("ninp");
-        this.parent.level.cam.setaimode(11);
-        this.initshort();
-        return null;
-    }
-    
+        
     method youwin() {
         this.roadrunnerwon = 0;
         debug::print("**********************************YOU WIN");

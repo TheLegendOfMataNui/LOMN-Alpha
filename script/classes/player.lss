@@ -306,6 +306,8 @@ class player {
                 if (this.maskcontrol.isactive()) {
                     this.maskcontrol.toggleactive();
                 }
+                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.level.cam.setaimode(7);
             }
             else if (param1.eventid == 19) {
                 if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {

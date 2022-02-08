@@ -190,7 +190,7 @@ class ta116_puzzle {
         var var1;
         var var2;
         var var3;
-        if (!(this.mask == null)) {
+        if (this.mask != null) {
             if (this.mask.objshown) {
                 this.mask.show();
             }
@@ -215,7 +215,7 @@ class ta116_puzzle {
     
     method hide() {
         var var1;
-        if (!(this.mask == null)) {
+        if (this.mask != null) {
             this.showmask = this.mask.objshown;
             this.mask.cleanupfull();
             this.mask = null;
@@ -285,10 +285,7 @@ class ta116_puzzle {
         var var7;
         var var8;
         var var9;
-        if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
-        else if (param1.eventid == 27) {
+        if (param1.eventid == 27) {
             this.initshort();
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.unkill();

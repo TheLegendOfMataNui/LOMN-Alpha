@@ -281,7 +281,7 @@ class bech2_puzzle {
         this.kn07coords = null;
         this.platformarrayubound = null;
         this.waterburstarrayubound = null;
-        if (!(this.maskoftranslation == null)) {
+        if (this.maskoftranslation != null) {
             this.maskoftranslation.cleanupfull();
             this.maskoftranslation = null;
         }
@@ -312,7 +312,7 @@ class bech2_puzzle {
         var1 = 0;
         while (this.platformarrayubound >= var1) {
             if (this.platformarray[var1].obj.collide == 0) {
-                if (!(this.platformarray[var1].obj.gety() == this.platformarray[var1].startingycoord)) {
+                if (this.platformarray[var1].obj.gety() != this.platformarray[var1].startingycoord) {
                     if (this.platformarray[var1].name == "lg01") {
                         this.platformarray[var1].setfirsttouch("true");
                         this.platformarray[var1].obj.interpolate(this.platformarray[var1].obj.getx(), this.platformarray[var1].startingycoord, this.platformarray[var1].obj.getz(), 0.2);
@@ -405,9 +405,6 @@ class bech2_puzzle {
                 this.timerarray[7].reset(0);
                 this.timerarray[7].start();
             }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);

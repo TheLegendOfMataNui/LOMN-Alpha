@@ -22,7 +22,7 @@ class bullrun3 {
     }
     
     method cleanup() {
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
@@ -30,7 +30,7 @@ class bullrun3 {
     }
     
     method process(param1) {
-        if (!(this.bully.getcurrentanimationid() == scslosifoundation::stringtoidentifier("bl07"))) {
+        if (this.bully.getcurrentanimationid() != scslosifoundation::stringtoidentifier("bl07")) {
             this.bully.run(0);
         }
         return null;
@@ -54,7 +54,7 @@ class bullrun3 {
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
-                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.kill();
             }
         }
         else if (param1.eventid == 11) {
@@ -64,9 +64,6 @@ class bullrun3 {
                 debug::print("****************BULL RUN*****************");
             }
             scslosifoundation::identifiertostring(param1.args[1]);
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             this.bully.gotostartpos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));

@@ -172,15 +172,12 @@ class rescuetohunga_puzzlep : base_object {
                     debug::print("Making the grappling hook longer");
                     globalclass.player.setgrapplinghookdistance(70);
                 }
-                param1.args[1];
             }
-            param1.args[0];
         }
         else if (param1.eventid == 11) {
             if (param1.args[1] == scslosifoundation::stringtoidentifier("a005")) {
                 this.firespitball();
             }
-            param1.args[1];
         }
         else if (param1.eventid == 8) {
             var1 = 0;
@@ -188,12 +185,8 @@ class rescuetohunga_puzzlep : base_object {
                 if (param1.args[0] == this.webtimers[var1].id) {
                     this.spitballs[var1].kill();
                 }
-                param1.args[0];
                 var1 = var1 + 1;
             }
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
@@ -223,11 +216,11 @@ class rescuetohunga_puzzlep : base_object {
     
     method cleanupfull() {
         var var1;
-        if (!(this.desctext == null)) {
+        if (this.desctext != null) {
             this.desctext.cleanupfull();
             this.desctext = null;
         }
-        if (!(this.howtotext == null)) {
+        if (this.howtotext != null) {
             this.howtotext.cleanupfull();
             this.howtotext = null;
         }
@@ -241,7 +234,7 @@ class rescuetohunga_puzzlep : base_object {
         }
         this.scorpion.cleanupfull();
         this.scorpion = null;
-        if (!(this.discpickup == null)) {
+        if (this.discpickup != null) {
             this.showdisc = this.discpickup.objshown;
             this.discpickup.cleanupfull();
             this.discpickup = null;

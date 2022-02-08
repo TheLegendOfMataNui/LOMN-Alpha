@@ -51,7 +51,7 @@ class beach_puzzle {
         this.glasswall = null;
         this.cinema = null;
         var1 = null;
-        if (!(this.glyph0 == null)) {
+        if (this.glyph0 != null) {
             if (this.glyph0.objshown == 0) {
                 this.showglyph = 0;
             }
@@ -83,14 +83,9 @@ class beach_puzzle {
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
+                globalclass.player.kill();
                 globalclass.player.actor.setinputstate("none");
             }
-            param1.args[0];
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
@@ -100,7 +95,7 @@ class beach_puzzle {
             gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
         }
         else if (param1.eventid == 44) {
-            if (!(this.cinema == null) && (this.safecount < 3)) {
+            if ((this.cinema != null) && (this.safecount < 3)) {
                 this.safecount = this.safecount + 1;
                 if (this.safecount == 2) {
                     var1 = gcmodeldirector::getcharacter(scslosifoundation::stringtoidentifier("vlgr"), 0);
@@ -114,11 +109,10 @@ class beach_puzzle {
     method input(param1) {
         if (param1.event == 2) {
             if (param1.button == 255) {
-                if (!(this.cinema == null)) {
+                if (this.cinema != null) {
                     gccinemaengine::stop(this.cinema);
                 }
             }
-            param1.button;
         }
         return null;
     }

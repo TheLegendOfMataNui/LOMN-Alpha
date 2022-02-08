@@ -126,7 +126,7 @@ class well4_puzzle {
     
     method hide() {
         var var1;
-        if (!(this.glyph == null)) {
+        if (this.glyph != null) {
             this.glyph.cleanupfull();
             this.glyph = null;
         }
@@ -305,17 +305,14 @@ class well4_puzzle {
                     this.platformarray[26].interpolate(this.platformarray[26].getx(), this.platformarray[26].gety() - 2, this.platformarray[26].getz(), 0.4);
                 }
             }
-            scslosifoundation::identifiertostring(param1.args[1]);
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
                 globalclass.player.kill();
-                this.parent.level.cam.setaimode(7);
                 globalclass.player.actor.setinputstate("none");
             }
             else if (param1.args[0] == scslosifoundation::stringtoidentifier("tb01")) {
                 globalclass.player.kill();
-                this.parent.level.cam.setaimode(7);
                 globalclass.player.actor.setinputstate("none");
             }
         }
@@ -328,9 +325,6 @@ class well4_puzzle {
             this.parent.level.cam.setaimode(11);
             gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb00"), 0);
             gccollisionphysicsgroup::toggletriggerboxentered(scslosifoundation::stringtoidentifier("tb01"), 0);
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 7) {
             if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {

@@ -29,11 +29,11 @@ class ptv2_puzzle {
     
     method cleanupfull() {
         this.cinema = null;
-        if (!(this.pushblock == null)) {
+        if (this.pushblock != null) {
             this.pushblock.cleanupfull();
             this.pushblock = null;
         }
-        if (!(this.blockplane == null)) {
+        if (this.blockplane != null) {
             this.blockplane.cleanupfull();
             this.blockplane = null;
         }
@@ -45,8 +45,6 @@ class ptv2_puzzle {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
                 globalclass.player.kill();
                 gcstaticsoundsptrarray::playtablesound(737);
-                this.parent.level.cam.setaimode(7);
-                gccollisionphysicsgroup::spinmask(1.2);
             }
         }
         else if (param1.eventid == 4) {
@@ -66,9 +64,6 @@ class ptv2_puzzle {
             debug::print("[][][] cinema done.  where's my hud?!!!");
             globalclass.hud.show();
             globalclass.hud.slideall(1);
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.unkill();

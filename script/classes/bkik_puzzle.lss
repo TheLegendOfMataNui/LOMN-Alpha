@@ -158,12 +158,8 @@ class bkik_puzzle {
         }
         else if (param1.eventid == 3) {
             debug::print("You hit triggerbox: " + scslosifoundation::identifiertostring(param1.args[0]));
-            this.parent.level.cam.setaimode(7);
             globalclass.player.actor.setinputstate("none");
             globalclass.player.kill();
-        }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
@@ -201,7 +197,7 @@ class bkik_puzzle {
         var var1;
         this.doorswitchtimer.cleanupfull();
         this.doorswitchtimer = null;
-        if (!(this.bgmusic == null)) {
+        if (this.bgmusic != null) {
             this.bgmusic.stop();
             this.bgmusic = null;
         }

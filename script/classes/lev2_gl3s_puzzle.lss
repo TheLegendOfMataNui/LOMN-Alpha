@@ -119,7 +119,6 @@ class lev2_gl3s_puzzle {
                 screenlist.screens[2].screen.areas[12].puzzle.needstobeunderwater(0);
                 screenlist.screens[2].screen.areas[12].puzzle.switchit(2);
             }
-            param1.args[0];
             this.startsurf();
         }
         else if (param1.eventid == 3) {
@@ -128,15 +127,11 @@ class lev2_gl3s_puzzle {
         else if (param1.eventid == 27) {
             this.resetb();
         }
-        else if (param1.eventid == 46) {
-            gccollisionphysicsgroup::spinmask(1.2);
-        }
         return null;
     }
     
     method reseta() {
-        this.parent.level.cam.setaimode(7);
-        gccollisionphysicsgroup::spinmask(1.2);
+        globalclass.player.kill();
         globalclass.player.actor.setsurfingability(0.0, 1);
         return null;
     }
