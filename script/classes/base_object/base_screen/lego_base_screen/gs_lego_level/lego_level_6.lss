@@ -1,5 +1,6 @@
 class lego_level_6 : gs_lego_level {
     property burnsound;
+    property fellinlava;
     
     method lego_level_6() {
         var var1;
@@ -78,6 +79,7 @@ class lego_level_6 : gs_lego_level {
             }
         }
         this.burnsound = new tablecopysound(775);
+        this.fellinlava = 0;
         return null;
     }
     
@@ -97,15 +99,31 @@ class lego_level_6 : gs_lego_level {
         return null;
     }
     
+    method cleanupfull() {
+        this.lego_level_cleanupfull();
+        if (this.burnsound != null) {
+            this.burnsound.cleanupfull();
+            this.burnsound = null;
+        }
+        this.fellinlava = null;
+        return null;
+    }
+
     method onevent(param1) {
         this.lego_level_onevent(param1);
         if (param1.eventid == 42) {
-            debug::print("hit LAVA");
-            globalclass.player.kill();
-            this.burnsound.play();
+            if (this.fellinlava == 0) {
+                debug::print("hit LAVA");
+                globalclass.player.kill();
+                this.burnsound.play();
+                this.fellinlava = 1;
+            }
         }
         else if (param1.eventid == 1010) {
             globalclass.player.actor.setlevitateparams(12, 6);
+        }
+        else if (param1.eventid == 27) {
+            this.fellinlava = 0;
         }
         return null;
     }

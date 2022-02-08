@@ -161,3 +161,4 @@ Per-level fixes:
 • GALI:   Fixed AI issue causing sfsh and tfsh to stick to floor			----		(ReeseB)
 • POHATU: Added coloring and mask to Husi rider 							----		(ShadowDraikana)
 • KOPAKA: Fixed Ice Elemental crash 										----		(ShadowDraikana)
+• TAHU:   Fixed burn sound from playing repeatedly when falling into lava 	----		(ShadowDraikana)
