@@ -152,6 +152,7 @@ v1.1.2
 • Fixed some texture antialiasing and alpha issues with masks				----		(Vahkiti, Fraug J. Coolman)
 • Fixed an issue with player animation speed not resetting upon death		----		(Vahkiti)
 • Updated debug menu scrolling to be single press instead of scroll 		----		(ShadowDraikana)
+• Added wrapping to debug menu scrolling  									----		(ShadowDraikana)
 • Optimized screenwipe upon death/respawn to play on a generic	basis		----		(ShadowDraikana)
 • Optimized the camera follow upon death to work on a generic basis 		----		(ShadowDraikana)
 
@@ -159,6 +160,5 @@ Per-level fixes:
 • ONUA:   Fixed some Onu-Matoran dialogue showing up as XXX 				----		(ShadowDraikana)
 • ONUA:   Properly fixed Whenua from not appearing in the Takara			----		(ShadowDraikana)
 • GALI:   Fixed AI issue causing sfsh and tfsh to stick to floor			----		(ReeseB)
-• POHATU: Added coloring and mask to Husi rider 							----		(ShadowDraikana)
 • KOPAKA: Fixed Ice Elemental crash 										----		(ShadowDraikana)
 • TAHU:   Fixed burn sound from playing repeatedly when falling into lava 	----		(ShadowDraikana)
