@@ -215,7 +215,7 @@ class vllg2_puzzle {
                     else if (param1.args[1] == this.testplatforms[2].id) {
                         this.currentlycollidingwith = this.testplatforms[2].id;
                         this.tempplatform = this.testplatforms[2];
-                        this.canblow = this.testplatforms;
+                        this.canblow = 1;
                         this.tempplatform.setcollide();
                     }
                     else if (param1.args[1] == this.testplatforms[3].id) {
