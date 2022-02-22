@@ -254,6 +254,11 @@ class gs_lego_toa : gs_lego_character {
         return null;
     }
     
+    method replenishair() {
+        gccharacter::replenishair(this.handle);
+        return null;
+    }
+    
     method userealtime(param1) {
         gctoa::userealtime(this.toahandle, param1);
         return null;
