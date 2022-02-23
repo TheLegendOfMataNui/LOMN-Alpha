@@ -300,7 +300,7 @@ class startpuzzle {
     method hitswitch() {
         if (this.buttonup) {
             this.buttonup = 0;
-            this.button.changeposition(0, 0 - 1.2, 0, 1);
+            this.button.changeposition(0, 0 - 0.6, 0, 1);
             this.button.setresponse(0, 0, 0);
             this.startcam();
             globalclass.player.actor.setpos(127.3, -270, 1606);

@@ -133,7 +133,6 @@ class l4_tele_puzzle {
                         this.block = 1;
                     }
                 }
-                param1.args[1];
             }
             else if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
                 if (param1.args[1] == scslosifoundation::stringtoidentifier("sw00")) {
@@ -204,6 +203,11 @@ class l4_tele_puzzle {
             if (param1.args[2] == scslosifoundation::stringtoidentifier("Ecut")) {
                 gcstaticsoundsptrarray::playtablesound(144);
             }
+        }
+        else if (param1.eventid == 6) {
+            this.parent.level.cam.setaimode(11);
+            this.parent.level.cam.resetviewport();
+            globalclass.hud.show();
         }
         return null;
     }

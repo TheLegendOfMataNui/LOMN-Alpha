@@ -31,7 +31,7 @@ class well4_puzzle {
             this.glyph.initfull();
             this.glyph.show();
         }
-        this.rotatetimer = new lego_timer("rott", 2.0, this.parent.name, 0);
+        this.rotatetimer = new lego_timer("rott", 2.0, 0);
         this.rotatetimer.initfull();
         this.rotatecase = 0;
         this.platformarray = [ new platform("pf36"), 
