@@ -259,7 +259,7 @@ class startpuzzle {
             }
         }
         else if (param1.eventid == 30) {
-            globalclass.player.maskcontrol.changemask(3);
+            globalclass.player.maskcontrol.changemask(2);
             globalclass.hud.show();
         }
         return null;

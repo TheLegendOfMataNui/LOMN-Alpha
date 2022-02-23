@@ -161,4 +161,5 @@ Per-level fixes:
 • ONUA:   Properly fixed Whenua from not appearing in the Takara			----		(ShadowDraikana)
 • GALI:   Fixed AI issue causing sfsh and tfsh to stick to floor			----		(ReeseB)
 • KOPAKA: Fixed Ice Elemental crash 										----		(ShadowDraikana)
+• KOPAKA: Fixed issue where the Kakama would not be equipped post-meetup	----		(ShadowDraikana)
 • TAHU:   Fixed burn sound from playing repeatedly when falling into lava 	----		(ShadowDraikana)
