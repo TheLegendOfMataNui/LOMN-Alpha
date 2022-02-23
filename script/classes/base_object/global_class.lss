@@ -107,6 +107,58 @@ class global_class : base_object {
     
     method cleanupfull() {
         var var1;
+        if (this.hud != null) {
+            this.hud.cleanupfull();
+            this.hud = null;
+            debug::print("[][b][] hud cleaned up");
+        }
+        if (this.player != null) {
+            this.player.cleanupfull();
+            this.player = null;
+            debug::print("[][b][] player cleaned up");
+        }
+        if (this.tweak != null) {
+            this.tweak.cleanupfull();
+            this.tweak = null;
+            debug::print("[][b][] tweak cleaned up");
+        }
+        if (this.pause != null) {
+            this.pause.cleanupfull();
+            this.pause = null;
+            debug::print("[][b][] pause cleaned up");
+        }
+        if (this.helpscreen != null) {
+            this.helpscreen.cleanupfull();
+            this.helpscreen = null;
+            debug::print("[][b][] help cleaned up");
+        }
+        if (this.render != null) {
+            this.render.cleanupfull();
+            this.render = null;
+            debug::print("[][b][] render cleaned up");
+        }
+        if (this.cheats != null) {
+            this.cheats.cleanupfull();
+            this.cheats = null;
+            debug::print("[][b][] cheats cleaned up");
+        }
+        this.level = null;
+        this.randnum = null;
+        this.language = null;
+        if (this.debugstring != null) {
+            this.debugstring.cleanupfull();
+            this.debugstring = null;
+        }
+        if (this.debugtimer != null) {
+            this.debugtimer.cleanupfull();
+            this.debugtimer = null;
+        }
+        this.gamefont = null;
+        this.gamefont2 = null;
+        this.hittoggletimer = null;
+        this.whatsnext = null;
+        this.testforlavacollisions = null;
+        this.saverloaded = null;
         var1 = 0;
         while ((this.eventlist.__length - 1) >= var1) {
             this.eventlist.__removeat(this.eventlist.__length - 1);
@@ -129,58 +181,6 @@ class global_class : base_object {
         this.eventhandles = null;
         this.inputhandles = null;
         this.processhandles = null;
-        if (!(this.hud == null)) {
-            this.hud.cleanupfull();
-            this.hud = null;
-            debug::print("[][b][] hud cleaned up");
-        }
-        if (!(this.player == null)) {
-            this.player.cleanupfull();
-            this.player = null;
-            debug::print("[][b][] player cleaned up");
-        }
-        if (!(this.tweak == null)) {
-            this.tweak.cleanupfull();
-            this.tweak = null;
-            debug::print("[][b][] tweak cleaned up");
-        }
-        if (!(this.pause == null)) {
-            this.pause.cleanupfull();
-            this.pause = null;
-            debug::print("[][b][] pause cleaned up");
-        }
-        if (!(this.helpscreen == null)) {
-            this.helpscreen.cleanupfull();
-            this.helpscreen = null;
-            debug::print("[][b][] help cleaned up");
-        }
-        if (!(this.render == null)) {
-            this.render.cleanupfull();
-            this.render = null;
-            debug::print("[][b][] render cleaned up");
-        }
-        if (!(this.cheats == null)) {
-            this.cheats.cleanupfull();
-            this.cheats = null;
-            debug::print("[][b][] cheats cleaned up");
-        }
-        this.level = null;
-        this.randnum = null;
-        this.language = null;
-        if (!(this.debugstring == null)) {
-            this.debugstring.cleanupfull();
-            this.debugstring = null;
-        }
-        if (!(this.debugtimer == null)) {
-            this.debugtimer.cleanupfull();
-            this.debugtimer = null;
-        }
-        this.gamefont = null;
-        this.gamefont2 = null;
-        this.hittoggletimer = null;
-        this.whatsnext = null;
-        this.testforlavacollisions = null;
-        this.saverloaded = null;
         return null;
     }
     
@@ -194,6 +194,10 @@ class global_class : base_object {
     
     method cleanupshort() {
         this.shortinit = 1;
+        if (this.level != null) {
+            this.level.cleanupfull();
+            this.level = null;
+        }
         this.player.cleanupfull();
         debug::print("[][][] player cleanupFull done");
         this.hud.cleanupfull();
@@ -201,13 +205,15 @@ class global_class : base_object {
         this.hittoggletimer = 0;
         this.whatsnext = 0;
         this.testforlavacollisions = 0;
-        this.saverloaded = 0;
-        this.level.cleanupfull();
-        this.level = null;
         return null;
     }
     
     method exit() {
+        if (this.level != null) {
+            this.level.exit();
+            this.level = null;
+            debug::print("[][][] level clean");
+        }
         this.cleanupfull();
         debug::print("[][][] globalclass clean");
         screenlist.cleanupfull();
@@ -247,7 +253,7 @@ class global_class : base_object {
     
     method process(param1) {
         var var1;
-        if (!(this.level == null)) {
+        if (this.level != null) {
             var1 = 0;
             while ((this.processlist.__length - 1) >= var1) {
                 if (this.shortinit) {
@@ -266,12 +272,11 @@ class global_class : base_object {
     
     method input(param1) {
         var var1;
-        if (!(this.level == null)) {
+        if (this.level != null) {
             if (param1.event == 2) {
                 if (param1.button == 145) {
                     this.toggleinput();
                 }
-                param1.button;
             }
             if (this.inputenabled) {
                 var1 = 0;
@@ -292,7 +297,7 @@ class global_class : base_object {
     }
     
     method toggleinput(param1) {
-        if (!(param1 == null)) {
+        if (param1 != null) {
             this.inputenabled = param1;
         }
         else if (this.inputenabled == 1) {
@@ -306,7 +311,7 @@ class global_class : base_object {
     
     method onevent(param1) {
         var var1;
-        if (!(this.level == null)) {
+        if (this.level != null) {
             var1 = 0;
             while ((this.eventlist.__length - 1) >= var1) {
                 if (this.shortinit) {

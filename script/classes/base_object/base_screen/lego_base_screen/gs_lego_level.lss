@@ -42,7 +42,7 @@ class gs_lego_level : lego_base_screen {
             var1 = gcsaver::getarea();
             this.startingarea = scslosifoundation::identifiertostring(var1);
         }
-        else if (!(this.argarray == null)) {
+        else if (this.argarray != null) {
             this.startingarea = this.argarray[0];
         }
         debug::print("[][][] create the camera");
@@ -53,13 +53,13 @@ class gs_lego_level : lego_base_screen {
             this.toa = scslosifoundation::identifiertostring(gcsaver::gettoa());
             debug::print(("[][][] toa " + this.toa) + " loaded from saver");
         }
-        if (!(this.toa == "none") && !(this.toa == null)) {
+        if ((this.toa != "none") && (this.toa != null)) {
             globalclass.player.setactor("cnt1", this.toa, 0.0, 0.0, 0.0, 0.0, "ninp");
         }
         debug::print("[][][] Load in the current area");
         this.areasetcurrent(scslosifoundation::stringtoidentifier(this.startingarea));
         debug::print("[][][] initfull the actor");
-        if (!(this.toa == "none")) {
+        if (this.toa != "none") {
             globalclass.player.actorinitfull();
         }
         debug::print("[][][] init the active area");
@@ -73,7 +73,7 @@ class gs_lego_level : lego_base_screen {
         }
         gclightdirector::toggleconstantlights();
         debug::print("[][][] more player init stuff");
-        if (!(this.toa == "none")) {
+        if (this.toa != "none") {
             if (globalclass.saverloaded) {
                 globalclass.player.actor.gotopos(gcsaver::getstart(), gcsaver::getlook());
             }
@@ -81,19 +81,19 @@ class gs_lego_level : lego_base_screen {
                 globalclass.player.actor.gotopos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
             }
             var2 = this.cam.getaimode();
-            if (!(var2 == 9)) {
+            if (var2 != 9) {
                 this.cam.setaimode(11);
             }
         }
         this.cam.settweakable();
-        if (!(var2 == 9)) {
+        if (var2 != 9) {
             debug::print("[][][]show the hud");
             globalclass.hud.show();
         }
         debug::print("[][][]set tokens");
         if (globalclass.saverloaded) {
             var3 = gcsaver::gettokencount();
-            if (!(var3 == null)) {
+            if (var3 != null) {
                 globalclass.player.settokens(var3);
             }
         }
@@ -136,17 +136,18 @@ class gs_lego_level : lego_base_screen {
         var var1;
         var var2;
         debug::print("\\\\\cleaning up level");
-        if (!(this.active_areas == null)) {
+        if (this.active_areas != null) {
             var1 = this.active_areas.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
+                this.active_areas[var1 - var2].cleanupfull();
                 gcareadirector::removearea(this.active_areas[var2].id);
                 this.active_areas[var2] = null;
                 var2 = var2 + 1;
             }
             this.active_areas = null;
         }
-        if (!(this.cam == null)) {
+        if (this.cam != null) {
             this.cam.cleanupfull();
             this.cam = null;
         }
@@ -156,11 +157,15 @@ class gs_lego_level : lego_base_screen {
     method exit() {
         var var1;
         var var2;
+        var var3;
         this.cleanupfull();
-        if (!(this.areas == null)) {
+        if (this.areas != null) {
             var1 = this.areas.__length - 1;
             var2 = 0;
             while (var1 >= var2) {
+                var3 = this.areas[var2].id;
+                this.areas[var2].lego_area_cleanupfull();
+                this.areas[var2].exit();
                 this.areas[var2] = null;
                 var2 = var2 + 1;
             }
@@ -176,7 +181,7 @@ class gs_lego_level : lego_base_screen {
     
     method lego_level_process(param1) {
         var var1;
-        if (!(this.cam == null)) {
+        if (this.cam != null) {
             var1 = 0;
             while ((this.active_areas.__length - 1) >= var1) {
                 this.active_areas[var1].process(param1);
@@ -197,7 +202,7 @@ class gs_lego_level : lego_base_screen {
         var var2;
         var var3;
         var var4;
-        if (!(this.cam == null)) {
+        if (this.cam != null) {
             if (param1.eventid == 20) {
                 var1 = param1.args[0];
                 this.areasetinactive(var1);
@@ -213,7 +218,7 @@ class gs_lego_level : lego_base_screen {
             }
             else if (param1.eventid == 29) {
                 var2 = this.cam.getaimode();
-                if (!(var2 == 9)) {
+                if (var2 != 9) {
                     globalclass.hud.show();
                 }
             }
@@ -226,7 +231,7 @@ class gs_lego_level : lego_base_screen {
                 }
                 var4 = 0;
                 while ((var3.__length - 1) >= var4) {
-                    if (!(var3[var4] == var1)) {
+                    if (var3[var4] != var1) {
                         this.areasetinactive(var3[var4]);
                     }
                     var4 = var4 + 1;
@@ -248,7 +253,7 @@ class gs_lego_level : lego_base_screen {
     
     method lego_level_input(param1) {
         var var1;
-        if (!(this.cam == null)) {
+        if (this.cam != null) {
             var1 = 0;
             while ((this.active_areas.__length - 1) >= var1) {
                 this.active_areas[var1].input(param1);
@@ -268,7 +273,7 @@ class gs_lego_level : lego_base_screen {
         var var1;
         if (this.getactive(param1) == null) {
             var1 = this.getarea(param1);
-            if (!(var1 == null)) {
+            if (var1 != null) {
                 this.areas[var1].initfull();
                 this.active_areas.__append(this.areas[var1]);
             }
