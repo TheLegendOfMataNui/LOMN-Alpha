@@ -155,6 +155,7 @@ v1.1.2
 • Added wrapping to debug menu scrolling  									----		(ShadowDraikana)
 • Optimized screenwipe upon death/respawn to play on a generic	basis		----		(ShadowDraikana)
 • Optimized the camera follow upon death to work on a generic basis 		----		(ShadowDraikana)
+• Backported some beta code into base_screenlist to resolve instabilities 	----		(ShadowDraikana)
 
 Per-level fixes:
 • ONUA:   Fixed some Onu-Matoran dialogue showing up as XXX 				----		(ShadowDraikana)
