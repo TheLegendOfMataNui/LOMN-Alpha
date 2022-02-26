@@ -3,6 +3,7 @@ class lego_area_icmz4 : gs_lego_area {
     
     method lego_area_icmz4(param1) {
         this.gs_lego_area("icmz", param1, 0, 0);
+        this.puzzle = new icmz_puzzle(this);
         this.lego_area_initfull();
         this.startingarea = [ 180, 
             -356, 
@@ -13,7 +14,6 @@ class lego_area_icmz4 : gs_lego_area {
     
     method initfull() {
         this.lego_area_show();
-        this.puzzle = new icmz_puzzle(this);
         this.puzzle.initfull();
         this.puzzle.show();
         return null;
@@ -23,7 +23,6 @@ class lego_area_icmz4 : gs_lego_area {
         this.lego_area_hide();
         this.puzzle.hide();
         this.puzzle.cleanupfull();
-        this.puzzle = null;
         this.startingarea = null;
         return null;
     }
@@ -44,6 +43,11 @@ class lego_area_icmz4 : gs_lego_area {
     }
     
     method exit() {
+        this.lego_area_cleanupfull();
+        if (this.puzzle != null) {
+            this.puzzle.exit();
+            this.puzzle = null;
+        }
         return null;
     }
 }

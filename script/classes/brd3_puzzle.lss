@@ -23,7 +23,7 @@ class brd3_puzzle {
         return null;
     }
     
-    method hide() {
+    method cleanupfull() {
         globalclass.player.actor.setsurfingability(0, 1.0);
         return null;
     }
@@ -66,6 +66,11 @@ class brd3_puzzle {
     }
     
     method input(param1) {
+        return null;
+    }
+
+    method exit() {
+        this.parent = null;
         return null;
     }
 }

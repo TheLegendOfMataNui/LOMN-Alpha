@@ -4,17 +4,19 @@ class lego_area_boss4 : gs_lego_area {
     method lego_area_boss4(param1) {
         this.gs_lego_area("boss", param1, 0, 0);
         this.puzzle = new snowman_puzzle(this);
+        this.lego_area_initfull();
         return null;
     }
     
     method initfull() {
+        this.lego_area_show();
         this.puzzle.initfull();
         return null;
     }
     
     method cleanupfull() {
+        this.lego_area_hide();
         this.puzzle.cleanupfull();
-        this.puzzle = null;
         return null;
     }
     
@@ -34,6 +36,11 @@ class lego_area_boss4 : gs_lego_area {
     }
     
     method exit() {
+        this.lego_area_cleanupfull();
+        if (this.puzzle != null) {
+            this.puzzle.exit();
+            this.puzzle = null;
+        }
         return null;
     }
 }

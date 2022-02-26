@@ -82,7 +82,7 @@ class l4_tele_puzzle {
         return null;
     }
     
-    method hide() {
+    method cleanupfull() {
         if (this.mask != null) {
             this.mask.cleanupfull();
             this.mask = null;
@@ -280,6 +280,11 @@ class l4_tele_puzzle {
         this.parent.level.cam.scaletocutscene();
         globalclass.hud.hide();
         this.cameratimer.reset(1);
+        return null;
+    }
+
+    method exit() {
+        this.parent = null;
         return null;
     }
 }

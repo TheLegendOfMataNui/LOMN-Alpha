@@ -124,7 +124,7 @@ class well4_puzzle {
         return null;
     }
     
-    method hide() {
+    method cleanupfull() {
         var var1;
         if (this.glyph != null) {
             this.glyph.cleanupfull();
@@ -368,6 +368,11 @@ class well4_puzzle {
     
     method cheat() {
         globalclass.player.addmask("mks2", 3);
+        return null;
+    }
+
+    method exit() {
+        this.parent = null;
         return null;
     }
 }

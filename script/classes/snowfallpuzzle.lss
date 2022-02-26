@@ -311,4 +311,9 @@ class snowfallpuzzle {
         this.parent.parent.cam.interpolate(-142, 6.149, -209, -142, 6.149, -209, 2.0);
         return null;
     }
+
+    method exit() {
+        this.parent = null;
+        return null;
+    }
 }

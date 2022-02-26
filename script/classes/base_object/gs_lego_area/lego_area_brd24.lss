@@ -17,8 +17,7 @@ class lego_area_brd24 : gs_lego_area {
     
     method cleanupfull() {
         this.lego_area_hide();
-        this.puzzle.hide();
-        this.puzzle = null;
+        this.puzzle.cleanupfull();
         return null;
     }
     
@@ -38,6 +37,11 @@ class lego_area_brd24 : gs_lego_area {
     }
     
     method exit() {
+        this.lego_area_cleanupfull();
+        if (this.puzzle != null) {
+            this.puzzle.exit();
+            this.puzzle = null;
+        }
         return null;
     }
 }

@@ -138,9 +138,9 @@ class l4_visn_puzzle {
         return null;
     }
     
-    method hide() {
+    method cleanupfull() {
         var var1;
-        if (!(this.mask == null)) {
+        if (this.mask != null) {
             this.mask.cleanupfull();
             this.mask = null;
         }
@@ -442,6 +442,11 @@ class l4_visn_puzzle {
         this.door2t.interpolate(972.562, 55.0423, 0 - 182.87, 5.0);
         this.door2b.interpolate(972.562, 27.5522, 0 - 182.87, 5.0);
         this.door2b.setresponse(0, 0, 0);
+        return null;
+    }
+
+    method exit() {
+        this.parent = null;
         return null;
     }
 }

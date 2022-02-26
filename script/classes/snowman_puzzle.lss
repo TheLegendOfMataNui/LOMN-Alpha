@@ -121,4 +121,9 @@ class snowman_puzzle {
         globalclass.player.addmaxlife(20);
         return null;
     }
+
+    method exit() {
+        this.parent = null;
+        return null;
+    }
 }

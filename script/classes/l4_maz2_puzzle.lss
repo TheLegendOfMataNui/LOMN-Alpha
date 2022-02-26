@@ -315,4 +315,9 @@ class l4_maz2_puzzle {
         globalclass.player.addmask("msk1", 3);
         return null;
     }
+
+    method exit() {
+        this.parent = null;
+        return null;
+    }
 }

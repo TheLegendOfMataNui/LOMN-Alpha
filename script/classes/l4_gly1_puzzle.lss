@@ -358,4 +358,9 @@ class l4_gly1_puzzle {
         }
         return null;
     }
+
+    method exit() {
+        this.parent = null;
+        return null;
+    }
 }

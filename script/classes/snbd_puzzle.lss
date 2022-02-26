@@ -219,4 +219,9 @@ class snbd_puzzle {
         param1.hide();
         return null;
     }
+
+    method exit() {
+        this.parent = null;
+        return null;
+    }
 }

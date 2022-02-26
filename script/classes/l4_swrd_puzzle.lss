@@ -168,7 +168,7 @@ class l4_swrd_puzzle {
         return null;
     }
     
-    method hide() {
+    method cleanupfull() {
         var var1;
         var1 = 0;
         while ((this.platforms.__length - 1) >= var1) {
@@ -298,6 +298,11 @@ class l4_swrd_puzzle {
         }
         this.platforms[15].setorientation(0.0, this.temporient3, 0.0);
         debug::print("Orientation = " + __tostring(this.temporient3));
+        return null;
+    }
+
+    method exit() {
+        this.parent = null;
         return null;
     }
 }

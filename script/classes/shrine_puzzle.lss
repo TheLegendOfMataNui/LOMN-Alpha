@@ -54,4 +54,9 @@ class shrine_puzzle {
     method cheat() {
         return null;
     }
+
+    method exit() {
+        this.parent = null;
+        return null;
+    }
 }

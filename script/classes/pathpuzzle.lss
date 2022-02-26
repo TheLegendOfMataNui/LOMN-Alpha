@@ -377,4 +377,9 @@ class pathpuzzle {
         }
         return null;
     }
+
+    method exit() {
+        this.parent = null;
+        return null;
+    }
 }

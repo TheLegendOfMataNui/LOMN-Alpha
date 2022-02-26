@@ -1,0 +1,23 @@
+class lego_area_hutt4 : gs_lego_area {
+    
+    method lego_area_hutt4(param1) {
+        this.gs_lego_area("hutt", param1, 0, 0);
+        this.lego_area_initfull();
+        return null;
+    }
+    
+    method initfull() {
+        this.lego_area_show();
+        return null;
+    }
+    
+    method cleanupfull() {
+        this.lego_area_hide();
+        return null;
+    }
+    
+    method exit() {
+        this.lego_area_cleanupfull();
+        return null;
+    }
+}

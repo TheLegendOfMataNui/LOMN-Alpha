@@ -21,11 +21,7 @@ class l4_maz1_puzzle {
     
     method initfull() {
         var var1;
-        var var2;
-        var var3;
         gcareadirector::setnearestmax(50);
-        var1 = 0;
-        var2 = 0;
         this.incme = 0;
         this.shake = 1;
         this.temporient = 0;
@@ -49,11 +45,11 @@ class l4_maz1_puzzle {
             new gs_lego_character("ib02", "ibat", "maz1", 0, 392.0, 15.4, 0 - 529.5, "aiin"), 
             new gs_lego_character("ib03", "ibat", "maz1", 0, 336.9, 15.7, 0 - 480.7, "aiin"), 
             new gs_lego_character("ib04", "ibat", "maz1", 0, 396.6, 66.5, 0 - 484.9, "aiin") ];
-        var3 = 0;
-        while ((this.bats.__length - 1) >= var3) {
-            this.bats[var3].initfull();
-            this.bats[var3].add();
-            var3 = var3 + 1;
+        var1 = 0;
+        while ((this.bats.__length - 1) >= var1) {
+            this.bats[var1].initfull();
+            this.bats[var1].add();
+            var1 = var1 + 1;
         }
         this.blocks = [ new lego_moveableobject("sb00", this.parent.name), 
             new lego_moveableobject("sb01", this.parent.name), 
@@ -63,18 +59,18 @@ class l4_maz1_puzzle {
             new lego_moveableobject("sb05", this.parent.name), 
             new lego_moveableobject("sb06", this.parent.name), 
             new lego_moveableobject("sb07", this.parent.name) ];
-        var3 = 0;
-        while ((this.blocks.__length - 1) >= var3) {
-            this.blocks[var3].initfull("iblk", "Root/data/levels/lev4/maz1");
-            this.blocks[var3].setresponse(3, 0, 3);
-            var3 = var3 + 1;
+        var1 = 0;
+        while ((this.blocks.__length - 1) >= var1) {
+            this.blocks[var1].initfull("iblk", "Root/data/levels/lev4/maz1");
+            this.blocks[var1].setresponse(3, 0, 3);
+            var1 = var1 + 1;
         }
-        var3 = 0;
-        while ((this.icicles.__length - 1) >= var3) {
-            this.icicles[var3].initfull();
-            this.icicles[var3].setbouncefactor(0.01);
-            this.icicles[var3].setbounceeventrepoert(1);
-            var3 = var3 + 1;
+        var1 = 0;
+        while ((this.icicles.__length - 1) >= var1) {
+            this.icicles[var1].initfull();
+            this.icicles[var1].setbouncefactor(0.01);
+            this.icicles[var1].setbounceeventrepoert(1);
+            var1 = var1 + 1;
         }
         return null;
     }
@@ -186,18 +182,14 @@ class l4_maz1_puzzle {
                 if (param1.args[1] == this.boulder.id) {
                     globalclass.player.actor.react(0, 4, this.boulder.id);
                 }
-                param1.args[1];
             }
-            param1.args[0];
             var1 = 0;
             while ((this.blocks.__length - 1) >= var1) {
                 if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
                     if (param1.args[1] == this.blocks[var1].id) {
                         globalclass.player.actor.react(0, 4, this.blocks[var1].id);
                     }
-                    param1.args[1];
                 }
-                param1.args[0];
                 var1 = var1 + 1;
             }
         }
@@ -211,7 +203,6 @@ class l4_maz1_puzzle {
                     }
                 }
             }
-            param1.args[0];
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
@@ -245,7 +236,6 @@ class l4_maz1_puzzle {
                     if (param1.args[0] == this.icicles[var1].id) {
                         this.icicles[var1].fadeout(2.5);
                     }
-                    param1.args[0];
                     var1 = var1 + 1;
                 }
             }
@@ -366,6 +356,11 @@ class l4_maz1_puzzle {
     }
     
     method iceshake(param1) {
+        return null;
+    }
+
+    method exit() {
+        this.parent = null;
         return null;
     }
 }

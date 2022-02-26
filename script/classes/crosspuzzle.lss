@@ -90,6 +90,7 @@ class crosspuzzle {
         this.platformarray = null;
         this.falltimer.cleanupfull();
         this.falltimer = null;
+        this.doorarray = null;
         return null;
     }
     
@@ -306,6 +307,11 @@ class crosspuzzle {
         if (this.doorgone2) {
             this.doorarray[1].hide();
         }
+        return null;
+    }
+
+    method exit() {
+        this.parent = null;
         return null;
     }
 }

@@ -56,10 +56,12 @@ class startpuzzle {
         this.tiggerboxid = 0;
         this.camposnum = 0;
         this.startedfalling = 0;
-        this.cinema = gccinemaengine::create();
-        gccinemaengine::load(this.cinema, "cin1");
-        globalclass.hud.hide();
-        gccinemaengine::play(this.cinema);
+        if (gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin1")) == 0) {
+            this.cinema = gccinemaengine::create();
+            gccinemaengine::load(this.cinema, "cin1");
+            globalclass.hud.hide();
+            gccinemaengine::play(this.cinema);
+        }
         return null;
     }
     
@@ -339,6 +341,11 @@ class startpuzzle {
         this.doortop.setresponse(0, 0, 0);
         this.doorbottom.changeposition(0, -5, 0, 3);
         this.doorbottom.setresponse(0, 0, 0);
+        return null;
+    }
+
+    method exit() {
+        this.parent = null;
         return null;
     }
 }
