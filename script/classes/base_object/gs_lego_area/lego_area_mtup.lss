@@ -1,39 +1,35 @@
 class lego_area_mtup : gs_lego_area {
     property cinema;
-    property cinema_shown;
     property bgmusic;
     
     method lego_area_mtup(param1) {
-        this.cinema_shown = 0;
         this.gs_lego_area("mtup", param1, 0, 0);
         this.lego_area_initfull();
         return null;
     }
     
     method initfull() {
-        if (this.cinema_shown == 0) {
+        this.lego_area_show();
+        this.bgmusic = new legomp3player();
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICpohatutheme");
+        this.bgmusic.play(1);
+        if (gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin1")) == 0) {
             this.cinema = gccinemaengine::create();
             gccinemaengine::load(this.cinema, "cin1");
-            this.bgmusic = new legomp3player();
-            this.bgmusic.setupforplay("Root/Data/sounds/MUSICLEGOCinematicambience");
-            this.bgmusic.play(1);
             globalclass.hud.hide();
             gccinemaengine::play(this.cinema);
+            this.bgmusic.stop();
             debug::print("playing cinema 1");
-            this.cinema_shown = 1;
         }
         return null;
     }
     
     method onevent(param1) {
         if (param1.eventid == 30) {
-            if (param1.args[0] == scslosifoundation::stringtoidentifier("cin1")) {
-                globalclass.hud.show();
-                this.bgmusic.stop();
-                this.bgmusic.setupforplay("Root/Data/sounds/MUSICpohatutheme");
-                this.bgmusic.play(1);
-                globalclass.player.maskcontrol.changemask(1);
-            }
+            globalclass.hud.show();
+            globalclass.hud.slideall(1);
+            this.bgmusic.play(1);
+            globalclass.player.maskcontrol.changemask(1);
         }
         else if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.enterstartid, this.enterlookid);
@@ -53,26 +49,25 @@ class lego_area_mtup : gs_lego_area {
             if (param1.button == 255) {
                 if (this.cinema != null) {
                     gccinemaengine::stop(this.cinema);
-                    this.bgmusic.stop();
-                    this.bgmusic.setupforplay("Root/Data/sounds/MUSICpohatutheme");
-                    this.bgmusic.play(1);
                 }
             }
-            param1.button;
         }
         return null;
     }
     
     method cleanupfull() {
+        this.lego_area_hide();
         this.cinema = null;
         if (this.bgmusic != null) {
             this.bgmusic.stop();
+            this.bgmusic.cleanupfordestroy();
             this.bgmusic = null;
         }
         return null;
     }
     
     method exit() {
+        this.lego_area_cleanupfull();
         return null;
     }
 }
