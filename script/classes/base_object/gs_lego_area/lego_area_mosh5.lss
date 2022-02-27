@@ -4,14 +4,13 @@ class lego_area_mosh5 : gs_lego_area {
     
     method lego_area_mosh5(param1) {
         this.gs_lego_area("mosh", param1, 0, 0);
-        this.cinema = null;
+        this.lego_area_initfull();
         return null;
     }
     
     method initfull() {
-        var var1;
-        var1 = gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin4"));
-        if (var1 == 0) {
+        this.lego_area_show();
+        if (gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin4")) == 0) {
             this.cinema = gccinemaengine::create();
             gccinemaengine::load(this.cinema, "cin4");
             globalclass.hud.hide();
@@ -28,7 +27,7 @@ class lego_area_mosh5 : gs_lego_area {
     
     method input(param1) {
         if ((param1.event == 2) && (param1.button == 255)) {
-            if (!(this.cinema == null)) {
+            if (this.cinema != null) {
                 gccinemaengine::stop(this.cinema);
             }
         }
@@ -37,7 +36,7 @@ class lego_area_mosh5 : gs_lego_area {
     
     method onevent(param1) {
         var var1;
-        if (!(this.cinema == null)) {
+        if (this.cinema != null) {
             if (param1.eventid == 44) {
                 if (this.safecount < 3) {
                     this.safecount = this.safecount + 1;
@@ -55,19 +54,18 @@ class lego_area_mosh5 : gs_lego_area {
                     }
                 }
             }
-            if (param1.eventid == 30) {
-                globalclass.hud.show();
-            }
         }
         return null;
     }
     
     method cleanupfull() {
+        this.lego_area_hide();
         this.cinema = null;
         return null;
     }
     
     method exit() {
+        this.lego_area_cleanupfull();
         return null;
     }
 }

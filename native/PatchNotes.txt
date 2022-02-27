@@ -148,7 +148,7 @@ v1.1.1
 Per-level fixes:
 • ONUA:   Fixed invisible dancy bois once and for all						----		(Vahkiti)
 
-v1.1.2
+v1.2.0
 • Fixed some texture antialiasing and alpha issues with masks				----		(Vahkiti, Fraug J. Coolman)
 • Fixed an issue with player animation speed not resetting upon death		----		(Vahkiti)
 • Updated debug menu scrolling to be single press instead of scroll 		----		(ShadowDraikana)
@@ -165,4 +165,6 @@ Per-level fixes:
 • POHATU: Fixed second cinematic in BLCV being unskippable					----		(ShadowDraikana)
 • KOPAKA: Fixed Ice Elemental crash 										----		(ShadowDraikana)
 • KOPAKA: Fixed issue where the Kakama would not be equipped post-meetup	----		(ShadowDraikana)
+• LEWA:   Fixed SHRN cutscene skipping causing a softlock					----		(ShadowDraikana)
+• LEWA:   Fixed mask swap in HIVE/SHRN not taking place post-cutscene		----		(ShadowDraikana)
 • TAHU:   Fixed burn sound from playing repeatedly when falling into lava 	----		(ShadowDraikana)

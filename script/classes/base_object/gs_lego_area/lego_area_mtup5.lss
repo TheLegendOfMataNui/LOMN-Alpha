@@ -3,13 +3,13 @@ class lego_area_mtup5 : gs_lego_area {
     
     method lego_area_mtup5(param1) {
         this.gs_lego_area("mtup", param1, 0, 0);
+        this.lego_area_initfull();
         return null;
     }
     
     method initfull() {
-        var var1;
-        var1 = gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin1"));
-        if (var1 == 0) {
+        this.lego_area_show();
+        if (gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin1")) == 0) {
             this.cinema = gccinemaengine::create();
             gccinemaengine::load(this.cinema, "cin1");
             globalclass.hud.hide();
@@ -21,11 +21,13 @@ class lego_area_mtup5 : gs_lego_area {
     }
     
     method cleanupfull() {
+        this.lego_area_hide();
         this.cinema = null;
         return null;
     }
     
     method exit() {
+        this.lego_area_cleanupfull();
         return null;
     }
     
@@ -38,19 +40,18 @@ class lego_area_mtup5 : gs_lego_area {
             globalclass.player.maskcontrol.changemask(3);
             globalclass.player.actor.gotopos(scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
             globalclass.hud.show();
+            globalclass.hud.slideall(1);
         }
-        param1.eventid;
         return null;
     }
     
     method input(param1) {
         if (param1.event == 2) {
             if (param1.button == 255) {
-                if (!(this.cinema == null)) {
+                if (this.cinema != null) {
                     gccinemaengine::stop(this.cinema);
                 }
             }
-            param1.button;
         }
         return null;
     }

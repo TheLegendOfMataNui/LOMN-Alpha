@@ -4,10 +4,12 @@ class lego_area_hive5 : gs_lego_area {
     method lego_area_hive5(param1) {
         this.gs_lego_area("hive", param1, 0, 0);
         this.puzzle = new hive_puzzle(this);
+        this.lego_area_initfull();
         return null;
     }
     
     method initfull() {
+        this.lego_area_show();
         this.puzzle.initfull();
         gcareadirector::setfog(-10381892, 0 - 5.0, 0 - 600.0, 0.01);
         gclightdirector::setcavelighting(0);
@@ -15,16 +17,22 @@ class lego_area_hive5 : gs_lego_area {
     }
     
     method cleanupfull() {
+        this.lego_area_hide();
         this.puzzle.cleanupfull();
         return null;
     }
     
     method exit() {
-        this.puzzle.exit();
+        this.lego_area_cleanupfull();
+        if (this.puzzle != null) {
+            this.puzzle.exit();
+            this.puzzle = null;
+        }
         return null;
     }
     
     method process(param1) {
+        this.puzzle.process(param1);
         return null;
     }
     
