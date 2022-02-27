@@ -95,7 +95,6 @@ class digclassp : base_screen {
                 if (var1 == this.digplanes[var3].id) {
                     if (var2 == 1) {
                         if ((globalclass.player.actor.getcurrentanimationid() == scslosifoundation::stringtoidentifier("o013")) || (globalclass.player.actor.getcurrentanimationid() == scslosifoundation::stringtoidentifier("o014"))) {
-                            gcstaticsoundsptrarray::playtablesound();
                             this.digplanes[var3].setcollide();
                             this.digplanes[var3].hide();
                             this.digarray[var3].hide();
