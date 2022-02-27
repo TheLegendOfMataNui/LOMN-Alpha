@@ -46,6 +46,7 @@ class acmaskpuzzle {
         if (this.cinema2_shown == 0) {
             this.cinema2 = gccinemaengine::create();
             gccinemaengine::load(this.cinema2, "cin3");
+            gccinemaengine::setnextarea(this.cinema2, scslosifoundation::stringtoidentifier("blr1"));
         }
         this.wallchunks = [ new lego_moveableobject("brk1"), 
             new lego_moveableobject("brk2"), 
@@ -109,6 +110,8 @@ class acmaskpuzzle {
                         globalclass.hud.hide();
                         gccinemaengine::play(this.cinema2);
                         this.cinema2_shown = 1;
+                        globalclass.player.maskcontrol.toggleactive();
+                        globalclass.hud.mask.hide();
                     }
                 }
             }
@@ -122,7 +125,7 @@ class acmaskpuzzle {
                 if (this.cinema1 != null) {
                     gccinemaengine::stop(this.cinema1);
                 }
-                else if (this.cinema2 != null) {
+                if (this.cinema2 != null) {
                     gccinemaengine::stop(this.cinema2);
                 }
             }
@@ -147,6 +150,10 @@ class acmaskpuzzle {
                 this.bully.disableanim(scslosifoundation::stringtoidentifier("bl08"));
                 this.bully.disableanim(scslosifoundation::stringtoidentifier("bl09"));
                 this.bully.aipatrol();
+                if (globalclass.player.maskcontrol.isactive()) {
+                    globalclass.player.maskcontrol.toggleactive();
+                    globalclass.hud.mask.hide();
+                }
             }
         }
         else if (param1.eventid == 27) {
@@ -157,9 +164,8 @@ class acmaskpuzzle {
             this.parea.level.cam.setaimode(11);
         }
         else if (param1.eventid == 30) {
-            globalclass.hud.show();
-            if (param1.args[0] == scslosifoundation::stringtoidentifier("cin3")) {
-                gcbagroup::setswitchareas(scslosifoundation::stringtoidentifier("blr1"), scslosifoundation::stringtoidentifier("str0"), scslosifoundation::stringtoidentifier("lok0"));
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cin2")) {
+                globalclass.hud.show();
             }
         }
         return null;

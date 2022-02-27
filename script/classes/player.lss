@@ -60,7 +60,7 @@ class player {
         this.energy = null;
         this.maxenergy = null;
         this.tokens = null;
-        if (!(this.actor == null)) {
+        if (this.actor != null) {
             this.actor.cleanupfull();
             this.actor = null;
         }
@@ -68,11 +68,11 @@ class player {
         this.draintimer = null;
         this.grapplinghooksetup = null;
         this.spritedamageamount = null;
-        if (!(this.maskcontrol == null)) {
+        if (this.maskcontrol != null) {
             this.maskcontrol.cleanupfull();
             this.maskcontrol = null;
         }
-        if (!(this.elementcontrol == null)) {
+        if (this.elementcontrol != null) {
             this.elementcontrol.cleanupfull();
             this.elementcontrol = null;
         }
@@ -242,10 +242,10 @@ class player {
         var var1;
         var var2;
         var var3;
-        if (!(this.actor == null)) {
+        if (this.actor != null) {
             this.actor.onevent(param1);
             if (param1.eventid == 40) {
-                if (!(param1.args[1] == null)) {
+                if (param1.args[1] != null) {
                     debug::print("ouch! by " + __tostring(param1.args[1]));
                 }
                 else {
@@ -314,6 +314,9 @@ class player {
                     this.removelife(this.spritedamageamount);
                 }
             }
+            else if (param1.eventid == 30) {
+                gcstaticsoundsptrarray::stoptablesound(758);
+            }
         }
         return null;
     }
@@ -349,7 +352,7 @@ class player {
     
     method actorinitfull() {
         var var1;
-        if (!(this.actor == null)) {
+        if (this.actor != null) {
             this.actor.initfull();
             this.actor.show();
             this.actor.settweakable();
