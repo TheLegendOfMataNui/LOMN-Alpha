@@ -18,12 +18,10 @@ class glyph3_lev4_puzzle {
     property rotating;
     property rotatetime;
     property rotatespeed;
-    property showpickup;
     property bgmusic;
     
     method glyph3_lev4_puzzle(param1) {
         this.parent = param1;
-        this.showpickup = 1;
         this.switch1_up = 1;
         this.switch2_up = 1;
         this.switch3_up = 1;
@@ -39,11 +37,7 @@ class glyph3_lev4_puzzle {
         this.bgmusic.setupforplay("Root/Data/sounds/Musiclowandcreepyambience");
         this.bgmusic.play(1);
         globalclass.player.actor.setunderwater(1);
-        var1 = gcsaver::findglyph(scslosifoundation::stringtoidentifier("glyp"));
-        if (var1) {
-            this.showpickup = 0;
-        }
-        if (this.showpickup) {
+        if (gcsaver::findglyph(scslosifoundation::stringtoidentifier("glyp")) == 0) {
             this.glyph = new lego_pickup("glyp", 7, 2, "item", 8, 1);
             this.glyph.initfull();
             this.glyph.show();
@@ -93,8 +87,11 @@ class glyph3_lev4_puzzle {
     
     method cleanupfull() {
         var var1;
-        this.bgmusic.stop();
-        this.bgmusic = null;
+        if (this.bgmusic != null) {
+            this.bgmusic.stop();
+            this.bgmusic.cleanupfordestroy();
+            this.bgmusic = null;
+        }
         this.switch1.cleanupfull();
         this.switch1 = null;
         this.switch2.cleanupfull();
@@ -139,7 +136,7 @@ class glyph3_lev4_puzzle {
     }
     
     method onevent(param1) {
-        if (param1.eventid != 27) {
+        if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.unkill();
             globalclass.player.actor.setunderwater(1);
