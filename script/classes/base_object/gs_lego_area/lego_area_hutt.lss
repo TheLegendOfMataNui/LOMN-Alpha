@@ -1,9 +1,7 @@
 class lego_area_hutt : gs_lego_area {
     property puzzle;
-    property parent;
     
     method lego_area_hutt(param1) {
-        this.parent = param1;
         this.gs_lego_area("hutt", param1, 0, 0);
         this.puzzle = new hutt_class(this);
         this.lego_area_initfull();
@@ -39,7 +37,11 @@ class lego_area_hutt : gs_lego_area {
     }
     
     method exit() {
-        this.puzzle.exit();
+        this.lego_area_cleanupfull();
+        if (this.puzzle != null) {
+            this.puzzle.exit();
+            this.puzzle = null;
+        }
         return null;
     }
 }

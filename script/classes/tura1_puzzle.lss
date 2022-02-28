@@ -45,4 +45,9 @@ class tura1_puzzle {
     method cheat() {
         return null;
     }
+    
+    method exit() {
+        this.parent = null;
+        return null;
+    }
 }

@@ -156,6 +156,7 @@ v1.2.0
 • Optimized the camera follow upon death to work on a generic basis 		----		(ShadowDraikana)
 • Backported some beta code into base_screenlist to resolve instabilities 	----		(ShadowDraikana)
 • Fixed a case where mask active sound would be playing post-cinematic  	----		(ShadowDraikana)
+• Added script classes for Turaga hutts to prevent quit crashing		  	----		(ShadowDraikana)
 
 Per-level fixes:
 • ONUA:   Fixed some Onu-Matoran dialogue showing up as XXX 				----		(ShadowDraikana)
@@ -170,3 +171,4 @@ Per-level fixes:
 • LEWA:   Fixed SHRN cutscene skipping causing a softlock					----		(ShadowDraikana)
 • LEWA:   Fixed mask swap in HIVE/SHRN not taking place post-cutscene		----		(ShadowDraikana)
 • TAHU:   Fixed burn sound from playing repeatedly when falling into lava 	----		(ShadowDraikana)
+• TAHU:   Fixed freezing in Vakama's hutt by replacing collision data 		----		(ShadowDraikana)
