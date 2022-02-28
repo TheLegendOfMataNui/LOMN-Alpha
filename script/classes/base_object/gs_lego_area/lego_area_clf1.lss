@@ -35,13 +35,16 @@ class lego_area_clf1 : gs_lego_area {
     
     method cleanupfull() {
         this.lego_area_hide();
-        this.digpuzzle.cleanupfull();
+        this.digpuzzle.hide();
         return null;
     }
     
     method exit() {
-        this.digpuzzle.exit();
-        this.digpuzzle = null;
+        this.lego_area_cleanupfull();
+        if (this.digpuzzle != null) {
+            this.digpuzzle.exit();
+            this.digpuzzle = null;
+        }
         return null;
     }
 }

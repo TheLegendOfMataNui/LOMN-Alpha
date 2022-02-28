@@ -147,17 +147,9 @@ class cliff1_puzzle : base_object {
     }
     
     method onevent(param1) {
-        var var1;
-        var var2;
         var var3;
-        var var4;
         var var5;
         var var6;
-        var var7;
-        var var8;
-        var var9;
-        var var10;
-        var var11;
         if (param1.eventid == 27) {
             globalclass.player.actor.gotopos(this.parent.enterstartid, this.parent.enterlookid);
             globalclass.player.unkill();
@@ -169,22 +161,19 @@ class cliff1_puzzle : base_object {
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
                 globalclass.player.kill();
-                gcstaticsoundsptrarray::playtablesound(303);
+                gcstaticsoundsptrarray::playtablesound(737);
                 globalclass.player.actor.setinputstate("none");
             }
         }
         else if (param1.eventid == 1) {
-            var1 = param1.args[0];
-            var2 = param1.args[1];
             if (this.buttonpressed == 0) {
-                if (var2 == this.button.id) {
+                if (param1.args[1] == this.button.id) {
                     this.runcinematic();
                 }
             }
         }
         else if (param1.eventid == 12) {
-            var2 = param1.args[0];
-            if (var2 == this.button.id) {
+            if (param1.args[0] == this.button.id) {
                 var3 = this.parent.level.cam;
                 this.savecam = [ var3.x1, 
                     var3.y1, 
@@ -208,11 +197,9 @@ class cliff1_puzzle : base_object {
             this.cutscenetimer.start();
         }
         else if (param1.eventid == 4) {
-            var2 = param1.args[0];
-            var4 = param1.args[1];
             var5 = 0;
             while ((this.digplanes.__length - 1) >= var5) {
-                if (var2 == this.digplanes[var5].id) {
+                if (param1.args[0] == this.digplanes[var5].id) {
                     var6 = this.digplanes[var5];
                     var6.setcollide();
                 }
@@ -220,29 +207,24 @@ class cliff1_puzzle : base_object {
             }
         }
         else if (param1.eventid == 8) {
-            var7 = param1.args[0];
-            if (var7 == scslosifoundation::stringtoidentifier("tim0")) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tim0")) {
                 var3 = this.parent.level.cam;
                 var3.setaimode(11);
                 var3.setpos(this.savecam[0], this.savecam[1], this.savecam[2]);
                 var3.settargetpos(this.savecam[3], this.savecam[4], this.savecam[5]);
                 var3.resetviewport();
-                var8 = globalclass.hud;
-                var8.show();
+                globalclass.hud.show();
                 globalclass.player.actor.setinputstate("ninp");
                 this.cutscenetimer.reset();
             }
         }
         else if (param1.eventid == 7) {
-            var9 = param1.args[0];
-            var10 = param1.args[1];
-            var11 = param1.args[2];
-            if (var9 == scslosifoundation::stringtoidentifier("cnt1")) {
-                if ((var10 == scslosifoundation::stringtoidentifier("o013")) || (var10 == scslosifoundation::stringtoidentifier("o014"))) {
-                    if (var11 == scslosifoundation::stringtoidentifier("Edga")) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if ((param1.args[1] == scslosifoundation::stringtoidentifier("o013")) || (param1.args[1] == scslosifoundation::stringtoidentifier("o014"))) {
+                    if (param1.args[2] == scslosifoundation::stringtoidentifier("Edga")) {
                         this.digging = 1;
                     }
-                    if (var11 == scslosifoundation::stringtoidentifier("Edgd")) {
+                    if (param1.args[2] == scslosifoundation::stringtoidentifier("Edgd")) {
                         this.digging = 0;
                     }
                 }
@@ -300,14 +282,10 @@ class cliff1_puzzle : base_object {
     }
     
     method runcinematic() {
-        var var1;
-        var var2;
-        var1 = globalclass.hud;
-        var1.hide();
+        globalclass.hud.hide();
         this.buttonpressed = 1;
         this.button.interpolate(this.buttonpos[0], 0 - 63.269, this.buttonpos[2], 1.0);
-        var2 = this.parent.level.cam;
-        var2.shakecamera(1.0, 0.08);
+        this.parent.level.cam.shakecamera(1.0, 0.08);
         globalclass.player.actor.setinputstate("none");
         globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("o000"));
         gcsaver::setcondition(8388608, 1);
@@ -325,13 +303,11 @@ class cliff1_puzzle : base_object {
     }
     
     method resetcinematic() {
-        var var1;
         this.buttonpressed = 0;
         this.button.setposition(this.buttonpos[0], this.buttonpos[1], this.buttonpos[2]);
         this.ledge1.setposition(this.ledge1pos[0], this.ledge1pos[1], this.ledge1pos[2]);
         this.ledge2.setposition(this.ledge2pos[0], this.ledge2pos[1], this.ledge2pos[2]);
         this.splineon = 0;
-        var1 = 0.0;
         return null;
     }
 }

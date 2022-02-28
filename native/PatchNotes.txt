@@ -160,6 +160,7 @@ v1.2.0
 Per-level fixes:
 • ONUA:   Fixed some Onu-Matoran dialogue showing up as XXX 				----		(ShadowDraikana)
 • ONUA:   Properly fixed Whenua from not appearing in the Takara			----		(ShadowDraikana)
+• ONUA:   Fixed music from not playing properly in L1A8 					----		(ShadowDraikana)
 • GALI:   Fixed AI issue causing sfsh and tfsh to stick to floor			----		(ReeseB)
 • POHATU: Fixed second cinematic in BLCV being unskippable					----		(ShadowDraikana)
 • POHATU: Fixed instabilities with BLDR code and cleanup					----		(ShadowDraikana)

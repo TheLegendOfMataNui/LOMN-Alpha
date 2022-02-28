@@ -148,7 +148,7 @@ class l1a8_puzzlep : base_object {
         this.door.initfull();
         this.door.settweakable();
         this.bgmusic = new legomp3player();
-        this.bgmusic.setupforplay("Root/Data/sounds/LEGOUNDERGROUNDMUSIC");
+        this.bgmusic.setupforplay("Root/Data/sounds/MUSICLegoUnderground");
         this.bgmusic.play(1);
         return null;
     }
@@ -160,7 +160,6 @@ class l1a8_puzzlep : base_object {
                 var1 = 0;
                 while ((this.plataarray.__length - 1) >= var1) {
                     if (param1.args[1] == this.plataarray[var1].id) {
-                        gcstaticsoundsptrarray::playtablesound(304);
                         this.plataarray[var1].touch();
                         this.platbarray[var1].touch();
                         this.platcarray[var1].touch();
@@ -248,13 +247,9 @@ class l1a8_puzzlep : base_object {
         }
         if (this.bgmusic != null) {
             this.bgmusic.stop();
+            this.bgmusic.cleanupfordestroy();
             this.bgmusic = null;
         }
-        return null;
-    }
-    
-    method cleanupshort() {
-        this.cleanupfull();
         return null;
     }
     
