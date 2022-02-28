@@ -4,19 +4,13 @@ class lego_area_haka6 : gs_lego_area {
     
     method lego_area_haka6(param1) {
         this.gs_lego_area("mosh", param1, 0, 0);
-        this.cinema = null;
+        this.lego_area_initfull();
         return null;
     }
     
     method initfull() {
-        var var1;
-        this.lego_area_initfull();
-        this.startingarea = [ 180, 
-            -356, 
-            0 - 51.4, 
-            689 ];
-        var1 = gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin2"));
-        if (var1 == 0) {
+        this.lego_area_show();
+        if (gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin2")) == 0) {
             this.cinema = gccinemaengine::create();
             gccinemaengine::load(this.cinema, "cin2");
             globalclass.hud.hide();
@@ -28,17 +22,8 @@ class lego_area_haka6 : gs_lego_area {
     }
     
     method cleanupfull() {
-        this.cinema = null;
-        return null;
-    }
-    
-    method show() {
-        this.lego_area_show();
-        return null;
-    }
-    
-    method hide() {
         this.lego_area_hide();
+        this.cinema = null;
         return null;
     }
     
@@ -48,7 +33,7 @@ class lego_area_haka6 : gs_lego_area {
     
     method onevent(param1) {
         var var1;
-        if (param1.eventid == 44) {
+        if ((param1.eventid == 44) && this.cinema != null) {
             if (this.safecount < 3) {
                 this.safecount = this.safecount + 1;
                 if (this.safecount == 2) {
@@ -65,18 +50,20 @@ class lego_area_haka6 : gs_lego_area {
                 }
             }
         }
-        if (param1.eventid == 30) {
-            globalclass.hud.show();
-        }
         return null;
     }
     
     method input(param1) {
         if ((param1.event == 2) && (param1.button == 255)) {
-            if (!(this.cinema == null)) {
+            if (this.cinema != null) {
                 gccinemaengine::stop(this.cinema);
             }
         }
+        return null;
+    }
+    
+    method exit() {
+        this.lego_area_cleanupfull();
         return null;
     }
 }

@@ -94,11 +94,11 @@ v1.0.0:
 
 Per-level fixes:
 • ONUA:   Fixed Whenua not rendering in Onua's Takara 						----		(Omega12)
-• GALI:   Fixed Onua Meets Gali not playing									----		(Vahkiti)
-• GALI:   Fixed Nokama's spawn position 									----		(ShadowDraikana)
+• GALI:   Fixed Onua Meets Gali not playing 								----		(Vahkiti)
+• GALI:   Fixed Nokama's spawn position in GHUT 							----		(ShadowDraikana)
 • KOPAKA: Fixed Pohatu Meets Kopaka cinematic not playing					----		(Vahkiti)
-• KOPAKA: Backported beta animations for Pohatu due to missing data			----		(Vahkiti)
-• KOPAKA: Fixed Nuju's spawn position 										----		(ShadowDraikana)
+• KOPAKA: Backported beta animations for Pohatu due to missing data 		----		(Vahkiti)
+• KOPAKA: Fixed Nuju's spawn position in HUTT								----		(ShadowDraikana)
 • LEWA:   Fixed an issue with the Takara causing the camera to clip Matau	----		(OndrikB)
 • TAHU:   Backported Lewa Meets Tahu from beta due to missing data			----		(Vahkiti)
 • TAHU:   Fixed Vakama's spawn position 									----		(ShadowDraikana)
