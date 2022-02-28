@@ -4,7 +4,6 @@ class spiderfight_class {
     property hits;
     property showspider;
     property mask;
-    property showmask;
     property web1;
     property statetimer;
     property spitballs;
@@ -23,8 +22,6 @@ class spiderfight_class {
     
     method initfull() {
         var var1;
-        var var2;
-        var var3;
         var var4;
         var var5;
         this.webtimers = [ new lego_timer("wbt0", 4.0, 0), 
@@ -65,14 +62,7 @@ class spiderfight_class {
         this.spider.add();
         this.spider.show();
         gccharactermoveinterpreter::checkanimdone(scslosifoundation::stringtoidentifier("s010"));
-        var2 = gcsaver::findmask(scslosifoundation::stringtoidentifier("mskc"));
-        if (var2) {
-            this.showmask = 0;
-        }
-        else {
-            this.showmask = 1;
-        }
-        if (this.showmask == 1) {
+        if (gcsaver::findmask(scslosifoundation::stringtoidentifier("mskc")) == 0) {
             this.mask = new lego_pickup("mskc", 7, 1, "item", 4, 1);
             this.mask.initfull();
             this.mask.show();
@@ -84,17 +74,16 @@ class spiderfight_class {
             this.web1.hide();
         }
         this.statetimer = 0.0;
-        var3 = gcsaver::isconditionset(536870912);
-        if (var3) {
+        if (gcsaver::isconditionset(536870912)) {
             this.showintro = 0;
         }
         else {
             this.showintro = 1;
-            var4 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 1, 0);
+            var4 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 2, 0);
             this.desctext = new gs_legotext("Root/Data/Art/Fonts/BionicleFontHi", var4, screenx * 0.5, screeny - 130, 0, 1, 256, 0, 0);
             this.desctext.initfull();
             var5 = (screeny - 100) + 20;
-            var4 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 1, 1);
+            var4 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 2, 1);
             this.howtotext = new gs_legotext("Root/Data/Art/Fonts/BionicleFont", var4, screenx * 0.5, var5, 0, 1, 256, 0, 0);
             this.howtotext.initfull();
         }
@@ -107,7 +96,6 @@ class spiderfight_class {
         this.parent.level.cam.setaimode(2);
         this.parent.level.cam.settargetpos(396.0, 0 - 60.0, 0 - 214.0);
         this.parent.level.cam.scaletocutscene();
-        globalclass.scriptmessage("SPIDER KING", 9.0);
         globalclass.hud.hide();
         gcsaver::setcondition(536870912, 1);
         this.desctext.add();
@@ -141,12 +129,10 @@ class spiderfight_class {
         }
         if (this.bgmusic != null) {
             this.bgmusic.stop();
+            this.bgmusic.cleanupfordestroy();
             this.bgmusic = null;
         }
         if (this.mask != null) {
-            if (this.mask.objshown == 0) {
-                this.showmask = 0;
-            }
             this.mask.cleanupfull();
             this.mask = null;
         }

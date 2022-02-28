@@ -38,8 +38,11 @@ class lego_area_spcv : gs_lego_area {
     }
     
     method exit() {
-        this.spiderpuzzle.exit();
-        this.spiderpuzzle = null;
+        this.lego_area_cleanupfull();
+        if (this.spiderpuzzle != null) {
+            this.spiderpuzzle.exit();
+            this.spiderpuzzle = null;
+        }
         return null;
     }
 }
