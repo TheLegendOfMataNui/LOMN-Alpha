@@ -24,18 +24,21 @@ class vllg2_puzzle {
     method vllg2_puzzle(param1) {
         this.parent = param1;
         this.firsttouch = 1;
-        this.cinema_shown = 0;
         this.show_wirlpool = 0;
         return null;
     }
     
     method initfull() {
         var var1;
-        var var2;
-        var var3;
         this.bgmusic = new legomp3player();
         this.bgmusic.setupforplay("Root/Data/sounds/MusicVillage");
         this.bgmusic.play(1);
+        if (gcsaver::findcinema(scslosifoundation::stringtoidentifier("cin2")) == 0) {
+            this.cinema_shown == 1;
+        }
+        else {
+            this.cinema_shown == 0;
+        }
         if (this.cinema_shown == 0) {
             this.cinema = gccinemaengine::create();
             gccinemaengine::load(this.cinema, "cin2");
@@ -88,12 +91,10 @@ class vllg2_puzzle {
         }
         this.logarrayubound = this.logarray.__length - 1;
         this.puzinc = 1;
-        var2 = null;
         this.canblow = 0;
         this.tempplatform = this.testplatforms[0];
         this.tempplatform.collide = 0;
-        var3 = gcsaver::finditem(scslosifoundation::stringtoidentifier("gear"));
-        if (var3 == 0) {
+        if (gcsaver::finditem(scslosifoundation::stringtoidentifier("gear")) == 0) {
             this.gearpickup = new lego_pickup("gear", 0, 5, "item", 10, 1);
             this.gearpickup.initfull();
             this.gearpickup.show();
@@ -104,8 +105,11 @@ class vllg2_puzzle {
     
     method cleanupfull() {
         var var1;
-        this.bgmusic.stop();
-        this.bgmusic = null;
+        if (this.bgmusic != null) {
+            this.bgmusic.stop();
+            this.bgmusic.cleanupfordestroy();
+            this.bgmusic = null;
+        }
         if (this.cinema != null) {
             this.cinema = null;
         }
@@ -248,6 +252,16 @@ class vllg2_puzzle {
             globalclass.player.actor.switchanimation(scslosifoundation::stringtoidentifier("g000"));
             this.parent.level.cam.setaimode(11);
         }
+        else if (param1.eventid == 3) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {
+                if (param1.args[1] == 1) {
+                    globalclass.player.canshootdragger(0);
+                }
+                else if (param1.args[1] == 0) {
+                    globalclass.player.canshootdragger(1);
+                }
+            }
+        }
         var1 = 0;
         while ((this.logarray.__length - 1) >= var1) {
             this.logarray[var1].onevent(param1);
@@ -357,6 +371,11 @@ class vllg2_puzzle {
                 debug::print("you are not within the orientation range limit....");
             }
         }
+        return null;
+    }
+    
+    method exit() {
+        this.parent = null;
         return null;
     }
 }

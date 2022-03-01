@@ -45,13 +45,14 @@ class galiclass : gs_lego_toa {
     }
     
     method input(param1) {
-        var var1;
-        var1 = globalclass.player;
         if (param1.event == 2) {
             if (param1.button == 231) {
                 if (this.mapperstate == 0) {
-                    if (var1.grapplinghooksetup) {
+                    if ((globalclass.player.grapplinghooksetup) && (globalclass.player.bshootdragger == 1)) {
                         this.shootdragger();
+                    }
+                    else {
+                        debug::print("SORRY, YOU ARE IN THE TRIG BOX YOU CANNOT SHOOT YOUR DRAGGER");
                     }
                 }
             }

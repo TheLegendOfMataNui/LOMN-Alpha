@@ -7,23 +7,27 @@ Per-level fixes:
 • ONUA:   Fixed Onu-Matoran dancers being invisible 						----		(Omega12)
 • KOPAKA: Fixed Turaga Nuju's animations 									----		(Omega12)
 
+
 v0.002:
 • POHATU: Fixed Po-Wahi crash 												----		(ShadowDraikana)
 • LEWA:   Fixed Le-Koro crash 												----		(Omega12)
 • MAKUTA: Fixed Akamai crash 												----		(Vahkiti)
 
+
 v0.003:
-• Added Windows 10 support 													----		(JrMasterModelBuilder)
+• Added Windows 10 support  												----		(JrMasterModelBuilder)
 
 Per-level fixes:
 • GALI:   Fixed Turaga Nokama rendering invisible 							----		(ShadowDraikana)
 • GALI:   Fixed crash on warping to Gali's shrine 							----		(ShadowDraikana)
+
 
 v0.004:
 • Patches are now included in a fancy new installer! Ooh! Ahhh! 			----		(Vahkiti)
 
 Per-level fixes:
 • ONUA:   Fixed Onu-Matoran dancers For real this time! 					----		(Vahkiti)
+
 
 v0.005:
 • Added DGVoodoo to the patch, fixing the following graphical bugs:
@@ -33,10 +37,11 @@ v0.005:
 	• Uncapped FPS (Causing certain animations to run too fast) 			----		(Vahkiti)
 	• Missing death screen transitions 										----		(Ascendancy)
 • Temporarily dummied out intro FMVs until an outstanding bug can be fixed	----		(Vahkiti)
-• Added autohotkey script to make navigating the debug menu easier.			----		(Vahkiti)
+• Added autohotkey script to make navigating the debug menu easier  		----		(Vahkiti)
+
 
 v0.006:
-• Laid ground work for a universal game updater, patcher, and launcher 		----		(Vahkiti, Benji, Snowcone)
+• Laid ground work for a universal game updater, patcher, and launcher  	----		(Vahkiti, Benji, Snowcone)
 • Patch installer can now install to a custom game location 				----		(Vahkiti)
 • Fixed objects rendering through walls 									----		(Benji & JrMasterModelBuilder)
 • Fixed jagged edges on object intersections 								----		(Benji & JrMasterModelBuilder)
@@ -53,14 +58,16 @@ Per-level fixes:
 
 *Currently Kopaka and Lewa share the same dance as Onua. We know not whether original dance animations exist for them
 
+
 v0.006.1:
 • Fixed an issue with the patcher throwing a setup error 					----		(Vahkiti)
-• Reverted a change involving Takara breaking Tohunga elsewhere				----		(Vahkiti)
+• Reverted a change involving Takara breaking Tohunga elsewhere 			----		(Vahkiti)
 • Cleaned up redundant files in the installer 								----		(Vahkiti)
-• Increased the brightness of the game to 140% 								----		(Vahkiti)
+• Increased the brightness of the game to 140%  							----		(Vahkiti)
 
 Per-level fixes:
 • FREN:   Replaced placeholder textures for Frontend 						----		(Vahkiti)
+
 
 v0.007:
 • Reworked patching system once again. Game now runs from a new launcher 	----		(Vahkiti, benji, snowcone)
@@ -104,8 +111,9 @@ Per-level fixes:
 • TAHU:   Fixed Vakama's spawn position 									----		(ShadowDraikana)
 • TAHU:   Fixed MOSH shutdown on re-entry									----		(ShadowDraikana)
 
+
 v1.1.0
-• Restored FMVs that were disabled due to rendering issues*					----		(Vahkiti)
+• Restored FMVs that were disabled due to rendering issues* 				----		(Vahkiti)
 • Fixed an issue with falltodeath sounds not playing						----		(ShadowDraikana)
 • Added code to global_class exit subroutine, fixing various crashes		----		(ShadowDraikana)
 • Added code to lego_area_cleanup subroutines, fixing various cache issues	----		(ShadowDraikana)
@@ -142,10 +150,12 @@ Per-level fixes:
 
 *Note: FMVs do not currently work unless compatibility mode is set to XP, (any Service Pack ver.) or in widescreen mode. If you encounter any issues, simply delete or move the files from the "cinematics" folder.
 
+
 v1.1.1
 
 Per-level fixes:
 • ONUA:   Fixed invisible dancy bois once and for all						----		(Vahkiti)
+
 
 v1.2.0
 • Fixed some texture antialiasing and alpha issues with masks				----		(Vahkiti, Fraug J. Coolman)
@@ -162,7 +172,9 @@ Per-level fixes:
 • ONUA:   Fixed some Onu-Matoran dialogue showing up as XXX 				----		(ShadowDraikana)
 • ONUA:   Properly fixed Whenua from not appearing in the Takara			----		(ShadowDraikana)
 • ONUA:   Fixed music from not playing properly in L1A8 					----		(ShadowDraikana)
+• ONUA:   Made another attempt at fixing SCRP model crashing issues 		----		(ShadowDraikana)
 • GALI:   Fixed AI issue causing sfsh and tfsh to stick to floor			----		(ReeseB)
+• GALI:   Fixed Ga-Koro horn softlock										----		(ShadowDraikana)
 • POHATU: Fixed second cinematic in BLCV being unskippable					----		(ShadowDraikana)
 • POHATU: Fixed instabilities with BLDR code and cleanup					----		(ShadowDraikana)
 • KOPAKA: Fixed Ice Elemental crash 										----		(ShadowDraikana)

@@ -11,6 +11,7 @@ class player {
     property spritedamageamount;
     property maskcontrol;
     property elementcontrol;
+    property bshootdragger;
     
     method player() {
         return null;
@@ -31,6 +32,7 @@ class player {
         this.maskcontrol.initfull();
         this.elementcontrol = new lego_elementcontroller();
         this.elementcontrol.initfull();
+        this.bshootdragger = 1;
         return null;
     }
     
@@ -766,6 +768,14 @@ class player {
     
     method setgrapplinghookdistance(param1) {
         this.actor.setgrapplinghookdistance(param1);
+        return null;
+    }
+
+    method canshootdragger(param1) {
+        if (param1 == null) {
+            param1 = 1;
+        }
+        this.bshootdragger = param1;
         return null;
     }
 }
