@@ -184,3 +184,7 @@ Per-level fixes:
 • LEWA:   Fixed mask swap in HIVE/SHRN not taking place post-cutscene		----		(ShadowDraikana)
 • TAHU:   Fixed burn sound from playing repeatedly when falling into lava 	----		(ShadowDraikana)
 • TAHU:   Fixed freezing in Vakama's hutt by replacing collision data 		----		(ShadowDraikana)
+• TAHU:   Fixed TA13 and TA14 exits crashing  								----		(ShadowDraikana)
+• TAHU:   Fixed TA14 exit having incorrect spawn position set for SHRN		----		(ShadowDraikana)
+• TAHU:   Fixed respawning in lava in SHRN after dying  					----		(ShadowDraikana)
+

@@ -11,7 +11,6 @@ class ta146_puzzle {
     
     method initfull() {
         var var1;
-        var var2;
         globalclass.player.actor.setcrushfromtop(1);
         this.mdoors = [ new ta14_door("dr00"), 
             new ta14_door("dr01"), 
@@ -32,8 +31,7 @@ class ta146_puzzle {
             this.mdoors[var1].object.setslidetimer(0, 8.0, 0, 0.25, -1, 0.5);
             var1 = var1 + 1;
         }
-        var2 = gcsaver::finditem(scslosifoundation::stringtoidentifier("dsc6"));
-        if (var2 == 0) {
+        if (gcsaver::finditem(scslosifoundation::stringtoidentifier("dsc6")) == 0) {
             this.discpickup = new lego_pickup("dsc6", 0, 5, "item", 10, 1);
             this.discpickup.initfull();
             this.discpickup.show();
@@ -68,9 +66,11 @@ class ta146_puzzle {
             this.discpickup.cleanupfull();
             this.discpickup = null;
         }
-        this.music.stop();
-        this.music.cleanupfordestroy();
-        this.music = null;
+        if (this.music != null) {
+            this.music.stop();
+            this.music.cleanupfordestroy();
+            this.music = null;
+        }
         return null;
     }
     
@@ -101,7 +101,7 @@ class ta146_puzzle {
         else if (param1.eventid == 4) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tp02")) {
                 debug::print("OPENING THE LAST DOOR IN THE SHRINE");
-                screenlist.screens[9].screen.areas[13].puzzle.switchit(2);
+                screenlist.screens[6].screen.areas[13].puzzle.switchit(2);
             }
         }
         else if (param1.eventid == 1) {

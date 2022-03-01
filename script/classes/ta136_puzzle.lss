@@ -148,9 +148,8 @@ class ta136_puzzle {
         }
         else if (param1.eventid == 4) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tp02")) {
-                screenlist.screens[9].screen.areas[13].puzzle.switchit(0);
+                screenlist.screens[6].screen.areas[13].puzzle.switchit(0);
             }
-            param1.args[0];
         }
         else if (param1.eventid == 8) {
             if (param1.args[0] == this.pillartimer.id) {
