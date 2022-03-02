@@ -159,9 +159,11 @@ class ta126_puzzle {
         this.origx = null;
         this.origy = null;
         this.origz = null;
-        this.music.stop();
-        this.music.cleanupfordestroy();
-        this.music = null;
+        if (this.music != null) {
+            this.music.stop();
+            this.music.cleanupfordestroy();
+            this.music = null;
+        }
         return null;
     }
     
@@ -190,7 +192,7 @@ class ta126_puzzle {
         else if (param1.eventid == 4) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tp02")) {
                 debug::print("*****SWITCHING NEXT DOOR IN SHRN TO OPEN");
-                screenlist.screens[9].screen.areas[13].puzzle.switchit(1);
+                screenlist.screens[6].screen.areas[13].puzzle.switchit(1);
             }
             param1.args[0];
         }
@@ -203,7 +205,6 @@ class ta126_puzzle {
                     this.timers[var1].reset(0);
                     this.timers[var1].start();
                 }
-                param1.args[0];
                 var1 = var1 + 1;
             }
         }
@@ -216,7 +217,6 @@ class ta126_puzzle {
                     var4 = this.pillars[var1].getz();
                     this.pillars[var1].interpolate(var2, var3 - 10.0, var4, 3.0);
                 }
-                param1.args[0];
                 var1 = var1 + 1;
             }
         }
