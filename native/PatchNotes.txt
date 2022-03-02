@@ -173,6 +173,7 @@ Per-level fixes:
 • ONUA:   Fixed some Onu-Matoran dialogue showing up as XXX 				----		(ShadowDraikana)
 • ONUA:   Fixed music from not playing properly in L1A8 					----		(ShadowDraikana)
 • ONUA:   Made another attempt at fixing SCRP model crashing issues 		----		(ShadowDraikana)
+• ONUA:   Fixed SCRP/SPCV intros not cleaning text when quitting			----		(ShadowDraikana)
 • GALI:   Fixed AI issue causing sfsh and tfsh to stick to floor			----		(ReeseB)
 • GALI:   Fixed Ga-Koro horn softlock										----		(ShadowDraikana)
 • POHATU: Fixed second cinematic in BLCV being unskippable					----		(ShadowDraikana)

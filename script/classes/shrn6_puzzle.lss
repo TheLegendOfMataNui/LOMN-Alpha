@@ -40,7 +40,6 @@ class shrn6_puzzle {
             globalclass.hud.hide();
             if (globalclass.player.maskcontrol.isactive() == 1) {
                 globalclass.player.maskcontrol.toggleactive();
-                globalclass.hud.mask.hide();
             }
             gccinemaengine::play(this.cinema);
         }

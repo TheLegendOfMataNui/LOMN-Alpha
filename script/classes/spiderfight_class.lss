@@ -111,11 +111,17 @@ class spiderfight_class {
         var var2;
         this.spider.cleanupfull();
         this.spider = null;
+        if (this.parent.level.cam.getaimode() == 2) {
+            this.parent.level.cam.setaimode(11);
+            this.parent.level.cam.resetviewport();
+        }
         if (this.desctext != null) {
+            this.desctext.remove();
             this.desctext.cleanupfull();
             this.desctext = null;
         }
         if (this.howtotext != null) {
+            this.howtotext.remove();
             this.howtotext.cleanupfull();
             this.howtotext = null;
         }
