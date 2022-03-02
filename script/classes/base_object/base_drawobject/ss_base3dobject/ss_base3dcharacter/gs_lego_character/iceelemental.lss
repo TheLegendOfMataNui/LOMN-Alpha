@@ -17,7 +17,6 @@ class iceelemental : gs_lego_character {
     property plattimer;
     property text1;
     property text2;
-    property spinsound;
     
     method iceelemental(param1) {
         this.ppuzzle = param1;
@@ -40,7 +39,6 @@ class iceelemental : gs_lego_character {
         this.text1 = new gs_legotext("Root/Data/Art/Fonts/BionicleFontHi", var1, screenx * 0.5, screeny - 130, 0, 1.5, 256, 0, 0);
         var1 = gcareadirector::getscriptstring(scslosifoundation::stringtoidentifier("boss"), 1, 1);
         this.text2 = new gs_legotext("Root/Data/Art/Fonts/BionicleFontHi", var1, screenx * 0.5, screeny - 110, 0, 1.5, 256, 0, 0);
-        this.spinsound = new tablecopysound(462);
         return null;
     }
     
@@ -52,10 +50,6 @@ class iceelemental : gs_lego_character {
         if (this.text2 != null) {
             this.text2.cleanupfull();
             this.text2 = null;
-        }
-        if (this.spinsound != null) {
-            this.spinsound.cleanupfull();
-            this.spinsound = null;
         }
         this.cleanupfull();
         return null;
@@ -501,14 +495,12 @@ class iceelemental : gs_lego_character {
             this.spinnum = param1;
         }
         this.interporientation(180, 0.5);
-        this.spinsound.play(0);
         return null;
     }
     
     method stopspin() {
         this.spinnum = 0;
         this.setsplitanimation(scslosifoundation::stringtoidentifier("im00"), 0.01);
-        this.spinsound.stop();
         return null;
     }
     
@@ -518,7 +510,6 @@ class iceelemental : gs_lego_character {
             //Saffire is calling an unregistered OSI function which is what's triggering this shutdown
             //var1 = gccharacter::ishanging(globalclass.player.actor.handle);
             globalclass.level.cam.shakecamera(0.2, 0.68);
-            gcstaticsoundsptrarray::playtablesound(441);
             var1 = var1;
             if (param1 != null) {
                 if ((this.toaonplat == 1) || (var1 == 1)) {
@@ -712,7 +703,6 @@ class iceelemental : gs_lego_character {
     
     method laugh() {
         this.setsplitanimation(scslosifoundation::stringtoidentifier("im02"), 0.01);
-        gcstaticsoundsptrarray::playtablesound(464);
         return null;
     }
     
@@ -721,19 +711,16 @@ class iceelemental : gs_lego_character {
         this.needspin = 1;
         if (this.hitpoints == 3) {
             this.setsplitanimation(scslosifoundation::stringtoidentifier("im05"), 0.01);
-            gcstaticsoundsptrarray::playtablesound(463);
             this.movetimer = 0;
             this.state = 10;
         }
         else if (this.hitpoints == 2) {
             this.setsplitanimation(scslosifoundation::stringtoidentifier("im05"), 0.01);
-            gcstaticsoundsptrarray::playtablesound(463);
             this.movetimer = 0;
             this.state = 20;
         }
         else if (this.hitpoints == 1) {
             this.setsplitanimation(scslosifoundation::stringtoidentifier("im05"), 0.01);
-            gcstaticsoundsptrarray::playtablesound(463);
             this.movetimer = 0;
             this.state = 30;
         }

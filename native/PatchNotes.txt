@@ -158,6 +158,7 @@ Per-level fixes:
 
 
 v1.2.0
+• Reverted texture, animation, and cinematic backports for preservation 	----		(ShadowDraikana
 • Fixed some texture antialiasing and alpha issues with masks				----		(Vahkiti, Fraug J. Coolman)
 • Fixed an issue with player animation speed not resetting upon death		----		(Vahkiti)
 • Updated debug menu scrolling to be single press instead of scroll 		----		(ShadowDraikana)
@@ -170,7 +171,6 @@ v1.2.0
 
 Per-level fixes:
 • ONUA:   Fixed some Onu-Matoran dialogue showing up as XXX 				----		(ShadowDraikana)
-• ONUA:   Properly fixed Whenua from not appearing in the Takara			----		(ShadowDraikana)
 • ONUA:   Fixed music from not playing properly in L1A8 					----		(ShadowDraikana)
 • ONUA:   Made another attempt at fixing SCRP model crashing issues 		----		(ShadowDraikana)
 • GALI:   Fixed AI issue causing sfsh and tfsh to stick to floor			----		(ReeseB)
@@ -179,7 +179,6 @@ Per-level fixes:
 • POHATU: Fixed instabilities with BLDR code and cleanup					----		(ShadowDraikana)
 • KOPAKA: Fixed Ice Elemental crash 										----		(ShadowDraikana)
 • KOPAKA: Fixed issue where the Kakama would not be equipped post-meetup	----		(ShadowDraikana)
-• KOPAKA: Fixed boss door in SHRN being misaligned  						----		(ShadowDraikana)
 • LEWA:   Fixed SHRN cutscene skipping causing a softlock					----		(ShadowDraikana)
 • LEWA:   Fixed mask swap in HIVE/SHRN not taking place post-cutscene		----		(ShadowDraikana)
 • TAHU:   Fixed burn sound from playing repeatedly when falling into lava 	----		(ShadowDraikana)
