@@ -53,7 +53,6 @@ class mudmonster_puzzle {
         this.mudmonster.initshort();
         this.bgmusic.stop();
         this.bgmusic.play(1);
-        this.setupstrings();
         this.mudpos = 1;
         this.mudhits = 0;
         this.mudtimer = 0;
@@ -69,17 +68,29 @@ class mudmonster_puzzle {
     }
     
     method cleanupfull() {
-        this.mudmonster.cleanupfull();
-        this.mudmonster = null;
+        this.cleanupstrings();
+        if (this.mudmonster != null) { 
+            this.mudmonster.cleanup();
+            this.mudmonster = null;
+        }
         this.mudtimer = null;
         this.mudpos = null;
         this.mudhits = null;
         this.attacking = null;
         this.reacting = null;
-        this.bgmusic.stop();
-        this.bgmusic = null;
-        this.stone.cleanupfull();
-        this.stone = null;
+        if (this.bgmusic != null) {
+            this.bgmusic.stop();
+            this.bgmusic.cleanupfordestroy();
+            this.bgmusic = null;
+        }
+        if (this.stone != null) {
+            this.stone.cleanupfull();
+            this.stone = null;
+        }
+        if (this.turaga != null) {
+            this.turaga.cleanupfull();
+            this.turaga = null;
+        }
         return null;
     }
     
@@ -108,12 +119,16 @@ class mudmonster_puzzle {
     }
     
     method cleanupstrings() {
-        this.titletext1.remove();
-        this.titletext2.remove();
-        this.titletext1.cleanupfull();
-        this.titletext2.cleanupfull();
-        this.titletext1 = null;
-        this.titletext2 = null;
+        if (this.titletext1 != null) {
+            this.titletext1.remove();
+            this.titletext1.cleanupfull();
+            this.titletext1 = null;
+        }
+        if (this.titletext2 != null) {
+            this.titletext2.remove();
+            this.titletext2.cleanupfull();
+            this.titletext2 = null;
+        }
         return null;
     }
     
@@ -236,7 +251,9 @@ class mudmonster_puzzle {
     }
     
     method onevent(param1) {
-        this.mudmonster.onevent(param1);
+        if (this.mudmonster != null) {
+            this.mudmonster.onevent(param1);
+        }
         if (param1.eventid == 7) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("cnyy")) {
                 if (param1.args[2] == scslosifoundation::stringtoidentifier("Fprj")) {
@@ -295,6 +312,7 @@ class mudmonster_puzzle {
                 this.mudmonster.show();
                 this.mudtimer = 0;
                 this.mudmonster.setevilpermanent(0);
+                this.setupstrings();
                 this.showstrings();
             }
         }

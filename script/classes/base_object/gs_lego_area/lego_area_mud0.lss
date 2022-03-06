@@ -3,16 +3,16 @@ class lego_area_mud0 : gs_lego_area {
     
     method lego_area_mud0(param1) {
         this.gs_lego_area("mud0", param1, 0, 0);
+        this.mudpuzzle = new mudmonster_puzzle(this);
         this.lego_area_initfull();
-        gcareadirector::setnearestmax(50);
         return null;
     }
     
     method initfull() {
         this.lego_area_show();
-        this.mudpuzzle = new mudmonster_puzzle(this);
         this.mudpuzzle.initfull();
         globalclass.player.actor.setcontext(2);
+        gcareadirector::setnearestmax(50);
         gclightdirector::setcavelighting(1);
         gcareadirector::setfog(-14145496, 0 - 20.0, 0 - 175.0, 0.05);
         return null;
@@ -40,8 +40,11 @@ class lego_area_mud0 : gs_lego_area {
     }
     
     method exit() {
-        this.mudpuzzle.exit();
-        this.mudpuzzle = null;
+        this.lego_area_cleanupfull();
+        if (this.mudpuzzle != null) {
+            this.mudpuzzle.exit();
+            this.mudpuzzle = null;
+        }
         return null;
     }
 }
