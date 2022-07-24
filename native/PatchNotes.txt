@@ -191,4 +191,5 @@ Per-level fixes:
 • TAHU:   Fixed respawning in lava in SHRN after dying  					----		(ShadowDraikana)
 • TAHU:   Fixed boss door camera pan in SHRN6 from softlocking the game 	----		(ShadowDraikana)
 • TAHU:   Fixed TA10 crashing on exiting the area   						----		(ShadowDraikana)
+• TAHU:   Fixed TA09 surfboard not working properly   						----		(ShadowDraikana)
 
