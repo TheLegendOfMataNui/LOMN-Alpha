@@ -33,10 +33,14 @@ class bullrun2 {
             this.bgmusic.stop();
             this.bgmusic = null;
         }
-        this.bullmovesound.stop();
-        this.bullsnortsound.stop();
-        this.bullmovesound = null;
-        this.bullsnortsound = null;
+        if (this.bullmovesound != null) {
+            this.bullmovesound.cleanupfull();
+            this.bullmovesound = null;
+        }
+        if (this.bullsnortsound != null) {
+            this.bullsnortsound.cleanupfull();
+            this.bullsnortsound = null;
+        }
         this.bullspeed = 0;
         this.bully.setsplitanimation(scslosifoundation::stringtoidentifier("bl00"));
         this.bully.setbullrunmode(0.0);
@@ -69,11 +73,10 @@ class bullrun2 {
         }
         else if (param1.eventid == 11) {
             if (scslosifoundation::identifiertostring(param1.args[1]) == "bl09") {
-                this.bully.setsplitanimation(scslosifoundation::stringtoidentifier("bl12"));
+                this.bully.setsplitanimation(scslosifoundation::stringtoidentifier("bl02"));
                 this.bully.setbullrunmode(30.0);
                 this.bullmovesound.play(1);
             }
-            scslosifoundation::identifiertostring(param1.args[1]);
         }
         else if (param1.eventid == 3) {
             if (param1.args[0] == scslosifoundation::stringtoidentifier("tb00")) {

@@ -178,6 +178,8 @@ Per-level fixes:
 • GALI:   Fixed Ga-Koro horn softlock										----		(ShadowDraikana)
 • POHATU: Fixed second cinematic in BLCV being unskippable					----		(ShadowDraikana)
 • POHATU: Fixed instabilities with BLDR code and cleanup					----		(ShadowDraikana)
+• POHATU: Fixed bad animation call triggering a crash with the bull in BLR2 ----		(ShadowDraikana)
+• POHATU: Fixed bull movement sounds continuing to play after leaving BLR2  ----		(ShadowDraikana)
 • KOPAKA: Fixed Ice Elemental crash 										----		(ShadowDraikana)
 • KOPAKA: Fixed issue where the Kakama would not be equipped post-meetup	----		(ShadowDraikana)
 • LEWA:   Fixed SHRN cutscene skipping causing a softlock					----		(ShadowDraikana)
