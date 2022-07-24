@@ -91,6 +91,7 @@ class ta106_puzzle {
         var var38;
         gcareadirector::setnearestmax(50);
         this.setsurfmode(1);
+        globalclass.player.actor.addpart("tahu/xs/surf", "surf");
         this.music = new legomp3player();
         this.music.setupforplay("Root/Data/sounds/MUSICsurfandsnowboard");
         this.music.play(1);
@@ -232,8 +233,10 @@ class ta106_puzzle {
     
     method hide() {
         var var1;
-        globalclass.settestforlavacollisions(1);
         this.setsurfmode(0);
+        globalclass.settestforlavacollisions(1);
+        globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("t000"));
+        globalclass.player.actor.setforwardvelocity(0.0);
         this.music.stop();
         this.music.cleanupfordestroy();
         this.music = null;
@@ -305,7 +308,6 @@ class ta106_puzzle {
                     var1 = var1 + 2;
                 }
             }
-            param1.args[0];
         }
         else if (param1.eventid == 42) {
             
@@ -371,7 +373,6 @@ class ta106_puzzle {
             globalclass.player.actor.setsurfminspeed(30.0);
             globalclass.player.actor.setsurfdrag(0.00001);
             globalclass.player.actor.setsurffallgravity(1.0);
-            globalclass.player.actor.addpart("tahu/xs/surf", "surf");
             globalclass.player.actor.setsplitanimation(scslosifoundation::stringtoidentifier("t038"));
         }
         else {

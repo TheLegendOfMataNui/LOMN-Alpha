@@ -188,4 +188,5 @@ Per-level fixes:
 • TAHU:   Fixed TA14 exit having incorrect spawn position set for SHRN		----		(ShadowDraikana)
 • TAHU:   Fixed respawning in lava in SHRN after dying  					----		(ShadowDraikana)
 • TAHU:   Fixed boss door camera pan in SHRN6 from softlocking the game 	----		(ShadowDraikana)
+• TAHU:   Fixed TA10 crashing on exiting the area   						----		(ShadowDraikana)
 
