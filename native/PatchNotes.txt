@@ -19,7 +19,7 @@ v0.003:
 
 Per-level fixes:
 • GALI:   Fixed Turaga Nokama rendering invisible 							----		(ShadowDraikana)
-• GALI:   Fixed crash on warping to Gali's shrine 							----		(ShadowDraikana)
+• GALI:   Fixed crash on warping to Gali's shrine 							----		(ShadowDraikana, Omega12)
 
 
 v0.004:
