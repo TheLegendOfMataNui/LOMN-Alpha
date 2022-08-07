@@ -87,6 +87,7 @@ class startpuzzle {
         this.doorbottom = null;
         this.button.cleanupfull();
         this.button = null;
+        this.cinema = null;
         return null;
     }
     
@@ -261,7 +262,7 @@ class startpuzzle {
             }
         }
         else if (param1.eventid == 30) {
-            globalclass.player.maskcontrol.changemask(2);
+            globalclass.player.maskcontrol.changemask(3);
             globalclass.hud.show();
         }
         return null;
