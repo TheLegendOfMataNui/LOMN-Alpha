@@ -176,6 +176,7 @@ Per-level fixes:
 • ONUA:   Fixed SCRP/SPCV intros not cleaning text when quitting			----		(ShadowDraikana)
 • GALI:   Fixed AI issue causing sfsh and tfsh to stick to floor			----		(ReeseB)
 • GALI:   Fixed Ga-Koro horn softlock										----		(ShadowDraikana)
+• GALI:   Fixed various trigger, spawn point, and reentry issues with ISLD	----		(ShadowDraikana, Vahkiti)
 • POHATU: Fixed second cinematic in BLCV being unskippable					----		(ShadowDraikana)
 • POHATU: Fixed instabilities with BLDR code and cleanup					----		(ShadowDraikana)
 • POHATU: Fixed bad animation call triggering a crash with the bull in BLR2 ----		(ShadowDraikana)
