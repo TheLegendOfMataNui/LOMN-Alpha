@@ -268,3 +268,18 @@ v1.2.1
 
 General changes and fixes
 • Updated patch notes formatting 											----		(ShadowDraikana)
+• Improved level code for loading a saved game								----		(ShadowDraikana)
+• Fixed default/initial areas in level 2 and 6 pointing to the wrong rooms	----		(ShadowDraikana)
+• Fixed global level transition code*										----		(ShadowDraikana)
+
+Level 1 - Onua
+• Fixed and enabled transition to Gali's level from MUD0 					----		(ShadowDraikana)
+
+Level 6 - Tahu
+• Fixed typo in TA03 code for checking if the Hau was already collected 	----		(ShadowDraikana)
+• Fixed level load not handling shielding and volcano glyphs properly		----		(ShadowDraikana)
+• Fixed TA14 cleanup for the moving doors									----		(ShadowDraikana)
+• Fixed an issue causing TA14 spawns to displace player outside the map 	----		(ShadowDraikana)
+
+
+* This change allows for implementation of the transitions, however due to the unfinished nature of the boss fights these may take longer to be added in full.

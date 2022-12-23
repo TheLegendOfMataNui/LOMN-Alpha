@@ -11,7 +11,6 @@ class ta146_puzzle {
     
     method initfull() {
         var var1;
-        globalclass.player.actor.setcrushfromtop(1);
         this.mdoors = [ new ta14_door("dr00"), 
             new ta14_door("dr01"), 
             new ta14_door("dr02"), 
@@ -59,6 +58,7 @@ class ta146_puzzle {
         var1 = 0;
         while ((this.mdoors.__length - 1) >= var1) {
             this.mdoors[var1].object.hide();
+            this.mdoors[var1].object.cleanupfull();
             var1 = var1 + 1;
         }
         this.mdoors = null;
@@ -94,6 +94,7 @@ class ta146_puzzle {
             this.music.stop();
         }
         else if (param1.eventid == 27) {
+            globalclass.player.actor.setcrushfromtop(0);
             globalclass.player.actor.gotopos(this.mparent.enterstartid, this.mparent.enterlookid);
             globalclass.player.unkill();
             this.music.play(1);
@@ -105,6 +106,11 @@ class ta146_puzzle {
             }
         }
         else if (param1.eventid == 1) {
+            if (param1.args[0] == scslosifoundation::stringtoidentifier("cnt1")) {
+                if (param1.args[1] != scslosifoundation::stringtoidentifier("dsc6")) {
+                    globalclass.player.actor.setcrushfromtop(1);
+                }
+            }
             
         }
         return null;

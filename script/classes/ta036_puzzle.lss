@@ -38,7 +38,7 @@ class ta036_puzzle {
             new thermal("tm35") ];
         this.mask = new lego_pickup("mk6a", 6, 1, "item", 1, 1);
         this.mask.initfull();
-        if (gcsaver::findmaska(scslosifoundation::stringtoidentifier("mk6a"), scslosifoundation::stringtoidentifier("ra03"))) {
+        if (gcsaver::findmaska(scslosifoundation::stringtoidentifier("mk6a"), scslosifoundation::stringtoidentifier("ta03"))) {
             this.mask.hide();
         }
         else {

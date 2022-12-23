@@ -29,6 +29,7 @@ class lego_level_7 : gs_lego_level {
     method initfull() {
         this.lego_level_initfull();
         globalclass.player.addmask("fake", 0);
+        globalclass.saverloaded = 0;
         return null;
     }
     

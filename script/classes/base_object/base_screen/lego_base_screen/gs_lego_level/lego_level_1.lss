@@ -86,6 +86,7 @@ class lego_level_1 : gs_lego_level {
             }
             globalclass.player.initfromsaver();
         }
+        globalclass.saverloaded = 0;
         return null;
     }
     

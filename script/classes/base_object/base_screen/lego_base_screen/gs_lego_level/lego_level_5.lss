@@ -73,7 +73,9 @@ class lego_level_5 : gs_lego_level {
             if (gcsaver::findglypha(scslosifoundation::stringtoidentifier("glyp"), scslosifoundation::stringtoidentifier("gly3"))) {
                 globalclass.player.addelement(7);
             }
+            globalclass.player.initfromsaver();
         }
+        globalclass.saverloaded = 0;
         return null;
     }
     

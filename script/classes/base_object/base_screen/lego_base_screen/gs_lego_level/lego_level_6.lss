@@ -4,7 +4,7 @@ class lego_level_6 : gs_lego_level {
     
     method lego_level_6() {
         var var1;
-        this.gs_lego_level("lev6", "tahu", "vllg");
+        this.gs_lego_level("lev6", "tahu", "fvil");
         var1 = new lego_area_vllg6(this);
         this.areas.__append(var1);
         var1 = new lego_area_fvil6(this);
@@ -73,13 +73,18 @@ class lego_level_6 : gs_lego_level {
             if (gcsaver::findmaska(scslosifoundation::stringtoidentifier("mk5a"), scslosifoundation::stringtoidentifier("ta11"))) {
                 globalclass.player.addmask("fake", 5);
             }
-            if (gcsaver::findmaska(scslosifoundation::stringtoidentifier("mk6a"), scslosifoundation::stringtoidentifier("ra03"))) {
+            if (gcsaver::findmaska(scslosifoundation::stringtoidentifier("mk6a"), scslosifoundation::stringtoidentifier("ta03"))) {
                 globalclass.player.addmask("fake", 6);
             }
-            if (gcsaver::findglypha(scslosifoundation::stringtoidentifier("gly0"), scslosifoundation::stringtoidentifier("tmbl"))) {
+            if (gcsaver::findglypha(scslosifoundation::stringtoidentifier("glyp"), scslosifoundation::stringtoidentifier("tp02"))) {
+                globalclass.player.addelement(18);
+            }
+            if (gcsaver::findglypha(scslosifoundation::stringtoidentifier("glyp"), scslosifoundation::stringtoidentifier("tp03"))) {
                 globalclass.player.addelement(19);
             }
+            globalclass.player.initfromsaver();
         }
+        globalclass.saverloaded = 0;
         this.burnsound = new tablecopysound(775);
         this.fellinlava = 0;
         return null;
