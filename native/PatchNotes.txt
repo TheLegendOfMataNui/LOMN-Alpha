@@ -275,6 +275,9 @@ General changes and fixes
 Level 1 - Onua
 • Fixed and enabled transition to Gali's level from MUD0 					----		(ShadowDraikana)
 
+Level 5 - Lewa
+• Fixed GLY3 slide physics not functioning          						----		(ShadowDraikana)
+
 Level 6 - Tahu
 • Fixed typo in TA03 code for checking if the Hau was already collected 	----		(ShadowDraikana)
 • Fixed level load not handling shielding and volcano glyphs properly		----		(ShadowDraikana)
