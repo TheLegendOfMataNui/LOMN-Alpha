@@ -272,6 +272,7 @@ General changes and fixes
 • Fixed default/initial areas in level 2 and 6 pointing to the wrong rooms	----		(ShadowDraikana)
 • Fixed global level transition code*										----		(ShadowDraikana)
 • Fixed platform movement in general from being dependent upon framerate	----		(ShadowDraikana)
+• Fixed major pickups such as Kanohi from spinning while the game is paused	----		(ShadowDraikana)
 
 Level 1 - Onua
 • Fixed and enabled transition to Gali's level from MUD0 					----		(ShadowDraikana)
