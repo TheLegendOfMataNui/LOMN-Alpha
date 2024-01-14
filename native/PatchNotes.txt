@@ -267,10 +267,10 @@ Level 6 - Tahu
 v1.2.1
 
 General changes and fixes
-• Updated patch notes formatting 											----		(ShadowDraikana)
-• Improved level code for loading a saved game								----		(ShadowDraikana)
+• Updated patch notes formatting 	                                        ----		(ShadowDraikana)
+• Improved level code for loading a saved game		                        ----		(ShadowDraikana)
 • Fixed default/initial areas in level 2 and 6 pointing to the wrong rooms	----		(ShadowDraikana)
-• Fixed global level transition code*										----		(ShadowDraikana)
+• Fixed global level transition code*	                    		        ----		(ShadowDraikana)
 • Fixed platform movement in general from being dependent upon framerate	----		(ShadowDraikana)
 • Fixed major pickups such as Kanohi from spinning while the game is paused	----		(ShadowDraikana)
 
@@ -283,8 +283,9 @@ Level 5 - Lewa
 Level 6 - Tahu
 • Fixed typo in TA03 code for checking if the Hau was already collected 	----		(ShadowDraikana)
 • Fixed level load not handling shielding and volcano glyphs properly		----		(ShadowDraikana)
-• Fixed TA14 cleanup for the moving doors									----		(ShadowDraikana)
+• Fixed TA14 cleanup for the moving doors	                                ----		(ShadowDraikana)
 • Fixed an issue causing TA14 spawns to displace player outside the map 	----		(ShadowDraikana)
+• Fixed quitting to menu while in TA01 causing a crash     	    	        ----		(ShadowDraikana)
 
 Level 7 - Makuta
 • Fixed countdown timer text not rescaling upon failing a challenge 		----		(ShadowDraikana)
