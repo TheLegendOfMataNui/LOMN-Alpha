@@ -396,7 +396,7 @@ class cheatlist {
                 scprocessmanager::userealdeltatime(this.realdelta);
             }
             else if (param1.button == 46) {
-                if (globalclass.tweak.visible == 0) {
+                if ((globalclass.tweak.visible == 0) && ((gcareadirector::getcurrentarea() != scslosifoundation::stringtoidentifier("frnt")))) {
                     this.showcheatmenu();
                 }
             }

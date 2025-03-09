@@ -274,6 +274,7 @@ General changes and fixes
 • Fixed platform movement in general from being dependent upon framerate	----		(ShadowDraikana)
 • Fixed major pickups such as Kanohi from spinning while the game is paused	----		(ShadowDraikana)
 • Fixed timers from continuing to run while the game is paused		        ----		(ShadowDraikana)
+• Disabled debug menu while in the Front End		                        ----		(ShadowDraikana)
 
 Level 1 - Onua
 • Fixed and enabled transition to Gali's level from MUD0 					----		(ShadowDraikana)
