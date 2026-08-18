@@ -277,9 +277,13 @@ General changes and fixes
 • Disabled debug menu while in the Front End		                        ----		(ShadowDraikana)
 • Updated INI to add workaround for cursor stuck bug with multiple screens  ----		(Vahkiti)
 • Fixed "Press SPACE to Continue" text not updating upon language change 	----		(OndrikB)
+• Fixed debug camera text from sometimes breaking 							----		(ShadowDraikana)
 
 Level 1 - Onua
 • Fixed and enabled transition to Gali's level from MUD0 					----		(ShadowDraikana)
+
+Level 2 - Gali
+• Fixed drowning timer text sometimes breaking randomly 				 	----		(ShadowDraikana)
 
 Level 5 - Lewa
 • Fixed GLY3 slide physics not functioning          						----		(ShadowDraikana)
