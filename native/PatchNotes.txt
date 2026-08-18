@@ -275,7 +275,6 @@ General changes and fixes
 • Fixed major pickups such as Kanohi from spinning while the game is paused	----		(ShadowDraikana)
 • Fixed timers from continuing to run while the game is paused		        ----		(ShadowDraikana)
 • Disabled debug menu while in the Front End		                        ----		(ShadowDraikana)
-• Updated INI to add workaround for cursor stuck bug with multiple screens  ----		(Vahkiti)
 • Fixed "Press SPACE to Continue" text not updating upon language change 	----		(OndrikB)
 • Fixed debug camera text from sometimes breaking 							----		(ShadowDraikana)
 
