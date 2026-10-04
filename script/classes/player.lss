@@ -12,7 +12,11 @@ class player {
     property maskcontrol;
     property elementcontrol;
     property bshootdragger;
-    
+    property point;
+    property mousex;
+    property mousey;
+    property click;
+
     method player() {
         return null;
     }
@@ -318,6 +322,42 @@ class player {
                     this.removelife(this.spritedamageamount);
                 }
             }
+            else if (param1.eventid == 32) {
+                this.point = new ss_basesprite("Root/Data/Art/MenuArt/cursor0001", 50, 50, 0, 82, 82);
+                this.point.initfull();
+                this.point.add();
+                this.point.show();
+		        this.click = new ss_basesprite("Root/Data/Art/MenuArt/cursor0000", 50, 50, 0, 82, 82);
+                this.click.initfull();
+                this.click.add();
+                this.click.show();
+                this.click.hide();
+            }
+            else if (param1.eventid == 33) {
+                this.point.hide();
+                this.point.remove();
+                this.point.cleanupfull();
+                this.point = null;
+                this.click.hide();
+                this.click.remove();
+                this.click.cleanupfull();
+                this.click = null;
+            }
+            else if (param1.eventid == 26) {
+                if (this.point != null) {
+                    this.mousex = param1.args[0];
+                    this.mousey = param1.args[1];
+                    this.point.show();
+                    this.click.hide();
+                    this.setmenupointer();
+                }
+            }
+            else if (param1.eventid == 24) {
+                if (this.point != null) {
+                    this.point.hide();
+                    this.click.show();
+                }
+            }
             else if (param1.eventid == 30) {
                 gcstaticsoundsptrarray::stoptablesound(758);
             }
@@ -325,6 +365,12 @@ class player {
         return null;
     }
     
+    method setmenupointer() {
+        this.point.setpos(this.mousex - 16, this.mousey - 16, this.mousex + 16, this.mousey + 16);
+		this.click.setpos(this.mousex - 16, this.mousey - 16, this.mousex + 16, this.mousey + 16);
+        return null;
+    }
+
     method setactor(param1, param2, param3, param4, param5, param6, param7) {
         this.actorid = param2;
         if (this.actorid == "onua") {
