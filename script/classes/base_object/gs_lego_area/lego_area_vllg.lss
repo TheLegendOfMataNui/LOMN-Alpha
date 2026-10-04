@@ -102,6 +102,16 @@ class lego_area_vllg : gs_lego_area {
                 }
             }
         }
+        else if (param1.eventid == 38) {
+            globalclass.player.actor.stoprecordinghaka();
+            globalclass.scriptmessage("YOLO!", 4);
+        }
+        else if (param1.eventid == 32) {
+            globalclass.player.actor.recordhakasequence();
+        }
+        else if (param1.eventid == 33) {
+            globalclass.player.actor.stoprecordinghaka();
+        }
         return null;
     }
     
