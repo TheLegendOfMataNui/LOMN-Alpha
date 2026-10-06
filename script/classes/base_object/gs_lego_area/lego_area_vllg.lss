@@ -82,6 +82,23 @@ class lego_area_vllg : gs_lego_area {
                     gccinemaengine::stop(this.cinema);
                 }
             }
+            if (globalclass.player.actor.ishakarecording() == true) {
+                if (param1.button == 227) { //W key
+                    globalclass.scriptmessage("W pressed during Haka", 4);
+                }
+                if (param1.button == 228) { //S key
+                    globalclass.scriptmessage("S pressed during Haka", 4);
+                }
+                if (param1.button == 229) { //A key
+                    globalclass.scriptmessage("A pressed during Haka", 4);
+                }
+                if (param1.button == 230) { //D key
+                    globalclass.scriptmessage("D pressed during Haka", 4);
+                }
+                if (param1.button == 233) { //right click (jump)
+                    globalclass.scriptmessage("Right click pressed during Haka", 4);
+                }
+            }
         }
         return null;
     }
@@ -107,6 +124,7 @@ class lego_area_vllg : gs_lego_area {
             globalclass.scriptmessage("YOLO!", 4);
         }
         else if (param1.eventid == 32) {
+            globalclass.scriptmessage("YOLO TEST!", 4);
             globalclass.player.actor.recordhakasequence();
         }
         else if (param1.eventid == 33) {
